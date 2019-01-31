@@ -1,15 +1,15 @@
 'use strict'
 var module = angular.module('CourseAnalyzer.controllers', []);
 module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerService', 'fileUpload',
-    function($scope, courseAnalyzerService, $q, fileUpload) {
+    function($scope, $q, courseAnalyzerService, fileUpload) {
         $scope.mandatoryCoursesDto = {
             mandatoryCourses: null
         };
+        $scope.certificateList = null;
 
         $scope.analyzeCourses = function() {
             courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto);
 
-            $scope.certificateList = null;
             $scope.dataUpload = true;
             $scope.errVisibility = false;
             var file = $scope.certificateList;
@@ -21,7 +21,7 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
             }, function(error) {
                 alert('error');
             }).then(function() {
-                //courseAnalyzerService.compareCourses();
+                courseAnalyzerService.compareCourses();
             });
         };
     }
@@ -37,7 +37,7 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
                     scope.certificateList =  element[0].files[0];
                 });
             });
-            }
+        }
     };
 }]);
 module.service('fileUpload', ['$q','$http', function ($q,$http) {
@@ -55,20 +55,4 @@ module.service('fileUpload', ['$q','$http', function ($q,$http) {
         return responseData;
     }
 }]);
-module.controller('myCtrl', ['$scope', '$q', 'fileUpload', function($scope, $q, fileUpload){
-    $scope.dataUpload = true;
-    $scope.errVisibility = false;
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        console.log('file is ' );
-        console.dir(file);
-        var uploadUrl = CONSTANTS.readCertificateList;
-        fileUpload.uploadFileToUrl(file, uploadUrl).then(function(result){
-            $scope.errors = fileUpload.getResponse();
-            console.log($scope.errors);
-            $scope.errVisibility = true;
-        }, function(error) {
-            alert('error');
-        })
-    };
-}]);
+

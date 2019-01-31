@@ -8,5 +8,6 @@ module.factory('courseAnalyzerService', ['$http', 'CONSTANTS', function($http, C
     service.compareCourses = function() {
         return $http.post(CONSTANTS.compareCourses);
     };
+
     return service;
 }]);
