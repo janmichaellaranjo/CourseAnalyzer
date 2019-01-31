@@ -8,17 +8,12 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
         $scope.certificateList = null;
 
         $scope.analyzeCourses = function() {
-            courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto).then(function() {
-                var file = $scope.certificateList;
-                fileUpload.uploadFileToUrl(file, CONSTANTS.readCertificateList).then(function(result){
-                    $scope.errors = fileUpload.getResponse();
-                    console.log($scope.errors);
-                }, function(error) {
-                    alert('error');
-                }).then(function() {
-                    courseAnalyzerService.compareCourses();
-                });
-
+            $q.all([
+                fileUpload.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
+                courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto)
+            ])
+            .then(function() {
+                courseAnalyzerService.compareCourses();
             });
         };
     }
@@ -38,7 +33,6 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
     };
 }]);
 module.service('fileUpload', ['$q','$http', function ($q, $http) {
-    var responseData;
     this.uploadFileToUrl = function(file, uploadUrl){
         var formdata = new FormData();
         formdata.append('file', file);
@@ -46,9 +40,6 @@ module.service('fileUpload', ['$q','$http', function ($q, $http) {
             transformRequest: angular.identity,
             headers: { 'Content-Type' : undefined}
         });
-    }
-    this.getResponse = function() {
-        return responseData;
     }
 }]);
 

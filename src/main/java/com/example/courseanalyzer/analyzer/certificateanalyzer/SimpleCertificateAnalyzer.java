@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -36,7 +35,6 @@ import java.util.*;
  * <p>Every other information is simply ignored.</p>
  *
  */
-@Component("certificateAnalyzer")
 public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleCertificateAnalyzer.class);

@@ -7,6 +7,7 @@ package com.example.courseanalyzer.analyzer.certificateanalyzer;
  */
 
 import com.example.courseanalyzer.analyzer.model.Course;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
 import java.util.Set;
@@ -25,6 +26,7 @@ import java.util.Set;
  *    necessary.</p>
  *
  */
+@Service
 public interface CertificateAnalyzer {
 
     /**

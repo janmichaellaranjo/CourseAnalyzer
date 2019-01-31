@@ -7,14 +7,12 @@ package com.example.courseanalyzer.service;
  */
 
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
 
 /**
  *
  */
-@Service
 public interface CourseCheckerService {
 
     /**

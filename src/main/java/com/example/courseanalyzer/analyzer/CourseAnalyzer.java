@@ -12,7 +12,7 @@ import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.MandatoryCour
 import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import java.util.Set;
@@ -20,7 +20,6 @@ import java.util.Set;
 /**
  *
  */
-@Component
 public class CourseAnalyzer {
 
     private CertificateAnalyzer certificateAnalyzer;
@@ -43,7 +42,6 @@ public class CourseAnalyzer {
      * @param mandatoryCoursesDto contains the mandatory courses.
      */
     public void analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
-        System.out.println("1");
         this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(mandatoryCoursesDto);
     }
 
@@ -54,7 +52,6 @@ public class CourseAnalyzer {
      * @param request contains the list of certificates.
      */
     public void analyzeCourseList(ServletRequest request) {
-        System.out.println("2");
         this.finishedCourses = certificateAnalyzer.analyzeCertificateList(request);
     }
 
@@ -64,8 +61,7 @@ public class CourseAnalyzer {
      *
      */
     public void compareCourses() {
-
-        System.out.println("3");
-        int k = 0;
+        System.out.println(mandatoryCourses);
+        System.out.println(finishedCourses);
     }
 }
