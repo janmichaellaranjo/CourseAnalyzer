@@ -45,9 +45,7 @@ public class CourseCheckerController {
     @RequestMapping(value = "/readCertificateList",
                     method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public void readCourseList(HttpServletRequest request, HttpServletResponse response) {
-
         courseCheckerService.readCertificateList(request);
     }
 
