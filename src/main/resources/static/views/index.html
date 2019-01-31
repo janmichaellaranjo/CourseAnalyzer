@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Main Page</title>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/courseAnalyzerController.js"></script>
+    <script src="js/app/courseAnalyzerService.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app/index.css">
+</head>
+<body ng-app="CourseAnalyzer">
+    <hr/>
+    <div class="container" ng-controller="courseAnalyzerController">
+        <div class="center">
+            <p>
+                <label>Mandatory Courses</label>
+                <textarea ng-model="mandatoryCoursesDto.mandatoryCourses"></textarea>
+            </p>
+            <p>
+                <label>Select certificateList file</label>
+                <input type="file" accept=".xlsx" filemodel="mandatoryCoursesDto.certificateList" />
+            </p>
+
+            <button ng-click="analyzeCourses()">Prüfen</button>
+        </div>
+        <hr/>
+        <hr/>
+    </div>
+
+</body>
+
+</html>

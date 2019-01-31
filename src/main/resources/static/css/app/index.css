@@ -1,0 +1,9 @@
+.center {
+    vertical-align: text-top;
+    text-align: center;
+    border: 2px solid black;
+}
+textarea {
+    width: 700px;
+    height: 650px;
+}
