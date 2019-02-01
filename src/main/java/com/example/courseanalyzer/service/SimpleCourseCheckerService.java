@@ -7,6 +7,7 @@ package com.example.courseanalyzer.service;
  */
 
 import com.example.courseanalyzer.analyzer.CourseAnalyzer;
+import com.example.courseanalyzer.analyzer.model.CourseReport;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,7 +52,7 @@ public class SimpleCourseCheckerService implements CourseCheckerService {
     }
 
     @Override
-    public void compareCourses() {
-        courseAnalyzer.compareCourses();
+    public CourseReport compareCourses() {
+        return courseAnalyzer.compareCourses();
     }
 }

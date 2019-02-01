@@ -73,6 +73,17 @@ public class Course {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        } else if (!(other instanceof Course)) {
+            return false;
+        }
+        Course otherCourse = (Course)other;
+        return courseType.equals(otherCourse.courseType) && courseName.equals(otherCourse.courseName);
+    }
+
+    @Override
     public int hashCode() {
         int hashCode = 37 * courseName.hashCode();
         hashCode += 37 * courseType.hashCode();

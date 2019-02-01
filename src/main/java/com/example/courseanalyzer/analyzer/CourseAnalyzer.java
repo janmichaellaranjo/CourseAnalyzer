@@ -11,8 +11,8 @@ import com.example.courseanalyzer.analyzer.certificateanalyzer.SimpleCertificate
 import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
+import com.example.courseanalyzer.analyzer.model.CourseReport;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import java.util.Set;
@@ -57,11 +57,28 @@ public class CourseAnalyzer {
 
     /**
      *
-     * Compares the mandatory courses and the finished courses.
      *
+     * Returns a report of the finished mandatory courses and the missing
+     * mandatory courses.
+     *
+     * @return a report of the finished mandatory courses.
      */
-    public void compareCourses() {
-        System.out.println(mandatoryCourses);
-        System.out.println(finishedCourses);
+    public CourseReport compareCourses() {
+        float sumachievedEcts = 0;
+        Set<Course> remainingMandatoryCourses = mandatoryCourses;
+        CourseReport courseReport = new CourseReport();
+
+        //find mandatory courses(Pflicht-LVAs in German)
+        for (Course finishedCourse : finishedCourses) {
+            if (mandatoryCourses.contains(finishedCourse)) {
+                sumachievedEcts += finishedCourse.getEcts();
+                remainingMandatoryCourses.remove(finishedCourse);
+            }
+        }
+
+        courseReport.setMandatoryCoursesEcts(sumachievedEcts);
+        courseReport.setRemainingMandatoryCourses(remainingMandatoryCourses);
+
+        return courseReport;
     }
 }

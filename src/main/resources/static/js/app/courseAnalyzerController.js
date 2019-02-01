@@ -3,14 +3,16 @@ var module = angular.module('CourseAnalyzer.controllers', []);
 module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerService', 'fileUpload', 'CONSTANTS',
     function($scope, $q, courseAnalyzerService, fileUpload, CONSTANTS) {
         $scope.mandatoryCoursesDto = {
-            mandatoryCourses: null
+            mandatoryCourses: null,
+            additionalMandatoryCourses: null
         };
         $scope.certificateList = null;
 
         $scope.analyzeCourses = function() {
             $q.all([
                 fileUpload.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
-                courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto)
+                courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto),
+                courseAnalyzerService.analyzeAdditionalMandatoryCourses($scope.mandatoryCoursesDto)
             ])
             .then(function() {
                 courseAnalyzerService.compareCourses();

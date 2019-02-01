@@ -42,6 +42,13 @@ public class CourseCheckerController {
         courseCheckerService.analyzeMandatoryCourses(mandatoryCoursesDto);
     }
 
+    @RequestMapping(value = "/analyzeAdditionalMandatoryCourses",
+            method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void analyzeAdditionalMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {
+
+    }
+
     @RequestMapping(value = "/readCertificateList",
                     method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +60,7 @@ public class CourseCheckerController {
     @RequestMapping(value = "/compareCourses")
     @ResponseStatus(HttpStatus.OK)
     public void compareCourses() {
-        courseCheckerService.compareCourses();
+        System.out.println(courseCheckerService.compareCourses());
     }
 
 }

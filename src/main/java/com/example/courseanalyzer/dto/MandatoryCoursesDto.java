@@ -14,6 +14,7 @@ public class MandatoryCoursesDto {
 
     private String mandatoryCourses;
 
+    private String additionalMandatoryCourses;
 
     public MandatoryCoursesDto() {}
 
@@ -29,5 +30,12 @@ public class MandatoryCoursesDto {
         return mandatoryCourses;
     }
 
+    public String getAdditionalMandatoryCourses() {
+        return additionalMandatoryCourses;
+    }
+
+    public void setAdditionalMandatoryCourses(String additionalMandatoryCourses) {
+        this.additionalMandatoryCourses = additionalMandatoryCourses;
+    }
 
 }

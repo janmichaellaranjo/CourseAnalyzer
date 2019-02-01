@@ -5,6 +5,9 @@ module.factory('courseAnalyzerService', ['$http', 'CONSTANTS', function($http, C
     service.analyzeMandatoryCourses = function(mandatoryCoursesDto) {
         return $http.post(CONSTANTS.analyzeMandatoryCourses, mandatoryCoursesDto);
     };
+    service.analyzeAdditionalMandatoryCourses = function(mandatoryCoursesDto) {
+            return $http.post(CONSTANTS.analyzeAdditionalMandatoryCourses, mandatoryCoursesDto);
+    };
     service.compareCourses = function() {
         return $http.post(CONSTANTS.compareCourses);
     };

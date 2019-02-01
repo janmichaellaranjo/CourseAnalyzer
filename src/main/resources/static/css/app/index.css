@@ -3,7 +3,11 @@
     text-align: center;
     border: 2px solid black;
 }
-textarea {
+#mandatoryCoursesTextArea {
     width: 700px;
-    height: 650px;
+    height: 600px;
+}
+#additionalMandatoryCoursesTextArea {
+    width: 700px;
+    height: 300px;
 }
