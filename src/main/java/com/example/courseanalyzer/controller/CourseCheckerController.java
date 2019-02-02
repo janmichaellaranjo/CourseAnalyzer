@@ -46,7 +46,7 @@ public class CourseCheckerController {
             method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void analyzeAdditionalMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {
-
+        courseCheckerService.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
     }
 
     @RequestMapping(value = "/readCertificateList",

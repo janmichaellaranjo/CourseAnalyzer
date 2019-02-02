@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.mandatorycourseanalyzer;
  * @Date: 29.01.2019
  */
 
+import com.example.courseanalyzer.Util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.CourseType;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
@@ -16,7 +17,8 @@ import java.util.regex.Pattern;
 
 /**
  * Analyzes the mandatory courses by simply assuming that each line contains the
- * course informations in a consistent order.
+ * course informations of the study plan of Computer Science of TU Wien
+ * in a consistent order.
  *
  * <p>The order is <i><ects>_<courseType>_<course name></i></p>
  * <p>Every other information is simply ignored</p>
@@ -29,14 +31,15 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
     @Override
     public Set<Course> analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
         Set<Course> mandatoryCourses = new HashSet<>();
-        Scanner scanner = new Scanner(mandatoryCoursesDto.getMandatoryCourses());
+        Scanner scanner =
+                new Scanner(mandatoryCoursesDto.getMandatoryCourses());
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
 
-            if (isLineValidCourseInformation(line)) {
+            if (CourseLineUtil.isLineValidCourseInformation(line)) {
 
-                Course courseFromLine = getCourseFromLine(line);
+                Course courseFromLine = CourseLineUtil.getCourseFromLine(line);
 
                 if (courseFromLine.isInformationComplete()) {
                     mandatoryCourses.add(courseFromLine);
@@ -46,55 +49,5 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
         scanner.close();
 
         return mandatoryCourses;
-    }
-
-    private boolean isLineValidCourseInformation(String line) {
-        Pattern pattern = Pattern.compile(COURSE_INFORMATION_FORMAT);
-        Matcher matcher = pattern.matcher(line);
-
-        return matcher.matches();
-    }
-
-    private Course getCourseFromLine(String line) {
-        Course course = new Course();
-        String currentLine = line.replaceAll("\\*", "");
-        course.setEcts(getEctsFromLine(currentLine));
-        course.setCourseType(getCourseTypeFromLine(currentLine));
-        course.setCourseName(getCourseNameFromLine(currentLine));
-        return course;
-    }
-
-    private float getEctsFromLine(String line) {
-        int indexOfCourseType = getIndexOfCourseType(line);
-        // needs to be shorten because the course name could contain a number
-        String shortenedLine = line.substring(0, indexOfCourseType)
-                                    .replaceAll(COMMA, DECIMAL_POINT);
-        return Float.parseFloat(shortenedLine);
-    }
-
-    private int getIndexOfCourseType(String line) {
-        String courseTypeAsString = "";
-        for (CourseType courseType : CourseType.values()) {
-            if (line.contains(courseType.getCourseType())) {
-                courseTypeAsString = courseType.getCourseType();
-            }
-        }
-
-        return line.indexOf(courseTypeAsString);
-    }
-
-    private CourseType getCourseTypeFromLine(String line) {
-        for (CourseType courseType : CourseType.values()) {
-            if (line.contains(courseType.getCourseType())) {
-                return courseType;
-            }
-        }
-        return null;
-    }
-
-    private String getCourseNameFromLine(String line) {
-        final int offset = 3;
-        int indexOfCourseType = getIndexOfCourseType(line) + offset;
-        return line.substring(indexOfCourseType, line.length());
     }
 }

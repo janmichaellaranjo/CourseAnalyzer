@@ -6,6 +6,8 @@ package com.example.courseanalyzer.analyzer;
  * @Date: 29.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.AdditionalMandatoryCourseAnalyzer;
+import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.SimpleAdditionalMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.CertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.SimpleCertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
@@ -24,6 +26,8 @@ public class CourseAnalyzer {
 
     private CertificateAnalyzer certificateAnalyzer;
 
+    private AdditionalMandatoryCourseAnalyzer additionalMandatoryCourseAnalyzer;
+
     private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
 
     private Set<Course> mandatoryCourses;
@@ -32,6 +36,7 @@ public class CourseAnalyzer {
 
     public CourseAnalyzer() {
         this.mandatoryCourseAnalyzer = new SimpleMandatoryCourseAnalyzer();
+        this.additionalMandatoryCourseAnalyzer = new SimpleAdditionalMandatoryCourseAnalyzer();
         this.certificateAnalyzer = new SimpleCertificateAnalyzer();
     }
 
@@ -43,6 +48,16 @@ public class CourseAnalyzer {
      */
     public void analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
         this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(mandatoryCoursesDto);
+    }
+
+    /**
+     *
+     * Extracts every addtional mandatory course from the DTO.
+     *
+     * @param mandatoryCoursesDto contains the mandatory courses.
+     */
+    public void analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
+        additionalMandatoryCourseAnalyzer.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
     }
 
     /**
