@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * before {@link #getCourseFromLine(String)}.
  */
 public final class CourseLineUtil {
-    private static final String COURSE_INFORMATION_FORMAT = "[\\*|•]?[ ]?[0-9]+[,|.][0-9] [\\w|äöüÄÖÜß]+[\\w|äöüÄÖÜß| ]*";
+    private static final String COURSE_INFORMATION_FORMAT = "[\\*|•]?[ ]?[0-9]+[,|.][0-9] [\\w|äöüÄÖÜß]+[\\w|äöüÄÖÜß| |+]*";
     private static final String COMMA = ",";
     private static final String DECIMAL_POINT = ".";
 

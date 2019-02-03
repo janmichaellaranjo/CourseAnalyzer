@@ -15,6 +15,8 @@ public class CourseReport {
 
     private float mandatoryCoursesEcts;
 
+    private float additionalMandatoryCoursesEcts;
+
     private Set<Course> remainingMandatoryCourses;
 
     public float getMandatoryCoursesEcts() {
@@ -31,6 +33,14 @@ public class CourseReport {
 
     public void setRemainingMandatoryCourses(Set<Course> remainingMandatoryCourses) {
         this.remainingMandatoryCourses = remainingMandatoryCourses;
+    }
+
+    public float getAdditionalMandatoryCoursesEcts() {
+        return additionalMandatoryCoursesEcts;
+    }
+
+    public void setAdditionalMandatoryCoursesEcts(float additionalMandatoryCoursesEcts) {
+        this.additionalMandatoryCoursesEcts = additionalMandatoryCoursesEcts;
     }
 
     @Override

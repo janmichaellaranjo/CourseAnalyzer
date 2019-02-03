@@ -15,7 +15,18 @@ import java.util.Set;
  */
 public class ExamModule {
 
+    private Set<Course> mandatoryCourses;
+
     private Set<Course> additionalMandatoryCourses;
+
+
+    public Set<Course> getMandatoryCourses() {
+        return mandatoryCourses;
+    }
+
+    public void setMandatoryCourses(Set<Course> mandatoryCourses) {
+        this.mandatoryCourses = mandatoryCourses;
+    }
 
     public Set<Course> getAdditionalMandatoryCourses() {
         return additionalMandatoryCourses;
@@ -27,10 +38,18 @@ public class ExamModule {
 
     @Override
     public String toString() {
-        if (additionalMandatoryCourses == null || additionalMandatoryCourses.isEmpty()) {
-            return "[empty]";
+        String output = "";
+        if (mandatoryCourses == null || mandatoryCourses.isEmpty()) {
+            output += "mandatoryCourses: empty, ";
+        } else {
+            output += "mandatoryCourses:" + mandatoryCourses + ", ";
         }
-        return additionalMandatoryCourses.toString();
+        if (additionalMandatoryCourses == null || additionalMandatoryCourses.isEmpty()) {
+            output += "additionalMandatoryCourses: empty";
+        } else {
+            output += "additionalMandatoryCourses:" + additionalMandatoryCourses;
+        }
+        return "[" + output + "]";
     }
 
     /**

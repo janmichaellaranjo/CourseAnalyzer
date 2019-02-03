@@ -14,9 +14,12 @@ import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.MandatoryCour
 import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
+import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 
 import javax.servlet.ServletRequest;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -31,6 +34,8 @@ public class CourseAnalyzer {
     private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
 
     private Set<Course> mandatoryCourses;
+
+    private TransitionalProvision transitionalProvision;
 
     private Set<Course> finishedCourses;
 
@@ -57,7 +62,7 @@ public class CourseAnalyzer {
      * @param mandatoryCoursesDto contains the mandatory courses.
      */
     public void analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
-        additionalMandatoryCourseAnalyzer.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
+        this.transitionalProvision = additionalMandatoryCourseAnalyzer.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
     }
 
     /**
@@ -79,20 +84,34 @@ public class CourseAnalyzer {
      * @return a report of the finished mandatory courses.
      */
     public CourseReport compareCourses() {
-        float sumachievedEcts = 0;
-        Set<Course> remainingMandatoryCourses = mandatoryCourses;
+        float sumAchievedMandatoryEcts = 0f;
+        float sumAchievedAdditionalMandatoryEcts = 0f;
+        Set<Course> remainingFinishedCourses = new HashSet<>(finishedCourses);
+        Set<Course> remainingMandatoryCourses = new HashSet<>(mandatoryCourses);
         CourseReport courseReport = new CourseReport();
 
         //find mandatory courses(Pflicht-LVAs in German)
         for (Course finishedCourse : finishedCourses) {
             if (mandatoryCourses.contains(finishedCourse)) {
-                sumachievedEcts += finishedCourse.getEcts();
+                sumAchievedMandatoryEcts += finishedCourse.getEcts();
+                remainingFinishedCourses.remove(finishedCourse);
                 remainingMandatoryCourses.remove(finishedCourse);
             }
         }
 
-        courseReport.setMandatoryCoursesEcts(sumachievedEcts);
-        courseReport.setRemainingMandatoryCourses(remainingMandatoryCourses);
+        //find additional courses
+        Iterator<Course> coursesIter = remainingFinishedCourses.iterator();
+        while (coursesIter.hasNext()) {
+            Course remainingCourse = coursesIter.next();
+
+            if (transitionalProvision.containsCourse(remainingCourse)) {
+                sumAchievedAdditionalMandatoryEcts += remainingCourse.getEcts();
+                remainingMandatoryCourses.remove(remainingCourse);
+            }
+        }
+
+        courseReport.setMandatoryCoursesEcts(sumAchievedMandatoryEcts);
+        courseReport.setAdditionalMandatoryCoursesEcts(sumAchievedAdditionalMandatoryEcts);
 
         return courseReport;
     }
