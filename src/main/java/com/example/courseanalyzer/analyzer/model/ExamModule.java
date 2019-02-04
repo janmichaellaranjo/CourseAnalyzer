@@ -54,6 +54,19 @@ public class ExamModule {
 
     /**
      *
+     * Returns true, if the examined course is in the set of mandatory courses
+     * of the this module.
+     *
+     * @param examinedCourse the checked course.
+     * @return true, if the examined course is in the set of mandatory courses
+     *         of the this module.
+     */
+    public boolean containsMandatoryCourse(Course examinedCourse) {
+        return mandatoryCourses.contains(examinedCourse);
+    }
+
+    /**
+     *
      * Returns true, if the examined course is in the set of additional mandatory
      * courses of the this module.
      *

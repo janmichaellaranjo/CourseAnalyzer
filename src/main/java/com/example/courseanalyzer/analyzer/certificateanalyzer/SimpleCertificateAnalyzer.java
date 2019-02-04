@@ -38,9 +38,8 @@ import java.util.*;
 public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleCertificateAnalyzer.class);
-
     private static final int SHEET_NUMBER = 0;
-    private static final int START_ROW = 4;
+    private static final int START_ROW = 3;
     private static final int COURSE_NAME_INDEX = 0;
     private static final int COURSE_TYPE_INDEX = 1;
     private static final int COURSE_ECTS_INDEX = 3;

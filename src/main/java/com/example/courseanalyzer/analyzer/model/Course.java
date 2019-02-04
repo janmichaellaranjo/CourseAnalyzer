@@ -80,7 +80,8 @@ public class Course {
             return false;
         }
         Course otherCourse = (Course)other;
-        return courseType.equals(otherCourse.courseType) && courseName.equals(otherCourse.courseName);
+        return courseType.equals(otherCourse.courseType) &&
+                courseName.equals(otherCourse.courseName);
     }
 
     @Override

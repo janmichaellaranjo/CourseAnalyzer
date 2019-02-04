@@ -6,6 +6,7 @@ package com.example.courseanalyzer.controller;
  * @Date: 25.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.model.CourseReport;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 import com.example.courseanalyzer.service.CourseCheckerService;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -44,23 +45,29 @@ public class CourseCheckerController {
 
     @RequestMapping(value = "/analyzeAdditionalMandatoryCourses",
             method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public void analyzeAdditionalMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {
         courseCheckerService.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
+    }
+
+    @RequestMapping(value = "/readStudyPlan",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public void readStudyPlan(HttpServletRequest request, HttpServletResponse response) {
+        courseCheckerService.readStudyPlan(request);
     }
 
     @RequestMapping(value = "/readCertificateList",
                     method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public void readCourseList(HttpServletRequest request, HttpServletResponse response) {
         courseCheckerService.readCertificateList(request);
     }
 
-    @RequestMapping(value = "/compareCourses")
-    @ResponseStatus(HttpStatus.OK)
-    public void compareCourses() {
-        System.out.println(courseCheckerService.compareCourses());
+    @RequestMapping(value = "/compareCourses",
+                    method = RequestMethod.GET)
+    public @ResponseBody CourseReport compareCourses() {
+        CourseReport courseReport = courseCheckerService.compareCourses();
+        return courseReport;
     }
 
 }

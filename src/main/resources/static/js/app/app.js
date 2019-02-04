@@ -4,6 +4,7 @@ var demoApp = angular.module('CourseAnalyzer', ['CourseAnalyzer.controllers','Co
 demoApp.constant('CONSTANTS', {
     analyzeMandatoryCourses: '/courseanalyzer/analyzeMandatoryCourses',
     analyzeAdditionalMandatoryCourses: '/courseanalyzer/analyzeAdditionalMandatoryCourses',
+    readStudyPlan: '/courseanalyzer/readStudyPlan',
     readCertificateList: '/courseanalyzer/readCertificateList',
     compareCourses: '/courseanalyzer/compareCourses'
 });

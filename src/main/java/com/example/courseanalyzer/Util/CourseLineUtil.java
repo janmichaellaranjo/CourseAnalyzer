@@ -69,7 +69,7 @@ public final class CourseLineUtil {
         return line.indexOf(courseTypeAsString);
     }
 
-    private static CourseType getCourseTypeFromLine(String line) {
+    public static CourseType getCourseTypeFromLine(String line) {
         for (CourseType courseType : CourseType.values()) {
             if (line.contains(courseType.getCourseType())) {
                 return courseType;

@@ -36,8 +36,17 @@ public interface CourseCheckerService {
 
     /**
      *
-     * Reads and extracts the certificates from the file
-     * {@code certificateListFile}.
+     * Reads the request and extracts the mandatory and additional mandatory
+     * courses from the request which contains the uploaded file.
+     *
+     * @param request contains the courses
+     */
+    void readStudyPlan(ServletRequest request);
+
+    /**
+     *
+     * Reads the request and extracts the certificates from the request which
+     * contains the uploaded file.
      *
      * @param request contains the certificates
      */

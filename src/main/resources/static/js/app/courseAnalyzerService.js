@@ -9,7 +9,7 @@ module.factory('courseAnalyzerService', ['$http', 'CONSTANTS', function($http, C
             return $http.post(CONSTANTS.analyzeAdditionalMandatoryCourses, mandatoryCoursesDto);
     };
     service.compareCourses = function() {
-        return $http.post(CONSTANTS.compareCourses);
+        return $http.get(CONSTANTS.compareCourses);
     };
 
     return service;

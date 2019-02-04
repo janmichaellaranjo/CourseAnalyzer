@@ -33,7 +33,6 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
     @Override
     public TransitionalProvision analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
         //TODO: refactor
-        Scanner scanner = new Scanner(mandatoryCoursesDto.getAdditionalMandatoryCourses());
         TransitionalProvision transitionalProvision = new TransitionalProvision();
         Set<ExamModule> examModules = new HashSet<>();
         ExamModule examModule = null;
@@ -80,7 +79,7 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
         }
 
         //if exam module is not added because it is the last, it is added too
-        if (!isAdded) {
+        if (!isAdded && mandatoryCourses != null && additionalMandatoryCourses != null) {
             examModule.setMandatoryCourses(mandatoryCourses);
             examModule.setAdditionalMandatoryCourses(additionalMandatoryCourses);
             examModules.add(examModule);

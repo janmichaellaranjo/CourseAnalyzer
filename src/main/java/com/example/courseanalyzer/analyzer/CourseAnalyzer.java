@@ -10,11 +10,13 @@ import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.Addi
 import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.SimpleAdditionalMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.CertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.SimpleCertificateAnalyzer;
-import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
-import com.example.courseanalyzer.analyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.SimpleStudyPlanAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.StudyPlanAnalyzer;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 
 import javax.servlet.ServletRequest;
@@ -27,11 +29,13 @@ import java.util.Set;
  */
 public class CourseAnalyzer {
 
-    private CertificateAnalyzer certificateAnalyzer;
-
     private AdditionalMandatoryCourseAnalyzer additionalMandatoryCourseAnalyzer;
 
     private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
+
+    private StudyPlanAnalyzer studyPlanAnalyzer;
+
+    private CertificateAnalyzer certificateAnalyzer;
 
     private Set<Course> mandatoryCourses;
 
@@ -42,6 +46,7 @@ public class CourseAnalyzer {
     public CourseAnalyzer() {
         this.mandatoryCourseAnalyzer = new SimpleMandatoryCourseAnalyzer();
         this.additionalMandatoryCourseAnalyzer = new SimpleAdditionalMandatoryCourseAnalyzer();
+        this.studyPlanAnalyzer = new SimpleStudyPlanAnalyzer();
         this.certificateAnalyzer = new SimpleCertificateAnalyzer();
     }
 
@@ -52,7 +57,7 @@ public class CourseAnalyzer {
      * @param mandatoryCoursesDto contains the mandatory courses.
      */
     public void analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
-        this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(mandatoryCoursesDto);
+        this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(mandatoryCoursesDto.getMandatoryCourses());
     }
 
     /**
@@ -67,7 +72,18 @@ public class CourseAnalyzer {
 
     /**
      *
-     * Extracts the information from the request to retriev the certificates.
+     * Extracts the information from the request to retrieve the mandatory and
+     * additional mandatory courses.
+     *
+     * @param request contains the list of courses.
+     */
+    public void analyzeStudyPlan(ServletRequest request) {
+        studyPlanAnalyzer.analyzeStudyPlan(request);
+    }
+
+    /**
+     *
+     * Extracts the information from the request to retrieve the certificates.
      *
      * @param request contains the list of certificates.
      */
@@ -103,10 +119,14 @@ public class CourseAnalyzer {
         Iterator<Course> coursesIter = remainingFinishedCourses.iterator();
         while (coursesIter.hasNext()) {
             Course remainingCourse = coursesIter.next();
-
-            if (transitionalProvision.containsCourse(remainingCourse)) {
+            if (transitionalProvision.containsMandatoryCourse(remainingCourse)) {
+                sumAchievedMandatoryEcts += remainingCourse.getEcts();
+                coursesIter.remove();
+                //remainingFinishedCourses.remove(remainingCourse);
+            } else if (transitionalProvision.containsAdditionalMandatoryCourse(remainingCourse)) {
                 sumAchievedAdditionalMandatoryEcts += remainingCourse.getEcts();
-                remainingMandatoryCourses.remove(remainingCourse);
+                //remainingFinishedCourses.remove(remainingCourse);
+                coursesIter.remove();
             }
         }
 

@@ -24,11 +24,18 @@
                 <textarea id="additionalMandatoryCoursesTextArea" ng-model="mandatoryCoursesDto.additionalMandatoryCourses"></textarea>
             </p>
             <p>
+                <label>Select studyplan file</label>
+                <input type="file" accept=".pdf" filestudyplan='studyPlan' />
+            </p>
+            <p>
                 <label>Select certificateList file</label>
-                <input type="file" accept=".xlsx" filemodel="mandatoryCoursesDto.certificateList" />
+                <input type="file" accept=".xlsx" filecertificatelist='certificateList' />
             </p>
 
             <button ng-click="analyzeCourses()">Prüfen</button>
+
+            <p>Mandatory Courses ECTs: {{courseReport.mandatoryCoursesEcts}}</p>
+            <p>Additional Mandatory Courses ECTs: {{courseReport.additionalMandatoryCoursesEcts}}</p>
         </div>
         <hr/>
         <hr/>

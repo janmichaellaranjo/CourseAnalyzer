@@ -19,7 +19,8 @@ import java.util.Set;
  * the grade of the course.
  *
  * <p>This file can be downloaded on
- *    <a href="https://tiss.tuwien.ac.at/student/self_service">TISS-Student Self Service</a></p>.
+ *    <a href="https://tiss.tuwien.ac.at/student/self_service">TISS-Student Self
+ *    Service</a></p>.
  *
  * <p>These interface is used to conveniently change the implementation because
  *    the format of the file may change and a new implementation is

@@ -1,6 +1,6 @@
-package com.example.courseanalyzer.analyzer.mandatorycourseanalyzer;
+package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer;
 /**
- * @Package: com.example.courseanalyzer.analyzer.mandatorycourseanalyzer
+ * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer
  * @Class: SimpleMandatoryCourseAnalyzer
  * @Author: Jan
  * @Date: 29.01.2019
@@ -8,12 +8,8 @@ package com.example.courseanalyzer.analyzer.mandatorycourseanalyzer;
 
 import com.example.courseanalyzer.Util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
-import com.example.courseanalyzer.analyzer.model.CourseType;
-import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Analyzes the mandatory courses by simply assuming that each line contains the
@@ -29,10 +25,9 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
     private static final String DECIMAL_POINT = ".";
 
     @Override
-    public Set<Course> analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
+    public Set<Course> analyzeMandatoryCourses(String mandatoryCoursesText) {
         Set<Course> mandatoryCourses = new HashSet<>();
-        Scanner scanner =
-                new Scanner(mandatoryCoursesDto.getMandatoryCourses());
+        Scanner scanner = new Scanner(mandatoryCoursesText);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();

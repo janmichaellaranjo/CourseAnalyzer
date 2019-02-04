@@ -6,34 +6,63 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
             mandatoryCourses: null,
             additionalMandatoryCourses: null
         };
+        $scope.courseReport = {
+            additionalMandatoryCoursesEcts: 0,
+            mandatoryCoursesEcts: 0
+        };
         $scope.certificateList = null;
+        $scope.studyPlan = null;
 
         $scope.analyzeCourses = function() {
             $q.all([
                 fileUpload.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
+                fileUpload.uploadFileToUrl($scope.studyPlan, CONSTANTS.readStudyPlan),
                 courseAnalyzerService.analyzeMandatoryCourses($scope.mandatoryCoursesDto),
                 courseAnalyzerService.analyzeAdditionalMandatoryCourses($scope.mandatoryCoursesDto)
             ])
             .then(function() {
-                courseAnalyzerService.compareCourses();
+                courseAnalyzerService.compareCourses()
+                .then(function(response){
+                   $scope.courseReport.mandatoryCoursesEcts = response.data.mandatoryCoursesEcts;
+                   $scope.courseReport.additionalMandatoryCoursesEcts = response.data.additionalMandatoryCoursesEcts;
+                });
             });
+        };
+
+        $scope.addFile = function (variable, file) {
+            $scope.variable = file;
         };
     }
 ])
-.directive('filemodel', ['$parse', function ($parse) {
+.directive('filestudyplan', function () {
     return {
-        restrict: 'A',
+        scope: {
+              studyPlan: '='
+        },
         link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
             element.bind('change', function(){
                 scope.$apply(function(){
-                    scope.certificateList =  element[0].files[0];
+                    scope.$parent.studyPlan = element[0].files[0];
                 });
             });
         }
     };
-}]);
+})
+.directive('filecertificatelist', function () {
+    return {
+        scope: {
+              certificateList: '='
+        },
+        link: function(scope, element, attrs) {
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    scope.$parent.certificateList = element[0].files[0];
+                });
+            });
+        }
+    };
+});
+
 module.service('fileUpload', ['$q','$http', function ($q, $http) {
     this.uploadFileToUrl = function(file, uploadUrl){
         var formdata = new FormData();
