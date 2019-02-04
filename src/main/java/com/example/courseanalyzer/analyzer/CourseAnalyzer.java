@@ -52,16 +52,6 @@ public class CourseAnalyzer {
 
     /**
      *
-     * Extracts every mandatory course from the DTO.
-     *
-     * @param mandatoryCoursesDto contains the mandatory courses.
-     */
-    public void analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
-        this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(mandatoryCoursesDto.getMandatoryCourses());
-    }
-
-    /**
-     *
      * Extracts every addtional mandatory course from the DTO.
      *
      * @param mandatoryCoursesDto contains the mandatory courses.
@@ -79,6 +69,8 @@ public class CourseAnalyzer {
      */
     public void analyzeStudyPlan(ServletRequest request) {
         studyPlanAnalyzer.analyzeStudyPlan(request);
+
+        this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
     }
 
     /**
@@ -122,10 +114,8 @@ public class CourseAnalyzer {
             if (transitionalProvision.containsMandatoryCourse(remainingCourse)) {
                 sumAchievedMandatoryEcts += remainingCourse.getEcts();
                 coursesIter.remove();
-                //remainingFinishedCourses.remove(remainingCourse);
             } else if (transitionalProvision.containsAdditionalMandatoryCourse(remainingCourse)) {
                 sumAchievedAdditionalMandatoryEcts += remainingCourse.getEcts();
-                //remainingFinishedCourses.remove(remainingCourse);
                 coursesIter.remove();
             }
         }

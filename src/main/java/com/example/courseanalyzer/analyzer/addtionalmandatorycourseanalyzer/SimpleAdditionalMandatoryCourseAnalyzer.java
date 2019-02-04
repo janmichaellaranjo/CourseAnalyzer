@@ -56,7 +56,7 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
                 isStartMandatoryCourses = false;
                 additionalMandatoryCourses = new HashSet<>();
             }
-            if (CourseLineUtil.isLineValidCourseInformation(line)) {
+            if (CourseLineUtil.isLineValidCourseWithoutWeeklyHoursInformation(line)) {
                 Course course = CourseLineUtil.getCourseFromLine(line);
 
                 if (isStartMandatoryCourses) {

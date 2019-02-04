@@ -25,13 +25,15 @@ public interface MandatoryCourseAnalyzer {
 
     /**
      *
-     * Returns the list of the mandatory courses from the dto.
+     * Returns the set of the mandatory courses from the text
+     * {@code mandatoryCourses}.
      *
      * <p>This list can be empty, if the text does not meet the format
      *    criteria.</p>
      *
      * @param mandatoryCourses contains the mandatory courses
-     * @return the list of the mandatory courses from the dto.
+     * @return the set of the mandatory courses from the text
+     *         {@code mandatoryCourses}.
      */
     Set<Course> analyzeMandatoryCourses(String mandatoryCourses);
 }

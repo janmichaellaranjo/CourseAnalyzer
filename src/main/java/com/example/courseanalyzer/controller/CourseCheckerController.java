@@ -36,13 +36,6 @@ public class CourseCheckerController {
 
     private static final Logger logger = LogManager.getLogger(CourseCheckerController.class.getName());
 
-    @RequestMapping(value = "/analyzeMandatoryCourses",
-                    method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public void analyzeMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {
-        courseCheckerService.analyzeMandatoryCourses(mandatoryCoursesDto);
-    }
-
     @RequestMapping(value = "/analyzeAdditionalMandatoryCourses",
             method = RequestMethod.POST)
     public void analyzeAdditionalMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {

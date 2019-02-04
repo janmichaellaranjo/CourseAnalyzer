@@ -7,9 +7,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.model;
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +17,7 @@ import java.util.regex.Pattern;
  *
  */
 public class TableOfContent {
-    private static final String CHAPTER_FORMAT = "[\\w]+. [\\w|äöüÄÖÜß| |\\-|(|)]+ \\d+";
+    private static final String CHAPTER_FORMAT = "[\\w]+\\. .*”?[\\w|äöüÄÖÜß| |\\-|(|)]+“? \\d+";
     private List<Chapter> chapters;
 
     public TableOfContent() {

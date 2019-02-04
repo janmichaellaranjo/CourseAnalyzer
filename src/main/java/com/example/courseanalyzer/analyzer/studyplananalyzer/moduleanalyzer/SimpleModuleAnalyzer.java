@@ -8,7 +8,6 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer;
 
 import com.example.courseanalyzer.Util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
-import com.example.courseanalyzer.analyzer.model.CourseType;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 
 import java.util.*;
@@ -17,7 +16,9 @@ import java.util.regex.Pattern;
 
 /**
  * Analyzes the modules by simply assuming that each module starts with the name
- * of the module and mark, if they are optional. These consists of the courses.
+ * of the module and mark, if they are optional. This implementation is used for
+ *  the study plan of the computer science curriculum of TU Wien thus an
+ *  error can occure, if other study plans are used with different formatting.
  *
  * <p>The order is <i><ects>/<weeklyHourse>_<courseType>_<courseName></i></p>
  * <p>Every other information is simply ignored</p>
@@ -53,7 +54,7 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
                 isProcessing = true;
 
             } else if (isLinePattern(line, COURSE_FORMAT)) {
-                courses.add(getCourseFromLine(line));
+                courses.add(CourseLineUtil.getCourseFromLineWithWeeklyHours(line));
             } else if(isProcessing && !isLinePageNumber(line)){
                 module.setCourses(courses);
                 modules.add(module);
@@ -87,8 +88,6 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
                 }
 
                 processedLines.set(size - 1, correctLine);
-            } else {
-                //processedLines.add(line);
             }
         }
 
@@ -112,36 +111,4 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
         return isLinePattern(line, "\\d{1,3}");
     }
 
-    private Course getCourseFromLine(String line) {
-        Course course = new Course();
-        String processedLine = line.replaceAll(",", ".");
-        course.setEcts(Float.parseFloat(processedLine.substring(0, line.indexOf("/"))));
-        course.setCourseType(getCourseTypeFromLine(processedLine));
-        course.setCourseName(getCourseNameFromLine(processedLine));
-        return course;
-    }
-
-    private CourseType getCourseTypeFromLine(String line) {
-        int startIndexOfCourseType = getIndexOfCourseType(line);
-        String courseTypeAsString = line.substring(startIndexOfCourseType, startIndexOfCourseType + 2);
-
-        return CourseLineUtil.getCourseTypeFromLine(courseTypeAsString);
-    }
-
-    private int getIndexOfCourseType(String line) {
-        for (CourseType courseType : CourseType.values()) {
-            //assume that CourseType does not occure in course name
-            if (line.contains(courseType.getCourseType())) {
-                return line.indexOf(courseType.getCourseType());
-            }
-        }
-        return -1;
-    }
-
-    private String getCourseNameFromLine(String line) {
-        int startIndexOfCourseType = getIndexOfCourseType(line);
-
-        return line.substring(startIndexOfCourseType + 3, line.length())
-                .trim();
-    }
 }

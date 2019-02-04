@@ -14,6 +14,8 @@ import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Chapter;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.TableOfContent;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer.ModuleAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer.SimpleModuleAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.SimpleTransferableSkills;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.TransferableSkillsAnalyzer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -30,6 +32,12 @@ import java.util.Set;
 
 /**
  *
+ * Analyzes the study plan for the computer science curriculum of the TU Wien.
+ * This analysis heavily relies on the formatting of each page.
+ *
+ * <p>Each step of the analysis can be exchanged with a new implementation, if
+ *    necessary.</p>
+ *
  */
 public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
 
@@ -43,12 +51,15 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private TableOfContent tableOfContent;
     private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
     private ModuleAnalyzer moduleAnalyzer;
+    private TransferableSkillsAnalyzer transferableSkillsAnalyzer;
     private Set<Course> mandatoryCourses;
     private Set<Module> modules;
+    private Set<Course> transferableSkills;
 
     public SimpleStudyPlanAnalyzer() {
         this.mandatoryCourseAnalyzer = new SimpleMandatoryCourseAnalyzer();
         this.moduleAnalyzer = new SimpleModuleAnalyzer();
+        this.transferableSkillsAnalyzer = new SimpleTransferableSkills();
     }
 
     @Override
@@ -58,6 +69,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
             retrieveTableOfContent();
             analyzeMandatoryCourses();
             analyzeModules();
+            analyzeTransferableSkills();
         } catch (IOException e) {
             //TODO: exception handling
             e.printStackTrace();
@@ -130,6 +142,17 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         this.modules = moduleAnalyzer.analyzeModule(text);
     }
 
+    private void  analyzeTransferableSkills() throws IOException {
+        Chapter transferableSkillsChapter = tableOfContent.getChapter(CHAPTER_TITLE_TRANSFERABLE_SKILL);
+        PDFTextStripper pdfTextStripper = new PDFTextStripper();
+
+        pdfTextStripper.setStartPage(transferableSkillsChapter.getPageStart());
+        pdfTextStripper.setEndPage(transferableSkillsChapter.getPageEnd());
+
+        String text = pdfTextStripper.getText(pdDocument);
+        this.transferableSkills = transferableSkillsAnalyzer.analyzeTransferableSkills(text);
+    }
+
     @Override
     public Set<Course> getMandatoryCourses() {
         return mandatoryCourses;
@@ -138,6 +161,10 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     @Override
     public Set<Module> getModules() {
         return modules;
+    }
+
+    public Set<Course> getTransferableSkills() {
+        return transferableSkills;
     }
 
 }

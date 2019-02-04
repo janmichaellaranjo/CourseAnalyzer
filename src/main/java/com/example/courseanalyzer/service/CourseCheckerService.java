@@ -18,15 +18,6 @@ public interface CourseCheckerService {
 
     /**
      *
-     * Checks the mandatory courses {@code mandatoryCoursesDto} and extracts the
-     * mandatory courses information from the input text.
-     *
-     * @param mandatoryCoursesDto contains the mandatory courses
-     */
-    void analyzeMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto);
-
-    /**
-     *
      * Checks the additonal mandatory courses {@code mandatoryCoursesDto} and
      * extracts the additional mandatory courses information from the input text.
      *

@@ -21,8 +21,13 @@ import java.util.Set;
  *    the format is consistent. When the format varies between different study
  *    plans, a new implementation of this interface is advised.</p>
  *
- * <p>The result of the analysis are the two sets of courses the mandatory
- *    courses and the additional mandatory courses.</p>
+ * <p>The process should consist of the following steps:</p>
+ * <ol>
+ *     <li>Extraction of the table of content</li>
+ *     <li>Extraction of all mandatory courses</li>
+ *     <li>Extraction of all modules</li>
+ *     <li>Extraction of all transferable skills.</li>
+ * </ol>
  *
  * <p>This informations should be found in the study plan. They contain the list
  *    of courses in seperate chapters.</p>
@@ -43,7 +48,7 @@ public interface StudyPlanAnalyzer {
      * Returns the set of mandatory courses.
      *
      * <p>This method should be called after
-     * {@link #analyzeStudyPlan(ServletRequest)}</p>
+     * {@link #analyzeStudyPlan(ServletRequest)}.</p>
      *
      * @return the set of mandatory courses.
      */
@@ -54,9 +59,20 @@ public interface StudyPlanAnalyzer {
      * Returns the set of additional mandatory courses.
      *
      * <p>This method should be called after
-     * {@link #analyzeStudyPlan(ServletRequest)}</p>
+     * {@link #analyzeStudyPlan(ServletRequest)}.</p>
      *
      * @return the set of additional mandatory courses.
      */
     Set<Module> getModules();
+
+    /**
+     *
+     * Returns the set of transferable skills.
+     *
+     * <p>This method should be called after
+     *    @link #analyzeStudyPlan(ServletRequest)}.</p>
+     *
+     * @return the set of transferable skills.
+     */
+    Set<Course> getTransferableSkills();
 }
