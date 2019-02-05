@@ -17,6 +17,10 @@ public class CourseReport {
 
     private float additionalMandatoryCoursesEcts;
 
+    private float optionalModuleEcts;
+
+    private float transferableSkillsEcts;
+
     private Set<Course> remainingMandatoryCourses;
 
     public float getMandatoryCoursesEcts() {
@@ -43,11 +47,33 @@ public class CourseReport {
         this.additionalMandatoryCoursesEcts = additionalMandatoryCoursesEcts;
     }
 
+    public float getOptionalModuleEcts() {
+        return optionalModuleEcts;
+    }
+
+    public void setOptionalModuleEcts(float optionalModuleEcts) {
+        this.optionalModuleEcts = optionalModuleEcts;
+    }
+
+    public float getTransferableSkillsEcts() {
+        return transferableSkillsEcts;
+    }
+
+    public void setTransferableSkillsEcts(float transferableSkillsEcts) {
+        this.transferableSkillsEcts = transferableSkillsEcts;
+    }
+
     @Override
     public String toString() {
         return "[" +
-                "mandatoryCoursesEcts: " + mandatoryCoursesEcts +
+                "mandatoryCoursesEcts: " +
+                mandatoryCoursesEcts +
                 ", remainingMandatoryCourses: " +
-                remainingMandatoryCourses;
+                remainingMandatoryCourses +
+                ", optionalModuleEcts: " +
+                optionalModuleEcts +
+                ", transferableSkillsEcts: " +
+                transferableSkillsEcts +
+                "]";
     }
 }

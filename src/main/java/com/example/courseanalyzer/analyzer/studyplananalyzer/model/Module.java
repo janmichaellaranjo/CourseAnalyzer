@@ -23,6 +23,8 @@ import java.util.Set;
 public class Module {
     private boolean isMandatory;
 
+    private String name;
+
     private Set<Course> courses;
 
     public Module() {
@@ -31,6 +33,15 @@ public class Module {
 
     public boolean isMandatory() {
         return isMandatory;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setMandatory(boolean mandatory) {
@@ -43,6 +54,16 @@ public class Module {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    /**
+     *
+     * Returns true, if this module is optional.
+     *
+     * @return true, if this module is optional.
+     */
+    public boolean isOptional() {
+        return !isMandatory;
     }
 
     /**
@@ -65,13 +86,10 @@ public class Module {
     @Override
     public String toString() {
         if (courses == null || courses.isEmpty()) {
-            return "[]";
+            return name + ": []";
         }
 
-        String output = "";
-        for (Course course : courses) {
-            output += course + "\n";
-        }
+        String output = name + ": " + courses;
 
         return output;
     }

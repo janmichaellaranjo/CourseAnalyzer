@@ -16,15 +16,15 @@
     <div class="container" ng-controller="courseAnalyzerController">
         <div class="center">
             <p>
-                <label>Additional Mandatory Courses</label>
-                <textarea id="additionalMandatoryCoursesTextArea" ng-model="mandatoryCoursesDto.additionalMandatoryCourses"></textarea>
-            </p>
-            <p>
-                <label>Select studyplan file</label>
+                <label>Select Study Plan file</label>
                 <input type="file" accept=".pdf" filestudyplan='studyPlan' />
             </p>
             <p>
-                <label>Select certificateList file</label>
+                <label>Select Transitional Provision file</label>
+                <input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' />
+            </p>
+            <p>
+                <label>Select Certificate List file</label>
                 <input type="file" accept=".xlsx" filecertificatelist='certificateList' />
             </p>
 
@@ -32,6 +32,8 @@
 
             <p>Mandatory Courses ECTs: {{courseReport.mandatoryCoursesEcts}}</p>
             <p>Additional Mandatory Courses ECTs: {{courseReport.additionalMandatoryCoursesEcts}}</p>
+            <p>Optional Module ECTs: {{courseReport.optionalModuleCoursesEcts}}</p>
+            <p>Transferable Skills ECTs: {{courseReport.transferableSkillsEcts}}</p>
         </div>
         <hr/>
         <hr/>

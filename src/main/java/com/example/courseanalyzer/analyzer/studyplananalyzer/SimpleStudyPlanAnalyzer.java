@@ -47,7 +47,6 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private static final String CHAPTER_TITLE_EXAM_COURSES_MODULES = "Prüfungsfächer mit den zugeordneten Modulen und Lehrveranstaltungen";
     private static final int PAGE_NR_TABLE_OF_CONTENT = 2;
     private PDDocument pdDocument;
-    private PDPage page;
     private TableOfContent tableOfContent;
     private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
     private ModuleAnalyzer moduleAnalyzer;
@@ -79,8 +78,9 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private void initPdf(ServletRequest request) throws IOException {
 
         this.pdDocument = getWorkBookFromMultiPartRequest(request);
-        this.page = new PDPage();
         this.tableOfContent = new TableOfContent();
+
+        PDPage page = new PDPage();
 
         this.pdDocument.addPage(page);
     }

@@ -2,8 +2,8 @@
 'use strict'
 var demoApp = angular.module('CourseAnalyzer', ['CourseAnalyzer.controllers','CourseAnalyzer.services']);
 demoApp.constant('CONSTANTS', {
-    analyzeAdditionalMandatoryCourses: '/courseanalyzer/analyzeAdditionalMandatoryCourses',
     readStudyPlan: '/courseanalyzer/readStudyPlan',
+    readTransitionalProvision: '/courseanalyzer/readTransitionalProvision',
     readCertificateList: '/courseanalyzer/readCertificateList',
     compareCourses: '/courseanalyzer/compareCourses'
 });

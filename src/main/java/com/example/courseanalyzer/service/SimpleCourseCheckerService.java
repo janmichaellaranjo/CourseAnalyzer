@@ -30,22 +30,21 @@ public class SimpleCourseCheckerService implements CourseCheckerService {
     }
 
     @Override
-    public void analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto) {
-        if (mandatoryCoursesDto == null) {
-            logger.error("The mandatory courses dto on the service layer is null");
-            throw new IllegalArgumentException("mandatoryCoursesDto must not be null");
-        }
-
-        courseAnalyzer.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
-    }
-
-    @Override
     public void readStudyPlan(ServletRequest request) {
         if (request == null) {
             logger.error("The request on the service layer is null");
             throw new IllegalArgumentException("request must not be null");
         }
         courseAnalyzer.analyzeStudyPlan(request);
+    }
+
+    @Override
+    public void readTransitionalProvision(ServletRequest request) {
+        if (request == null) {
+            logger.error("The request on the service layer is null");
+            throw new IllegalArgumentException("request must not be null");
+        }
+        courseAnalyzer.readTransitionalProvision(request);
     }
 
     @Override

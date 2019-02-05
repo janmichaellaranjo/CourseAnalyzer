@@ -37,7 +37,7 @@ public interface StudyPlanAnalyzer {
     /**
      *
      * Analysis the request {@code request} and assign the result to the sets of
-     * mandatory and additional mandatory courses.
+     * mandatory courses, modules and transferable skills.
      *
      * @param request contains the study plan.
      */

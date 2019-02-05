@@ -24,19 +24,20 @@ import java.util.regex.Pattern;
  * <p>Every other information is simply ignored</p>
  */
 public class SimpleModuleAnalyzer implements ModuleAnalyzer {
-    private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(\\d+,\\d+ECTS\\)";
+    private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(.*[mindestens ]?\\d+,\\d+ECTS\\)";
     private static final String COURSE_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";
     private static final String EXAM_MODULE_TITLE_FORMAT = "Prüfungsfach .*[„|”][\\w|äöüÄÖÜß| |(|)|:|-]+“?";
 
     @Override
     public Set<Module> analyzeModule(String modulesText) {
+        //TODO: error occures at "VO Vernetztes Lernen"
         List<String> processedLines = getProcessedLinesFromText(modulesText);
         boolean isProcessing = false;
         boolean isFirst = true;
         Set<Module> modules = new HashSet<>();
         Module module = null;
         Set<Course> courses = null;
-        int i = 0;
+
         for (String line : processedLines) {
             if (isLinePattern(line, MODULE_FORMAT)) {
                 if (isFirst) {
@@ -48,9 +49,13 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
 
                 module = new Module();
                 courses = new HashSet<>();
+
+                module.setName(getModuleName(line));
+
                 if (line.charAt(0) == '*') {
                     module.setMandatory(false);
                 }
+
                 isProcessing = true;
 
             } else if (isLinePattern(line, COURSE_FORMAT)) {
@@ -60,7 +65,6 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
                 modules.add(module);
                 isProcessing = false;
             }
-            i++;
         }
 
         module.setCourses(courses);
@@ -74,13 +78,16 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
         Scanner scanner = new Scanner(text);
 
         while (scanner.hasNextLine()) {
+
             String line = scanner.nextLine().trim();
             int size = processedLines.size();
+
             if (isUsedInformationLine(line)) {
                 processedLines.add(line);
             } else if (size > 1 &&
                         isUsedInformationLine(processedLines.get(size - 1)) &&
-                        !isLinePageNumber(line)) {
+                        !isLinePageNumber(line) &&
+                        !line.contains("Prüfungsfach")) {
                 String correctLine = processedLines.get(size - 1) + " " + line;
 
                 if (correctLine.contains("- ")) {
@@ -94,10 +101,16 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
         return processedLines;
     }
 
+    private String getModuleName(String line) {
+        String modulePrefix = line.contains("*") ? "*Modul " : "Modul ";
+        int indexOfQuotation = line.indexOf("“");
+        return line.substring(modulePrefix.length() + 1, indexOfQuotation);
+    }
+
     private boolean isUsedInformationLine(String line) {
         return isLinePattern(line, MODULE_FORMAT) ||
-                isLinePattern(line, COURSE_FORMAT) ||
-                isLinePattern(line, EXAM_MODULE_TITLE_FORMAT);
+                isLinePattern(line, COURSE_FORMAT)/* ||
+                isLinePattern(line, EXAM_MODULE_TITLE_FORMAT)*/;
     }
 
     private boolean isLinePattern(String line, String patternFormat) {

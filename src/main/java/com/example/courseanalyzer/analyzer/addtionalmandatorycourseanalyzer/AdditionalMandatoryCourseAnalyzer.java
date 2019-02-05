@@ -9,6 +9,8 @@ package com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
 import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 
+import javax.servlet.ServletRequest;
+
 /**
  * Extracts the additional mandatory course informations.
  *
@@ -23,13 +25,20 @@ public interface AdditionalMandatoryCourseAnalyzer {
 
     /**
      *
+     * Analysis the request {@code request} and assign the result to the sets of
+     * mandatory and additional mandatory courses.
      *
-     * Returns the transitional provisions by extracting every addtional
-     * mandatory course from the DTO.
-     *
-     * @param mandatoryCoursesDto contains the mandatory courses.
-     * @return the transitional provisions by extracting every addtional
-     *         mandatory course from the DTO.
+     * @param request contains the study plan.
      */
-    TransitionalProvision analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto);
+    void analyzeTransitionalProvision(ServletRequest request);
+
+    /**
+     *
+     * Returns the transitional provision containing the mandatory and additional
+     * mandatory courses.
+     *
+     * @return the transitional provision containing the mandatory and
+     * additional mandatory courses.
+     */
+    TransitionalProvision getTransitionalProvision();
 }

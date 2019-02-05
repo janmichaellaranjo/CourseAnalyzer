@@ -18,21 +18,21 @@ public interface CourseCheckerService {
 
     /**
      *
-     * Checks the additonal mandatory courses {@code mandatoryCoursesDto} and
-     * extracts the additional mandatory courses information from the input text.
-     *
-     * @param mandatoryCoursesDto contains the additonal mandatory courses
-     */
-    void analyzeAdditionalMandatoryCourses(MandatoryCoursesDto mandatoryCoursesDto);
-
-    /**
-     *
-     * Reads the request and extracts the mandatory and additional mandatory
-     * courses from the request which contains the uploaded file.
+     * Reads the request and extracts the mandatory courses, modules and
+     * transferable skills from the request which contains the uploaded file.
      *
      * @param request contains the courses
      */
     void readStudyPlan(ServletRequest request);
+
+    /**
+     *
+     * Reads the request and extracts the additional mandatory courses from the
+     * request which contains the uploaded file.
+     *
+     * @param request contains the courses
+     */
+    void readTransitionalProvision(ServletRequest request);
 
     /**
      *

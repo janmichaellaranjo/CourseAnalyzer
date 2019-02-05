@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
  *    on lines that contain the weekly hours.</p>
  */
 public final class CourseLineUtil {
-    private static final String COURSE_INFORMATION_FORMAT = "[\\*|•]?[ ]?[0-9]+[,|.][0-9] [\\w|äöüÄÖÜß]+[\\w|äöüÄÖÜß| |+]*";
-    private static final String COURSE_WITH_WEEKLY_HRS_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";
+    private static final String COURSE_INFORMATION_FORMAT = "[\\*|•]?[ ]?[0-9]+[,|.][0-9] [\\w|äöüÄÖÜß]+[\\w|äöüÄÖÜß| |\\+|\\-]*";
+    private static final String COURSE_WITH_WEEKLY_HRS_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |\\-|*\\&]+";
     private static final String COMMA = ",";
     private static final String DECIMAL_POINT = ".";
 

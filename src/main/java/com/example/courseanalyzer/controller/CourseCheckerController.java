@@ -36,17 +36,18 @@ public class CourseCheckerController {
 
     private static final Logger logger = LogManager.getLogger(CourseCheckerController.class.getName());
 
-    @RequestMapping(value = "/analyzeAdditionalMandatoryCourses",
-            method = RequestMethod.POST)
-    public void analyzeAdditionalMandatoryCourses(@RequestBody MandatoryCoursesDto mandatoryCoursesDto) {
-        courseCheckerService.analyzeAdditionalMandatoryCourses(mandatoryCoursesDto);
-    }
-
     @RequestMapping(value = "/readStudyPlan",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void readStudyPlan(HttpServletRequest request, HttpServletResponse response) {
         courseCheckerService.readStudyPlan(request);
+    }
+
+    @RequestMapping(value = "/readTransitionalProvision",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public void readTransitionalProvision(HttpServletRequest request, HttpServletResponse response) {
+        courseCheckerService.readTransitionalProvision(request);
     }
 
     @RequestMapping(value = "/readCertificateList",
