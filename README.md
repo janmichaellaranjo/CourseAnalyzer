@@ -2,7 +2,7 @@
 
 This web application helps students to give a better view of their received ECTs and remaining mandatory courses. The application calculates conviently the amount of ECTs of mandatory courses, courses from optional modules and transferable skills depending on the certificate list, study plan and transitional provision. Also the remaining mandatory courses will be listed.
 
-<span style="color:red">This version just contains the most basic functionality. It prints only the calculated ECTS.</span>
+**This version just contains the most basic functionality. It prints only the calculated ECTS.**
 
 ## Getting Started
 
