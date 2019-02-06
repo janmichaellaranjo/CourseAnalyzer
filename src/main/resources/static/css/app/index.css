@@ -1,13 +1,26 @@
 .center {
     vertical-align: text-top;
-    text-align: center;
     border: 2px solid black;
 }
-#mandatoryCoursesTextArea {
-    width: 700px;
-    height: 600px;
+
+.column {
+  float: right;
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 260px
 }
-#additionalMandatoryCoursesTextArea {
-    width: 700px;
-    height: 300px;
+
+.column1 {
+  float: left;
+  width: 10%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
