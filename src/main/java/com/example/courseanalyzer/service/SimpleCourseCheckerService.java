@@ -7,8 +7,9 @@ package com.example.courseanalyzer.service;
  */
 
 import com.example.courseanalyzer.analyzer.CourseAnalyzer;
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
-import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import javax.servlet.ServletRequest;
  *
  */
 @Service
-public class SimpleCourseCheckerService implements CourseCheckerService {
+public class SimpleCourseCheckerService implements CourseAnalyzerService {
     private static final Logger logger = LogManager.getLogger(SimpleCourseCheckerService.class);
 
     private CourseAnalyzer courseAnalyzer;

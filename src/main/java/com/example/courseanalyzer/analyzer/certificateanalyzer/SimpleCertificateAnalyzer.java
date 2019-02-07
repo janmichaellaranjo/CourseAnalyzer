@@ -6,6 +6,8 @@ package com.example.courseanalyzer.analyzer.certificateanalyzer;
  * @Date: 30.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.CourseType;
 import org.apache.logging.log4j.LogManager;
@@ -43,10 +45,13 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
     private static final int COURSE_NAME_INDEX = 0;
     private static final int COURSE_TYPE_INDEX = 1;
     private static final int COURSE_ECTS_INDEX = 3;
+    private Set<Course> certificates;
+    private String fileName;
 
     @Override
-    public Set<Course> analyzeCertificateList(ServletRequest request) {
-        Set<Course> certificates = new HashSet<>();
+    public void analyzeCertificateList(ServletRequest request) {
+
+        this.certificates = new HashSet<>();
         try {
             Workbook workbook = getWorkBookFromMultiPartRequest(request);
             Sheet sheet = workbook.getSheetAt(SHEET_NUMBER);
@@ -55,11 +60,7 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
             int i = START_ROW;
             Row row = sheet.getRow(i);
             while (!isRowEmpty(row)) {
-                Course certificate = new Course();
-
-                certificate.setCourseName(row.getCell(COURSE_NAME_INDEX).getStringCellValue());
-                certificate.setCourseType(getCourseTypeFromCell(row.getCell(COURSE_TYPE_INDEX)));
-                certificate.setEcts(getEctsFromCell(row.getCell(COURSE_ECTS_INDEX)));
+                Course certificate = getCertificateFromCells(row);
 
                 if (certificate.isInformationComplete()) {
                     certificates.add(certificate);
@@ -69,10 +70,30 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
 
         } catch (IOException e) {
-            //TODO: exception
+            logger.error(e.getLocalizedMessage(), e);
+            String errorMsg = String.format(
+                    "An error occured while reading certificate list file %s",
+                    getFileName());
+
+            throw new ReadFileException(errorMsg);
+        }
+    }
+
+    private Course getCertificateFromCells(Row row) {
+        Course certificate = new Course();
+        try {
+            certificate.setCourseName(row.getCell(COURSE_NAME_INDEX).getStringCellValue());
+            certificate.setCourseType(getCourseTypeFromCell(row.getCell(COURSE_TYPE_INDEX)));
+            certificate.setEcts(getEctsFromCell(row.getCell(COURSE_ECTS_INDEX)));
+        } catch (Exception e) {
+            String errorMsg = String.format(
+                    "An error occured while reading the row %d from the file %s",
+                    row.getRowNum(),
+                    getFileName());
+            throw new WrongFormatException(errorMsg);
         }
 
-        return certificates;
+        return certificate;
     }
 
     /**
@@ -95,6 +116,7 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
     }
 
     private Workbook getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
+        //TODO: extract because similar method exists
         MultipartHttpServletRequest multiPartRequest = (MultipartHttpServletRequest) request;
         multiPartRequest.getParameterMap();
 
@@ -102,7 +124,8 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
         // Only one file is uploaded
         if (iterator.hasNext()) {
-            String fileName = iterator.next();
+            this.fileName = iterator.next();
+
             logger.debug("File %s is uploaded", fileName);
             MultipartFile multipartFile = multiPartRequest.getFile(fileName);
             Workbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
@@ -126,5 +149,14 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
     private float getEctsFromCell(Cell cell) {
         return (float)cell.getNumericCellValue();
+    }
+
+    private String getFileName() {
+        return fileName != null ? fileName : "";
+    }
+
+    @Override
+    public Set<Course> getCertificates() {
+        return certificates;
     }
 }

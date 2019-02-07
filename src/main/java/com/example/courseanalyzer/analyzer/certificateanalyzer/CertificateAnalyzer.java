@@ -6,6 +6,8 @@ package com.example.courseanalyzer.analyzer.certificateanalyzer;
  * @Date: 30.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +34,26 @@ public interface CertificateAnalyzer {
 
     /**
      *
-     * Extracts the certificate informations from the download request.
+     *
+     * Creates the set of certificates which is extracted from the download
+     * request.
      *
      * <p>These list of certificates can be empty, if the file of the request
      *    does not meet the format of the file to extract the information.</p>
      *
      * @param request the download request
-     * @return
+     * @throws ReadFileException    is thrown, when an IO problem occurs while
+     *                              reading the passed file.
+     * @throws WrongFormatException is thrown, when the format is empty or the
+     *                              text creates an empty list of certificates.
      */
-    Set<Course> analyzeCertificateList(ServletRequest request);
+   void analyzeCertificateList(ServletRequest request);
+
+    /**
+     *
+     * Returns the list of certificates.
+     *
+     * @return the list of certificates.
+     */
+    Set<Course> getCertificates();
 }

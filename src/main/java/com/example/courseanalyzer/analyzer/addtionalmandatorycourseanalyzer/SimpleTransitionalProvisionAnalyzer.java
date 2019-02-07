@@ -1,12 +1,14 @@
 package com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer;
 /**
  * @Package: com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer
- * @Class: SimpleAdditionalMandatoryCourseAnalyzer
+ * @Class: SimpleTransitionalProvisionAnalyzer
  * @Author: Jan
  * @Date: 02.02.2019
  */
 
-import com.example.courseanalyzer.Util.CourseLineUtil;
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.ExamModule;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
@@ -33,15 +35,16 @@ import java.util.regex.Pattern;
  *    additional mandatory courses.</p>
  * <p>The order of the course is <i><ects>_<courseType>_<course name></i>.</p>
  */
-public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandatoryCourseAnalyzer {
+public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisionAnalyzer {
 
-    private static final Logger logger = LogManager.getLogger(SimpleAdditionalMandatoryCourseAnalyzer.class);
+    private static final Logger logger = LogManager.getLogger(SimpleTransitionalProvisionAnalyzer.class);
     private static final int PAGE_NR = 3;
     private static final String EXAM_MODULE_TITLE_FORMAT = "Prüfungsfach „[\\w|äöüÄÖÜß| |(|)|:|-]+“?";
     private static final String MANDATORY_COURSE_TITLE = "Pflichtlehrveranstaltungen";
     private static final String ADDITIONAL_MANDATORY_COURSE_TITLE = "Ergänzende Pflichtlehrveranstaltungen";
     private PDDocument pdDocument;
     private TransitionalProvision transitionalProvision;
+    private String fileName;
 
     @Override
     public void analyzeTransitionalProvision(ServletRequest request) {
@@ -50,8 +53,13 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
             initPdf(request);
             analyzeTransitionalProvision();
 
+            pdDocument.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage(), e);
+            String errorMsg = String.format(
+                    "An error occured while reading the transitional provision file",
+                    fileName != null ? fileName : "");
+            throw new ReadFileException(errorMsg, e);
         }
     }
 
@@ -62,6 +70,7 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
         PDPage page = new PDPage();
 
         this.pdDocument.addPage(page);
+        validatePDF();
     }
 
     private PDDocument getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
@@ -73,8 +82,8 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
 
         // Only one file is uploaded
         if (iterator.hasNext()) {
-            String fileName = iterator.next();
-            logger.debug("File %s is uploaded", fileName);
+            this.fileName = iterator.next();
+            logger.debug("File %s is uploaded", fileName != null ? fileName : "");
             MultipartFile multipartFile = multiPartRequest.getFile(fileName);
 
             return PDDocument.load(multipartFile.getInputStream());
@@ -82,15 +91,33 @@ public class SimpleAdditionalMandatoryCourseAnalyzer implements AdditionalMandat
         return null;
     }
 
-    private void analyzeTransitionalProvision() throws IOException {
+    private void validatePDF() {
+        if (pdDocument.getNumberOfPages() == 1) {
+            throw new ReadFileException("The transitional provision file only contains 1 page.");
+        }
+    }
+
+    private void analyzeTransitionalProvision() throws IOException, WrongFormatException {
         PDFTextStripper pdfTextStripper = new PDFTextStripper();
 
         pdfTextStripper.setStartPage(PAGE_NR);
         pdfTextStripper.setEndPage(PAGE_NR);
 
         String text = pdfTextStripper.getText(pdDocument);
-
+        if (text == null || text.isEmpty()) {
+            throwExtractInformationException();
+        }
         analyzeAdditionalMandatoryCourses(text);
+    }
+
+    private void throwExtractInformationException() throws WrongFormatException {
+        String errorMsg = String.format(
+                "The text on the page %d in the passed file %s is empty.",
+                PAGE_NR,
+                fileName != null ? fileName : "");
+
+        logger.error(errorMsg);
+        throw new WrongFormatException(errorMsg);
     }
 
     private void analyzeAdditionalMandatoryCourses(String transitionalProvisionText) {

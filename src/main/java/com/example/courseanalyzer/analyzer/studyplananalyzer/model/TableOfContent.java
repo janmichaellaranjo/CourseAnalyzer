@@ -95,6 +95,9 @@ public class TableOfContent {
     @Override
     public String toString() {
         String output = "Table of content: \n";
+        if (chapters == null) {
+            return output + "empty";
+        }
 
         for(Chapter chapter : chapters) {
             output += chapter + "\n";

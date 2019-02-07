@@ -1,13 +1,14 @@
 package com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer;
 /**
  * @Package: com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer
- * @Class: AdditionalMandatoryCourseAnalyzer
+ * @Class: TransitionalProvisionAnalyzer
  * @Author: Jan
  * @Date: 02.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
-import com.example.courseanalyzer.dto.MandatoryCoursesDto;
 
 import javax.servlet.ServletRequest;
 
@@ -21,14 +22,18 @@ import javax.servlet.ServletRequest;
  * <p>These interface is used to conveniently change the implementation because
  * the format may change and a new implementation is necessary.</p>
  */
-public interface AdditionalMandatoryCourseAnalyzer {
+public interface TransitionalProvisionAnalyzer {
 
     /**
      *
-     * Analysis the request {@code request} and assign the result to the sets of
-     * mandatory and additional mandatory courses.
+     * Analysis the request {@code request} and creates {@link TransitionalProvision}
      *
      * @param request contains the study plan.
+     * @throws ReadFileException    is thrown, when an IO problem occurs while
+     *                              reading the passed file.
+     * @throws WrongFormatException is thrown, when the text on a page is empty
+     *                              or the format creates an empty
+     *                              {@link TransitionalProvision}
      */
     void analyzeTransitionalProvision(ServletRequest request);
 

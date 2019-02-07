@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseana
  * @Date: 29.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 
 import java.util.Set;
@@ -32,6 +33,12 @@ public interface MandatoryCourseAnalyzer {
      *    criteria.</p>
      *
      * @param mandatoryCourses contains the mandatory courses
+     * @throws IllegalArgumentException is thrown, when {@coce modulesText} is
+     *                                   {@code null}.
+     * @throws WrongFormatException is thrown, when the format of
+     *                              {@code mandatoryCourses} is empty or the
+     *                              format is wrong such that the list of
+     *                              mandatory courses is empty.
      * @return the set of the mandatory courses from the text
      *         {@code mandatoryCourses}.
      */

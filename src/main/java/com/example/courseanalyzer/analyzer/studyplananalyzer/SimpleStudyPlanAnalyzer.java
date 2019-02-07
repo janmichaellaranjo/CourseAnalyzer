@@ -6,6 +6,8 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer;
  * @Date: 03.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.ReadFileException;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
@@ -54,6 +56,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private Set<Course> mandatoryCourses;
     private Set<Module> modules;
     private Set<Course> transferableSkills;
+    private String fileName;
 
     public SimpleStudyPlanAnalyzer() {
         this.mandatoryCourseAnalyzer = new SimpleMandatoryCourseAnalyzer();
@@ -69,9 +72,15 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
             analyzeMandatoryCourses();
             analyzeModules();
             analyzeTransferableSkills();
+
+            pdDocument.close();
         } catch (IOException e) {
-            //TODO: exception handling
-            e.printStackTrace();
+            String errorMsg = String.format(
+                    "An IO problem occured while reading the passed study plan file %s",
+                    getFileName());
+            logger.error(e.getLocalizedMessage(), e);
+
+            throw new ReadFileException(errorMsg, e);
         }
     }
 
@@ -79,6 +88,8 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
 
         this.pdDocument = getWorkBookFromMultiPartRequest(request);
         this.tableOfContent = new TableOfContent();
+
+        validateStudyPlanPDF();
 
         PDPage page = new PDPage();
 
@@ -94,7 +105,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
 
         // Only one file is uploaded
         if (iterator.hasNext()) {
-            String fileName = iterator.next();
+            this.fileName = iterator.next();
             logger.debug("File %s is uploaded", fileName);
             MultipartFile multipartFile = multiPartRequest.getFile(fileName);
 
@@ -103,13 +114,28 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         return null;
     }
 
+    private void validateStudyPlanPDF() {
+        if (pdDocument.getNumberOfPages() == 1) {
+            throw new ReadFileException("The study plan file only contains 1 page.");
+        }
+    }
+
     private void retrieveTableOfContent() throws IOException {
         PDFTextStripper pdfTextStripper = new PDFTextStripper();
         pdfTextStripper.setStartPage(PAGE_NR_TABLE_OF_CONTENT);
         pdfTextStripper.setEndPage(PAGE_NR_TABLE_OF_CONTENT);
 
         String parsedText = pdfTextStripper.getText(pdDocument);
-        Scanner scanner = new Scanner(parsedText);
+        Scanner scanner = null;
+
+        if (parsedText.isEmpty()) {
+            String errorMsg = String.format(
+                    "The table of content on page %d is empty",
+                    PAGE_NR_TABLE_OF_CONTENT);
+            throw new WrongFormatException(errorMsg);
+        }
+
+        scanner = new Scanner(parsedText);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -163,8 +189,12 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         return modules;
     }
 
+    @Override
     public Set<Course> getTransferableSkills() {
         return transferableSkills;
     }
 
+    public String getFileName() {
+        return fileName != null ? fileName : "";
+    }
 }

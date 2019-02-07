@@ -6,14 +6,15 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  * @Date: 04.02.2019
  */
 
-import com.example.courseanalyzer.Util.CourseLineUtil;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -27,8 +28,13 @@ import java.util.regex.Pattern;
  */
 public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
+    private static final Logger logger = LogManager.getLogger(SimpleTransferableSkills.class);
+
     @Override
     public Set<Course> analyzeTransferableSkills(String transferableSkillsText) {
+
+        throwExceptionIfTextIsEmpty(transferableSkillsText);
+
         Set<Course> transferableSkills = new HashSet<>();
         Scanner scanner = new Scanner(transferableSkillsText);
 
@@ -41,7 +47,23 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
             }
         }
 
+        if (transferableSkills.isEmpty()) {
+            String errorMsg = "The passed transferable skills text creates a list of transferable skills that is empty";
+
+            logger.error(errorMsg);
+
+            throw new WrongFormatException(errorMsg);
+        }
+
         return transferableSkills;
     }
 
+    private void throwExceptionIfTextIsEmpty(String text) {
+        //TODO: extract into validation util because similar method exist
+        if (text == null) {
+            throw new IllegalArgumentException("The passed transferable skills text is null");
+        } else if (text.isEmpty()) {
+            throw new WrongFormatException("The passed transferable skills text is empty");
+        }
+    }
 }

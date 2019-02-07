@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  * @Date: 04.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 
 import java.util.Set;
@@ -32,6 +33,13 @@ public interface TransferableSkillsAnalyzer {
      *    criteria.</p>
      *
      * @param transferableSkillsText contains the mandatory courses
+     * @throws IllegalArgumentException is thrown, when {@coce modulesText} is
+     *                                  {@code null}.
+     * @throws WrongFormatException is thrown, when the format of
+     *                              {@code transferableSkillsText} is empty or
+     *                              the format of the text is wrong such that
+     *                              a empty list of transferable skills is
+     *                              created.
      * @return the set of the transferable skills from the  text
      *        {@code mandatoryCourses}
      */

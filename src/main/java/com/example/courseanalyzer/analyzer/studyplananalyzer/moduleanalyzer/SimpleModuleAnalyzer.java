@@ -6,7 +6,8 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer;
  * @Date: 04.02.2019
  */
 
-import com.example.courseanalyzer.Util.CourseLineUtil;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 
@@ -26,11 +27,12 @@ import java.util.regex.Pattern;
 public class SimpleModuleAnalyzer implements ModuleAnalyzer {
     private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(.*[mindestens ]?\\d+,\\d+ECTS\\)";
     private static final String COURSE_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";
-    private static final String EXAM_MODULE_TITLE_FORMAT = "Prüfungsfach .*[„|”][\\w|äöüÄÖÜß| |(|)|:|-]+“?";
 
     @Override
     public Set<Module> analyzeModule(String modulesText) {
-        //TODO: error occures at "VO Vernetztes Lernen"
+
+        throwExceptionIfTextIsEmpty(modulesText);
+
         List<String> processedLines = getProcessedLinesFromText(modulesText);
         boolean isProcessing = false;
         boolean isFirst = true;
@@ -70,7 +72,22 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
         module.setCourses(courses);
         modules.add(module);
 
+        if (modules.isEmpty()) {
+            String errorMsg = "The passed modules text does not contain any valid module format";
+
+            throw new WrongFormatException(errorMsg);
+        }
+
         return modules;
+    }
+
+    private void throwExceptionIfTextIsEmpty(String text) {
+        //TODO: extract into validation util because similar method exist
+        if (text == null) {
+            throw new IllegalArgumentException("The passed module text is null");
+        } else if (text.isEmpty()) {
+            throw new WrongFormatException("The passed module text is empty");
+        }
     }
 
     private List<String> getProcessedLinesFromText(String text) {
@@ -109,8 +126,7 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
 
     private boolean isUsedInformationLine(String line) {
         return isLinePattern(line, MODULE_FORMAT) ||
-                isLinePattern(line, COURSE_FORMAT)/* ||
-                isLinePattern(line, EXAM_MODULE_TITLE_FORMAT)*/;
+                isLinePattern(line, COURSE_FORMAT);
     }
 
     private boolean isLinePattern(String line, String patternFormat) {

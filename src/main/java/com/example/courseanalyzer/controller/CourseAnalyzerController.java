@@ -1,18 +1,14 @@
 package com.example.courseanalyzer.controller;
 /**
  * @Package: com.example.courseanalyzer.controller
- * @Class: CourseCheckerController
+ * @Class: CourseAnalyzerController
  * @Author: Jan
  * @Date: 25.01.2019
  */
 
 import com.example.courseanalyzer.analyzer.model.CourseReport;
-import com.example.courseanalyzer.dto.MandatoryCoursesDto;
-import com.example.courseanalyzer.service.CourseCheckerService;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.example.courseanalyzer.service.CourseAnalyzerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping("/courseanalyzer")
 @RestController
-public class CourseCheckerController {
+public class CourseAnalyzerController {
 
     @Autowired
-    CourseCheckerService courseCheckerService;
+    CourseAnalyzerService courseCheckerService;
 
-    private static final Logger logger = LogManager.getLogger(CourseCheckerController.class.getName());
+    private static final Logger logger = LogManager.getLogger(CourseAnalyzerController.class.getName());
 
     @RequestMapping(value = "/readStudyPlan",
             method = RequestMethod.POST,

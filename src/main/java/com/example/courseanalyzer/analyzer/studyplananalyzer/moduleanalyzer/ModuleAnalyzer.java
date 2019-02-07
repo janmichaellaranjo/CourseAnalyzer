@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer;
  * @Date: 04.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 
 import java.util.Set;
@@ -27,6 +28,11 @@ public interface ModuleAnalyzer {
      * Returns the set of modules which is extracted from the text {@code modulesText}.
      *
      * @param modulesText contains the modules.
+     * @throws IllegalArgumentException is thrown, when {@coce modulesText} is
+     *                                  {@code null}.
+     * @throws WrongFormatException is thrown, when {@coce modulesText} is empty
+     *                              or the passed creates an empty list of
+     *                              modules.
      * @return the set of modules which is extracted from the text {@code modulesText}.
      */
     Set<Module> analyzeModule(String modulesText);

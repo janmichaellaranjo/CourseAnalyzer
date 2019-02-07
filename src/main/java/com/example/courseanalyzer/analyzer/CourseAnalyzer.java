@@ -6,8 +6,8 @@ package com.example.courseanalyzer.analyzer;
  * @Date: 29.01.2019
  */
 
-import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.AdditionalMandatoryCourseAnalyzer;
-import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.SimpleAdditionalMandatoryCourseAnalyzer;
+import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.TransitionalProvisionAnalyzer;
+import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.SimpleTransitionalProvisionAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.CertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.SimpleCertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
@@ -27,7 +27,7 @@ import java.util.Set;
  */
 public class CourseAnalyzer {
 
-    private AdditionalMandatoryCourseAnalyzer additionalMandatoryCourseAnalyzer;
+    private TransitionalProvisionAnalyzer transitionalProvisionAnalyzer;
 
     private StudyPlanAnalyzer studyPlanAnalyzer;
 
@@ -44,46 +44,55 @@ public class CourseAnalyzer {
     private Set<Course> transferableSkills;
 
     public CourseAnalyzer() {
-        this.additionalMandatoryCourseAnalyzer = new SimpleAdditionalMandatoryCourseAnalyzer();
+        this.transitionalProvisionAnalyzer = new SimpleTransitionalProvisionAnalyzer();
         this.studyPlanAnalyzer = new SimpleStudyPlanAnalyzer();
         this.certificateAnalyzer = new SimpleCertificateAnalyzer();
     }
 
     /**
      *
-     * Extracts the information from the request to retrieve the mandatory course,
-     * modules and transferable skills.
+     * @see StudyPlanAnalyzer#analyzeStudyPlan(ServletRequest)
      *
      * @param request contains the list of mandatory courses, modules and
      *                transferable skills.
+     * @throws IllegalArgumentException is thrown, when one necessary parameters
+     *                                  is {@code null}.
+     * @throws WrongFormatException is thrown, when the format of table of
+     *                              content, text of mandatory courses, text of
+     *                              modules or text of the transferable skills
+     *                              is wrong.
      */
     public void analyzeStudyPlan(ServletRequest request) {
         studyPlanAnalyzer.analyzeStudyPlan(request);
-
     }
 
     /**
      *
-     * Extracts the additional mandatory courses from the request.
      *
-     * @param request contains the list of additional courses.
+     * @see TransitionalProvisionAnalyzer#analyzeTransitionalProvision(ServletRequest)
+     *
+     * @param request contains the study plan.
+     * @throws ReadFileException    is thrown, when an IO problem occurs while
+     *                              reading the passed file.
+     * @throws WrongFormatException is thrown, when the text on a page is empty
+     *                              or the format creates an empty
+     *                              {@link TransitionalProvision}
      */
     public void readTransitionalProvision(ServletRequest request) {
-        additionalMandatoryCourseAnalyzer.analyzeTransitionalProvision(request);
+        transitionalProvisionAnalyzer.analyzeTransitionalProvision(request);
     }
 
     /**
      *
-     * Extracts the information from the request to retrieve the certificates.
+     * @see CertificateAnalyzer#analyzeCertificateList(ServletRequest)
      *
-     * @param request contains the list of certificates.
+     * @param request the download request
      */
     public void analyzeCourseList(ServletRequest request) {
-        this.finishedCourses = certificateAnalyzer.analyzeCertificateList(request);
+        certificateAnalyzer.analyzeCertificateList(request);
     }
 
     /**
-     *
      *
      * Returns a report of the finished mandatory courses and the missing
      * mandatory courses.
@@ -157,9 +166,9 @@ public class CourseAnalyzer {
     }
 
     private void initCourseInformation() {
-
+        this.finishedCourses = certificateAnalyzer.getCertificates();
         this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
-        this.transitionalProvision = additionalMandatoryCourseAnalyzer.getTransitionalProvision();
+        this.transitionalProvision = transitionalProvisionAnalyzer.getTransitionalProvision();
         this.modules = studyPlanAnalyzer.getModules();
         this.transferableSkills = studyPlanAnalyzer.getTransferableSkills();
     }

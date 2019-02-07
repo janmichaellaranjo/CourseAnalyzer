@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer;
  * @Date: 03.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.model.Course;
 
@@ -40,6 +41,12 @@ public interface StudyPlanAnalyzer {
      * mandatory courses, modules and transferable skills.
      *
      * @param request contains the study plan.
+     * @throws IllegalArgumentException is thrown, when one necessary parameters
+     *                                  is {@code null}.
+     * @throws WrongFormatException is thrown, when the format of table of
+     *                              content, text of mandatory courses, text of
+     *                              modules or text of the transferable skills
+     *                              is wrong.
      */
     void analyzeStudyPlan(ServletRequest request);
 

@@ -1,6 +1,6 @@
-package com.example.courseanalyzer.Util;
+package com.example.courseanalyzer.util;
 /**
- * @Package: com.example.courseanalyzer.Util
+ * @Package: com.example.courseanalyzer.util
  * @Class: CourseLineUtil
  * @Author: Jan
  * @Date: 02.02.2019

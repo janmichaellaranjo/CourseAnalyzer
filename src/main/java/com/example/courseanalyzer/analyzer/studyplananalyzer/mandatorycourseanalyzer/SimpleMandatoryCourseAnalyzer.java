@@ -6,8 +6,11 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseana
  * @Date: 29.01.2019
  */
 
-import com.example.courseanalyzer.Util.CourseLineUtil;
+import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -21,11 +24,18 @@ import java.util.*;
  */
 public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
 
+    private static final Logger logger = LogManager.getLogger(SimpleMandatoryCourseAnalyzer.class);
+
     @Override
     public Set<Course> analyzeMandatoryCourses(String mandatoryCoursesText) {
+
+        if (mandatoryCoursesText == null) {
+            throw new IllegalArgumentException("The passed mandatory courses text is null");
+        }
+
         Set<Course> mandatoryCourses = new HashSet<>();
         Scanner scanner = new Scanner(mandatoryCoursesText);
-
+        int i = 1;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
 
@@ -37,8 +47,18 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
                     mandatoryCourses.add(courseFromLine);
                 }
             }
+
+            i++;
         }
         scanner.close();
+
+        if (mandatoryCourses.isEmpty()) {
+            String errorMsg = String.format(
+                    "The the mandatory course text has the wrong format");
+            logger.error(errorMsg);
+
+            throw new WrongFormatException(errorMsg);
+        }
 
         return mandatoryCourses;
     }

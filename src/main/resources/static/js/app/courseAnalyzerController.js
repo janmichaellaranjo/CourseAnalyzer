@@ -29,6 +29,9 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
 
                    $scope.showElement.isResultFilled = true;
                 });
+            })
+            .catch(function(e) {
+                alert(e.data.message);
             });
         };
 
