@@ -26,13 +26,22 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
                    $scope.courseReport.additionalMandatoryCoursesEcts = response.data.additionalMandatoryCoursesEcts;
                    $scope.courseReport.optionalModuleCoursesEcts = response.data.optionalModuleEcts;
                    $scope.courseReport.transferableSkillsEcts = response.data.transferableSkillsEcts;
+
+                   $scope.showElement.isResultFilled = true;
                 });
             });
         };
 
-        $scope.addFile = function (variable, file) {
-            $scope.variable = file;
+        $scope.showElement = {
+            isMandatoryFilesFilled: false,
+            isResultFilled: false
         };
+
+        $scope.mandatoryFilesChecker = function() {
+            if ($scope.studyPlan != null && $scope.certificateList != null) {
+                $scope.showElement.isMandatoryFilesFilled = true;
+            }
+        }
     }
 ])
 .directive('filestudyplan', function () {
@@ -43,7 +52,9 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
         link: function(scope, element, attrs) {
             element.bind('change', function(){
                 scope.$apply(function(){
-                    scope.$parent.studyPlan = element[0].files[0];
+                    var parentScope = scope.$parent;
+                    parentScope.studyPlan = element[0].files[0];
+                    parentScope.mandatoryFilesChecker();
                 });
             });
         }
@@ -71,7 +82,9 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
         link: function(scope, element, attrs) {
             element.bind('change', function(){
                 scope.$apply(function(){
-                    scope.$parent.certificateList = element[0].files[0];
+                    var parentScope = scope.$parent;
+                    parentScope.certificateList = element[0].files[0];
+                    parentScope.mandatoryFilesChecker();
                 });
             });
         }
@@ -88,4 +101,5 @@ module.service('fileUpload', ['$q','$http', function ($q, $http) {
         });
     }
 }]);
+
 

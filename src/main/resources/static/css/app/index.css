@@ -13,7 +13,7 @@
 
 .column1 {
   float: left;
-  width: 10%;
+  width: 20%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 5px;
@@ -23,4 +23,20 @@
   content: "";
   display: table;
   clear: both;
+}
+
+#applicationTitle {
+    text-align: center;
+}
+
+#instructionText {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    width: 70%;
+}
+
+#optionalLabel {
+    font-size: 12px;
+    font-style: italic;
 }

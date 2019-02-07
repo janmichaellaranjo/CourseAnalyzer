@@ -15,34 +15,39 @@
     <hr/>
     <div class="container" ng-controller="courseAnalyzerController">
         <div class="center">
+            <h1 id="applicationTitle">Course Analyzer</h1>
+            <p id="instructionText">This web application helps you to give an overview of your total amount of mandatory
+            courses, courses from optional modules and transferable skills ECts and also shows the list of remaining
+            mandatory courses of your curriculum.</p>
             <div class="row">
                 <div class="column">
-                    <p><label>Select Study Plan file</label></p>
-                    <p><label>Select Transitional Provision file</label></p>
-                    <p><label>Select Certificate List file</label></p>
+                    <p><label>Study Plan file</label></p>
+                    <p><label>Transitional Provision file</label><label id="optionalLabel"> - Optional</label></p>
+                    <p><label>Certificate List file</label></p>
                     <br/>
-                    <p>Mandatory Courses ECTs: </p>
-                    <p>Additional Mandatory Courses ECTs: </p>
-                    <p>Optional Module ECTs: </p>
-                    <p>Transferable Skills ECTs: </p>
+                    <div class="results" ng-show="showElement.isResultFilled">
+                        <p><label>Mandatory Courses ECTs</label> </p>
+                        <p><label>Additional Mandatory Courses ECTs</label> </p>
+                        <p><label>Optional Module ECTs</label></p>
+                        <p><label>Transferable Skills ECTs</label> </p>
+                    </div>
                 </div>
                 <div class="column1">
                     <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
                     <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
                     <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
-                    <button ng-click="analyzeCourses()">Prüfen</button>
-                    <p>{{courseReport.mandatoryCoursesEcts}}</p>
-                    <p>{{courseReport.additionalMandatoryCoursesEcts}}</p>
-                    <p>{{courseReport.optionalModuleCoursesEcts}}</p>
-                    <p>{{courseReport.transferableSkillsEcts}}</p>
+                    <button id="analyzeBtn" ng-click="analyzeCourses()" ng-show="showElement.isMandatoryFilesFilled">Analyze</button>
+                    <div class="results" ng-show="showElement.isResultFilled">
+                        <p>{{courseReport.mandatoryCoursesEcts}}</p>
+                        <p>{{courseReport.additionalMandatoryCoursesEcts}}</p>
+                        <p>{{courseReport.optionalModuleCoursesEcts}}</p>
+                        <p>{{courseReport.transferableSkillsEcts}}</p>
+                    </div>
                 </div>
             </div>
-
         </div>
         <hr/>
         <hr/>
     </div>
-
 </body>
-
 </html>
