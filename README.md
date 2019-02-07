@@ -37,11 +37,11 @@ localhost:8080
 ## TODO
 
 * Return all remaining mandatory courses
-* Add Validations and Exception Handling
+* Add validations on every layerand Exception Handling
 * Better formatting of site
 * More user interaction on the web application
 * More course informations
-* Make application repsonsive and different formats for different medias
+* Make application responsive and different formats for different medias
 * Refactore code
 
 
