@@ -10,7 +10,9 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
             additionalMandatoryCoursesEcts: 0,
             mandatoryCoursesEcts: 0,
             optionalModuleCoursesEcts: 0,
-            transferableSkillsEcts: 0
+            transferableSkillsEcts: 0,
+            remainingMandatoryCourses: null,
+            remainingUnassignedFinishedCourses: null
         };
 
         $scope.analyzeCourses = function() {
@@ -22,12 +24,15 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
             .then(function() {
                 courseAnalyzerService.compareCourses()
                 .then(function(response){
-                   $scope.courseReport.mandatoryCoursesEcts = response.data.mandatoryCoursesEcts;
-                   $scope.courseReport.additionalMandatoryCoursesEcts = response.data.additionalMandatoryCoursesEcts;
-                   $scope.courseReport.optionalModuleCoursesEcts = response.data.optionalModuleEcts;
-                   $scope.courseReport.transferableSkillsEcts = response.data.transferableSkillsEcts;
+                    $scope.courseReport.mandatoryCoursesEcts = response.data.mandatoryCoursesEcts;
+                    $scope.courseReport.additionalMandatoryCoursesEcts = response.data.additionalMandatoryCoursesEcts;
+                    $scope.courseReport.optionalModuleCoursesEcts = response.data.optionalModuleEcts;
+                    $scope.courseReport.transferableSkillsEcts = response.data.transferableSkillsEcts;
 
-                   $scope.showElement.isResultFilled = true;
+                    $scope.courseReport.remainingMandatoryCourses = response.data.remainingMandatoryCourses;
+                    $scope.courseReport.remainingUnassignedFinishedCourses = response.data.remainingUnassignedFinishedCourses;
+
+                    $scope.showElement.isResultFilled = true;
                 });
             })
             .catch(function(e) {

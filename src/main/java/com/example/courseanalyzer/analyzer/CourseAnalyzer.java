@@ -24,6 +24,8 @@ import java.util.Set;
 
 /**
  *
+ * Analyzes the finished courses.
+ *
  */
 public class CourseAnalyzer {
 
@@ -42,6 +44,14 @@ public class CourseAnalyzer {
     private Set<Module> modules;
 
     private Set<Course> transferableSkills;
+
+    private float sumAchievedMandatoryEcts = 0f;
+
+    private float sumAchievedAdditionalMandatoryEcts = 0f;
+
+    private float sumAchievedOptionalModuleEcts = 0f;
+
+    private float sumAchievedTransferableSkillsEcts = 0f;
 
     public CourseAnalyzer() {
         this.transitionalProvisionAnalyzer = new SimpleTransitionalProvisionAnalyzer();
@@ -102,13 +112,11 @@ public class CourseAnalyzer {
     public CourseReport compareCourses() {
 
         initCourseInformation();
-        float sumAchievedMandatoryEcts = 0f;
-        float sumAchievedAdditionalMandatoryEcts = 0f;
-        float sumAchievedOptionalModuleEcts = 0f;
-        float sumAchievedTransferableSkillsEcts = 0f;
+
         Set<Course> remainingFinishedCourses = new HashSet<>(finishedCourses);
         Set<Course> remainingMandatoryCourses = new HashSet<>(mandatoryCourses);
         CourseReport courseReport = new CourseReport();
+        Iterator<Course> coursesIter = null;
 
         //find mandatory courses(Pflicht-LVAs in German)
         for (Course finishedCourse : finishedCourses) {
@@ -119,8 +127,41 @@ public class CourseAnalyzer {
             }
         }
 
+
         //find additional courses
-        Iterator<Course> coursesIter = remainingFinishedCourses.iterator();
+        analyzeAdditionalCourses(remainingFinishedCourses.iterator());
+
+        //find courses from optional modules
+        analyzeOptionalModuleSkills(remainingFinishedCourses.iterator());
+
+        //find courses from the transferable skills
+        analyzeTransferableSkill(remainingFinishedCourses.iterator());
+
+        courseReport.setMandatoryCoursesEcts(sumAchievedMandatoryEcts);
+        courseReport.setAdditionalMandatoryCoursesEcts(sumAchievedAdditionalMandatoryEcts);
+        courseReport.setOptionalModuleEcts(sumAchievedOptionalModuleEcts);
+        courseReport.setTransferableSkillsEcts(sumAchievedTransferableSkillsEcts);
+
+        courseReport.setRemainingMandatoryCourses(remainingMandatoryCourses);
+        courseReport.setRemainingUnassignedFinishedCourses(remainingFinishedCourses);
+
+        return courseReport;
+    }
+
+    private void initCourseInformation() {
+        this.sumAchievedMandatoryEcts = 0f;
+        this.sumAchievedAdditionalMandatoryEcts = 0f;
+        this.sumAchievedOptionalModuleEcts = 0f;
+        this.sumAchievedTransferableSkillsEcts = 0f;
+        this.finishedCourses = certificateAnalyzer.getCertificates();
+        this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
+        this.transitionalProvision = transitionalProvisionAnalyzer.getTransitionalProvision();
+        this.modules = studyPlanAnalyzer.getModules();
+        this.transferableSkills = studyPlanAnalyzer.getTransferableSkills();
+    }
+
+    private void analyzeAdditionalCourses(Iterator<Course> coursesIter) {
+
         while (coursesIter.hasNext()) {
             Course remainingCourse = coursesIter.next();
             if (transitionalProvision.containsMandatoryCourse(remainingCourse)) {
@@ -131,9 +172,9 @@ public class CourseAnalyzer {
                 coursesIter.remove();
             }
         }
+    }
 
-        //find courses from optional modules
-        coursesIter = remainingFinishedCourses.iterator();
+    private void analyzeOptionalModuleSkills(Iterator<Course> coursesIter) {
         while (coursesIter.hasNext()) {
             Course remainingCourse = coursesIter.next();
 
@@ -145,9 +186,9 @@ public class CourseAnalyzer {
                 }
             }
         }
+    }
 
-        //find courses from the transferable skills
-        coursesIter = remainingFinishedCourses.iterator();
+    private void analyzeTransferableSkill(Iterator<Course> coursesIter) {
         while (coursesIter.hasNext()) {
             Course remainingCourse = coursesIter.next();
 
@@ -156,20 +197,5 @@ public class CourseAnalyzer {
                 coursesIter.remove();
             }
         }
-
-        courseReport.setMandatoryCoursesEcts(sumAchievedMandatoryEcts);
-        courseReport.setAdditionalMandatoryCoursesEcts(sumAchievedAdditionalMandatoryEcts);
-        courseReport.setOptionalModuleEcts(sumAchievedOptionalModuleEcts);
-        courseReport.setTransferableSkillsEcts(sumAchievedTransferableSkillsEcts);
-
-        return courseReport;
-    }
-
-    private void initCourseInformation() {
-        this.finishedCourses = certificateAnalyzer.getCertificates();
-        this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
-        this.transitionalProvision = transitionalProvisionAnalyzer.getTransitionalProvision();
-        this.modules = studyPlanAnalyzer.getModules();
-        this.transferableSkills = studyPlanAnalyzer.getTransferableSkills();
     }
 }

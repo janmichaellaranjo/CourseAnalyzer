@@ -20,34 +20,69 @@
             courses, courses from optional modules and transferable skills ECts and also shows the list of remaining
             mandatory courses of your curriculum.</p>
             <div class="row">
-                <div class="column">
+                <div class="column0">
                     <p><label>Study Plan file</label></p>
                     <p><label>Transitional Provision file</label><label id="optionalLabel"> - Optional</label></p>
                     <p><label>Certificate List file</label></p>
                     <br/>
-                    <div class="results" ng-show="showElement.isResultFilled">
-                        <p><label>Mandatory Courses ECTs</label> </p>
-                        <p><label>Additional Mandatory Courses ECTs</label> </p>
-                        <p><label>Optional Module ECTs</label></p>
-                        <p><label>Transferable Skills ECTs</label> </p>
-                    </div>
                 </div>
                 <div class="column1">
                     <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
                     <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
                     <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
                     <button id="analyzeBtn" ng-click="analyzeCourses()" ng-show="showElement.isMandatoryFilesFilled">Analyze</button>
-                    <div class="results" ng-show="showElement.isResultFilled">
-                        <p>{{courseReport.mandatoryCoursesEcts}}</p>
-                        <p>{{courseReport.additionalMandatoryCoursesEcts}}</p>
-                        <p>{{courseReport.optionalModuleCoursesEcts}}</p>
-                        <p>{{courseReport.transferableSkillsEcts}}</p>
+                </div>
+            </div>
+            <div class="results" ng-show="showElement.isResultFilled">
+                <div class="row">
+                    <div class="column0">
+                            <p><label>Mandatory Courses ECTs</label></p>
+                            <p><label>Additional Mandatory Courses ECTs</label></p>
+                            <p><label>Optional Module ECTs</label></p>
+                            <p><label>Transferable Skills ECTs</label></p>
+                    </div>
+                    <div class="column1">
+                            <p class="resultRow">{{courseReport.mandatoryCoursesEcts}}</p>
+                            <p class="resultRow">{{courseReport.additionalMandatoryCoursesEcts}}</p>
+                            <p class="resultRow">{{courseReport.optionalModuleCoursesEcts}}</p>
+                            <p class="resultRow">{{courseReport.transferableSkillsEcts}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="resultColumn0">
+                        <p>Remaining Mandatory Courses</p>
+                        <p>
+                        <table class="resultTable">
+                            <thead>
+                            <td>ECTs</td>
+                            <td>Course Type</td>
+                            <td>Course Name</td>
+                            </thead>
+                            <tr ng-repeat="course in courseReport.remainingMandatoryCourses">
+                                <td class="ectsCell">{{course.ects}}</td>
+                                <td>{{course.courseType}}</td>
+                                <td>{{course.courseName}}</td>
+                            </tr>
+                        </table></p>
+                    </div>
+                    <div class="resultColumn1">
+                        <p>Remaining Unassigned Courses</p>
+                        <p><table class="resultTable">
+                        <thead>
+                        <td>ECTs</td>
+                        <td>Course Type</td>
+                        <td>Course Name</td>
+                        </thead>
+                        <tr ng-repeat="course in courseReport.remainingUnassignedFinishedCourses">
+                            <td class="ectsCell">{{course.ects}}</td>
+                            <td>{{course.courseType}}</td>
+                            <td>{{course.courseName}}</td>
+                        </tr>
+                    </table></p>
                     </div>
                 </div>
             </div>
         </div>
-        <hr/>
-        <hr/>
     </div>
 </body>
 </html>

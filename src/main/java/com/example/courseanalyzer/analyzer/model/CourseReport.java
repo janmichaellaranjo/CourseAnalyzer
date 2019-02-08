@@ -23,20 +23,14 @@ public class CourseReport {
 
     private Set<Course> remainingMandatoryCourses;
 
+    private Set<Course> remainingUnassignedFinishedCourses;
+
     public float getMandatoryCoursesEcts() {
         return mandatoryCoursesEcts;
     }
 
     public void setMandatoryCoursesEcts(float mandatoryCoursesEcts) {
         this.mandatoryCoursesEcts = mandatoryCoursesEcts;
-    }
-
-    public Set<Course> getRemainingMandatoryCourses() {
-        return remainingMandatoryCourses;
-    }
-
-    public void setRemainingMandatoryCourses(Set<Course> remainingMandatoryCourses) {
-        this.remainingMandatoryCourses = remainingMandatoryCourses;
     }
 
     public float getAdditionalMandatoryCoursesEcts() {
@@ -61,6 +55,22 @@ public class CourseReport {
 
     public void setTransferableSkillsEcts(float transferableSkillsEcts) {
         this.transferableSkillsEcts = transferableSkillsEcts;
+    }
+
+    public Set<Course> getRemainingMandatoryCourses() {
+        return remainingMandatoryCourses;
+    }
+
+    public void setRemainingMandatoryCourses(Set<Course> remainingMandatoryCourses) {
+        this.remainingMandatoryCourses = remainingMandatoryCourses;
+    }
+
+    public Set<Course> getRemainingUnassignedFinishedCourses() {
+        return remainingUnassignedFinishedCourses;
+    }
+
+    public void setRemainingUnassignedFinishedCourses(Set<Course> remainingUnassignedFinishedCourses) {
+        this.remainingUnassignedFinishedCourses = remainingUnassignedFinishedCourses;
     }
 
     @Override
