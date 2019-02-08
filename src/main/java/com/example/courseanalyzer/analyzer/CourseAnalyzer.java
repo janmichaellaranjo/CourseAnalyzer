@@ -161,7 +161,9 @@ public class CourseAnalyzer {
     }
 
     private void analyzeAdditionalCourses(Iterator<Course> coursesIter) {
-
+        if (transitionalProvision == null) {
+            return;
+        }
         while (coursesIter.hasNext()) {
             Course remainingCourse = coursesIter.next();
             if (transitionalProvision.containsMandatoryCourse(remainingCourse)) {

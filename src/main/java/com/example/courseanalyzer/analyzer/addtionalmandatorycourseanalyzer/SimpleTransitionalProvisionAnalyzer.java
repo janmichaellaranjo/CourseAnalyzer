@@ -51,6 +51,10 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
 
         try {
             initPdf(request);
+
+            if (pdDocument == null) {
+                return;
+            }
             analyzeTransitionalProvision();
 
             pdDocument.close();
@@ -66,6 +70,10 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
     private void initPdf(ServletRequest request) throws IOException {
 
         this.pdDocument = getWorkBookFromMultiPartRequest(request);
+
+        if (pdDocument == null) {
+            return;
+        }
 
         PDPage page = new PDPage();
 
@@ -145,6 +153,9 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
                 additionalMandatoryCourses = new HashSet<>();
             }
             if (CourseLineUtil.isLineValidCourseWithoutWeeklyHoursInformation(line)) {
+                if (line.contains("•")) {
+                    //TODO: add to MandatoryCoursesGroup
+                }
                 Course course = CourseLineUtil.getCourseFromLine(line);
 
                 if (isStartMandatoryCourses) {

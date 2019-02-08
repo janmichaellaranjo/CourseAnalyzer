@@ -36,20 +36,24 @@ localhost:8080
 
 ## TODO
 
-* Return all remaining mandatory courses
-* Add validations on every layerand Exception Handling
+* Remove mistake of courses in groups in transitional provision
+* ~~Return all remaining mandatory courses~~
+* ~~Add validations on every layerand Exception Handling~~
+* Better error messaging
 * Better formatting of site
-* More user interaction on the web application
-* More course informations
+* More user interaction
+* Create a tutorial part
+* ~~More course informations~~
 * Make application responsive and different formats for different medias
+* Change to multiple languages
 * Refactore code
+* Create tests
 
 
 ## Used Frameworks
 
 * AngularJS
 * Spring
-* H2 Database
 * Apache POI
 * PDFBox
 * Log4J

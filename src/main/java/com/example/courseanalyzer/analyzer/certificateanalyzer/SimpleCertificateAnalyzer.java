@@ -106,13 +106,18 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
      */
     private boolean isRowEmpty(Row row) {
         if (row == null) {
-            return false;
+            return true;
         } else if (row.getCell(0) == null) {
-            return false;
+            return true;
+        }
+        Cell cell = row.getCell(0);
+
+        if (cell == null) {
+            return true;
         }
 
-        return row.getCell(0).getCellType() != CellType.BLANK &&
-                row.getCell(0).getStringCellValue().isEmpty();
+        return cell.getCellType() == CellType.BLANK ||
+                cell.getStringCellValue().isEmpty();
     }
 
     private Workbook getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
