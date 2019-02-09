@@ -18,6 +18,12 @@ Maven
 Web browser(Firefox, Chrome,...)
 ```
 
+### Required Files
+
+* Study plan of your curriculum
+* Transitional provision (optional)
+* Finished courses file e.g. certificate list
+
 ### Running The Web Application
 
 1) First download or clone this repository. 
@@ -36,30 +42,22 @@ mvnw install
 localhost:8080
 ```
 
-### Required Files
 
-* Study plan of your curriculum
-* Transitional provision (optional)
-* Finished courses file e.g. certificate list
-
-### How To Use Application
-
-
-# Development
+## Development
 
 Due to the fact that the extraction of information depends on the format of the files the current implementation cannot be applied to every study plan, transitional provision or file that contains the finished courses.\
 To cope with this problem, there exists interfaces for extracting the informations to easily change implementations for different formats. Basically there are 3 main interfaces for extracting the informations of the study plans, transitional provisions and finished courses. Furthermore the study plan can be divided into the extraction of the mandatory courses, modules and soft skills.\
 For further implementation details how the interface should be implemented refer to the JavaDoc.
 
-## Format
+### Format
 
 This application heavily relies on the format of the documents because the documents are scanned and the necessary informations are extracted. To extract the information properly the application expects a consistent order and certain phrases.
 
-## Implementation
+### Implementation
 
 The current implementation works for the *TU Wien*'s current study plans in Computer Science ([study plan 2018](http://www.informatik.tuwien.ac.at/studium/angebot/studienplaene/informatik-archiv/informatik-studienplan-2018)) and the automatically generated certificate list file which can be retrieved on *TISS* page. The transitional provision ([transitional provision 2018](http://www.informatik.tuwien.ac.at/studium/angebot/studienplaene/informatik-archiv/informatik-uebergang-2018)) also relies on the format of the corresponding file.
 
-# Used Frameworks
+## Used Frameworks
 
 * AngularJS
 * Spring
@@ -67,7 +65,7 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 * PDFBox
 * Log4J
 
-# TODO
+## TODO
 
 * Remove mistake of courses in groups in transitional provision
 * ~~Return all remaining mandatory courses~~
@@ -75,10 +73,11 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 * Better error messaging
 * Better formatting of site
 * More user interaction
-* Create a tutorial part
+* Create a tutorial part in web application
 * ~~More course informations~~
 * Make application responsive and different formats for different medias
 * Change to multiple languages
 * Refactore code
 * Create tests
 * Properly log every class
+* Create a how to use in README
