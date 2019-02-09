@@ -24,13 +24,12 @@ import java.util.Set;
 public interface ModuleAnalyzer {
 
     /**
-     *
      * Returns the set of modules which is extracted from the text {@code modulesText}.
      *
      * @param modulesText contains the modules.
-     * @throws IllegalArgumentException is thrown, when {@coce modulesText} is
+     * @throws IllegalArgumentException is thrown, when {@code modulesText} is
      *                                  {@code null}.
-     * @throws WrongFormatException is thrown, when {@coce modulesText} is empty
+     * @throws WrongFormatException is thrown, when {@code modulesText} is empty
      *                              or the passed creates an empty list of
      *                              modules.
      * @return the set of modules which is extracted from the text {@code modulesText}.

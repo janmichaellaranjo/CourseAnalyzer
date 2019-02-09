@@ -12,9 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * Represents the table of content of the study plan.
- *
  */
 public class TableOfContent {
     private static final String CHAPTER_FORMAT = "[\\w]+\\. .*”?[\\w|äöüÄÖÜß| |\\-|(|)]+“? \\d+";
@@ -25,7 +23,6 @@ public class TableOfContent {
     }
 
     /**
-     *
      * Extracts the chapter information from the line and adds this chapter to
      * to list of chapters.
      *
@@ -60,11 +57,9 @@ public class TableOfContent {
     }
 
     /**
-     *
      * Determines every last page of each chapter of the table of content.
      *
-     * <p>The last chapter's page end is default {@code -1}</i></p>
-     *
+     * <p>The last chapter's page end is default {@code -1}</p>
      */
     public void determinePageEndsOfAllChapters() {
         for (int i = 0; i < chapters.size() - 1; i++) {
@@ -78,7 +73,6 @@ public class TableOfContent {
     }
 
     /**
-     *
      * Returns the chapter with the corresponding title {@code title}.
      *
      * @param chapterTitle the title of the chapter which is searched for.

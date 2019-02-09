@@ -30,7 +30,6 @@ public final class CourseLineUtil {
     private static final String DECIMAL_POINT = ".";
 
     /**
-     *
      * Returns true, if the line has the format of a course without the weekly
      * hours information.
      *
@@ -48,7 +47,6 @@ public final class CourseLineUtil {
     }
 
     /**
-     *
      * Returns true, if the line has the format of a course without the weekly
      * hours information.
      *
@@ -66,7 +64,6 @@ public final class CourseLineUtil {
     }
 
     /**
-     *
      * Returns the course by extracting the informations from the line
      * {@code line}.
      *
@@ -110,7 +107,6 @@ public final class CourseLineUtil {
     }
 
     /**
-     *
      * Returns the course type depending on the line {@code line}.
      *
      * <p>The method returns {@code null}, if the line does not contain any
@@ -135,7 +131,6 @@ public final class CourseLineUtil {
     }
 
     /**
-     *
      * Returns the course by extracting the informations from the line
      * {@code line}.
      *

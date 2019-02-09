@@ -11,7 +11,6 @@ import com.example.courseanalyzer.analyzer.model.Course;
 import java.util.Set;
 
 /**
- *
  * Represents the module of the curriculum which consists of courses. Module can
  * be mandatory or optional.
  * <p>Due to the curriculum a student has to achieve a minimum of 6 ECTs of
@@ -57,7 +56,6 @@ public class Module {
     }
 
     /**
-     *
      * Returns true, if this module is optional.
      *
      * @return true, if this module is optional.
@@ -67,7 +65,6 @@ public class Module {
     }
 
     /**
-     *
      * Returns {@code true}, if the module contains the course {@code course}.
      * This automatically returns {@code false}, when the module does not
      * contain any courses.

@@ -9,11 +9,9 @@ package com.example.courseanalyzer.analyzer.model;
 import java.util.Set;
 
 /**
- *
  * Represents the transitional provision for an upcoming semester. This consists
  * of the mandatory courses and additional mandatory courses. These lists all
  * courses that are no longer available and also all actual courses.
- *
  */
 public class TransitionalProvision {
 
@@ -28,7 +26,6 @@ public class TransitionalProvision {
     }
 
     /**
-     *
      * Returns true, if the mandatory courses of transitional provision
      * contains the examined module{@code examinedModule}.
      *
@@ -46,7 +43,6 @@ public class TransitionalProvision {
     }
 
     /**
-     *
      * Returns true, if the additional mandatory courses of transitional
      * provision contains the examined module{@code examinedModule}.
      *

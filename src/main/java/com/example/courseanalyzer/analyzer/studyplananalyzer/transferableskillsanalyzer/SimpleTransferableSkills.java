@@ -17,14 +17,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- *
  * Analyzes the list of the transferable skills. This implementation is used for
  * the study plan of the computer science curriculum of TU Wien thus an error
  * can occure, if other study plans are used with different formatting.
  *
  * <p>Each step of the analysis can be exchanged with a new implementation, if
  *    necessary.</p>
- *
  */
 public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 

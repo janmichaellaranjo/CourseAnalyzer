@@ -36,7 +36,6 @@ import java.util.Set;
 public interface StudyPlanAnalyzer {
 
     /**
-     *
      * Analysis the request {@code request} and assign the result to the sets of
      * mandatory courses, modules and transferable skills.
      *
@@ -51,7 +50,6 @@ public interface StudyPlanAnalyzer {
     void analyzeStudyPlan(ServletRequest request);
 
     /**
-     *
      * Returns the set of mandatory courses.
      *
      * <p>This method should be called after
@@ -62,7 +60,6 @@ public interface StudyPlanAnalyzer {
     Set<Course> getMandatoryCourses();
 
     /**
-     *
      * Returns the set of additional mandatory courses.
      *
      * <p>This method should be called after
@@ -73,11 +70,10 @@ public interface StudyPlanAnalyzer {
     Set<Module> getModules();
 
     /**
-     *
      * Returns the set of transferable skills.
      *
      * <p>This method should be called after
-     *    @link #analyzeStudyPlan(ServletRequest)}.</p>
+     *    {@link #analyzeStudyPlan(ServletRequest)}.</p>
      *
      * @return the set of transferable skills.
      */

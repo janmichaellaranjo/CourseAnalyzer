@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- *
  * Analyzes the passed file in the request. This assumes it is an excel-file and
  * contains the list of certificates. Each row contains the information of the
  * certificate.
@@ -30,12 +29,10 @@ import java.util.*;
  * <p>This analyzer is tailored to the format of generated certificate list
  * file of TISS.</p>
  * <p>
- *     The format is <i><course title><course typ><course id><ects><grade>....
- *     </i>.
+ *     The format is <i>[course title][course typ][course id][ects][grade]....</i>.
  * </p>
  *
  * <p>Every other information is simply ignored.</p>
- *
  */
 public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
@@ -97,7 +94,6 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
     }
 
     /**
-     *
      * Returns true, if the row is empty. It is assumed that the first cell of
      * the row is not empty due to the generated file.
      *

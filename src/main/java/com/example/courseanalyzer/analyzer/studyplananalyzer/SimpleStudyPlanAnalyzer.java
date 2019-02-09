@@ -33,13 +33,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- *
  * Analyzes the study plan for the computer science curriculum of the TU Wien.
  * This analysis heavily relies on the formatting of each page.
  *
  * <p>Each step of the analysis can be exchanged with a new implementation, if
  *    necessary.</p>
- *
  */
 public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
 

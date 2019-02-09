@@ -9,7 +9,17 @@ package com.example.courseanalyzer.analyzer.model;
 import java.util.Set;
 
 /**
- *
+ * Contains the result of the comparison between the finished courses and the
+ * mandatory courses, transferable skills and courses in optional modules.
+ * Following informations are included:
+ * <ul>
+ *     <li>The ects of mandatory courses</li>
+ *     <li>The ects of additional mandatory courses</li>
+ *     <li>The ects of courses from optional modules</li>
+ *     <li>The ects of transferable skills</li>
+ *     <li>The list of remaining mandatory courses</li>
+ *     <li>The list of unnassigned finished courses</li>
+ * </ul>
  */
 public class CourseReport {
 

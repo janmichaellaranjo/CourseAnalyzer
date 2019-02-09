@@ -9,8 +9,6 @@ package com.example.courseanalyzer.analyzer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.io.IOException;
-
 /**
  * This exception is thrown, when a IO problem occures during the process of 
  * reading the file to extract informations from. For instance the passed file is

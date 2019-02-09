@@ -7,16 +7,13 @@ package com.example.courseanalyzer.analyzer.model;
  */
 
 /**
- *
  * Represents a Course of the university.
  * <p>Following attributes are needed for a certificate:
- * <ul>
+ *  <ul>
  *     <li>course type</li>
  *     <li>course name</li>
  *     <li>ects-a positive value</li>
- * </ul>
- * </p>
- *
+ *  </ul>
  */
 public class Course {
     private CourseType courseType;
@@ -32,7 +29,6 @@ public class Course {
     }
 
     /**
-     *
      * Returns true, if every information of the course is filled.
      *
      * @return true, if every information of the course is filled.

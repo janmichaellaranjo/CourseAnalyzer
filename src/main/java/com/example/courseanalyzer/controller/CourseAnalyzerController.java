@@ -20,9 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- *
+ * Is the endpoint for the front end requests to trigger the methods.
  */
-
 @RequestMapping("/courseanalyzer")
 @RestController
 public class CourseAnalyzerController {

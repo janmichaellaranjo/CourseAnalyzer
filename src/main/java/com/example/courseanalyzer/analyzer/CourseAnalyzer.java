@@ -6,8 +6,8 @@ package com.example.courseanalyzer.analyzer;
  * @Date: 29.01.2019
  */
 
-import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.TransitionalProvisionAnalyzer;
-import com.example.courseanalyzer.analyzer.addtionalmandatorycourseanalyzer.SimpleTransitionalProvisionAnalyzer;
+import com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer.TransitionalProvisionAnalyzer;
+import com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer.SimpleTransitionalProvisionAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.CertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.certificateanalyzer.SimpleCertificateAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
@@ -23,9 +23,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- *
- * Analyzes the finished courses.
- *
+ * Is responsible to pass the information from the front end to the
+ * corresponding analyzers. The retrieved information is used for the analysis
+ * to create a {@link CourseReport} with {@link #compareCourses()}.
  */
 public class CourseAnalyzer {
 
@@ -60,7 +60,6 @@ public class CourseAnalyzer {
     }
 
     /**
-     *
      * @see StudyPlanAnalyzer#analyzeStudyPlan(ServletRequest)
      *
      * @param request contains the list of mandatory courses, modules and
@@ -77,8 +76,6 @@ public class CourseAnalyzer {
     }
 
     /**
-     *
-     *
      * @see TransitionalProvisionAnalyzer#analyzeTransitionalProvision(ServletRequest)
      *
      * @param request contains the study plan.
@@ -93,7 +90,6 @@ public class CourseAnalyzer {
     }
 
     /**
-     *
      * @see CertificateAnalyzer#analyzeCertificateList(ServletRequest)
      *
      * @param request the download request
@@ -103,7 +99,6 @@ public class CourseAnalyzer {
     }
 
     /**
-     *
      * Returns a report of the finished mandatory courses and the missing
      * mandatory courses.
      *

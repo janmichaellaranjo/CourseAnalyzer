@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  *  the study plan of the computer science curriculum of TU Wien thus an
  *  error can occure, if other study plans are used with different formatting.
  *
- * <p>The order is <i><ects>/<weeklyHourse>_<courseType>_<courseName></i></p>
+ * <p>The order is <i>[ects]/[weeklyHour]_[courseType]_[courseName]</i></p>
  * <p>Every other information is simply ignored</p>
  */
 public class SimpleModuleAnalyzer implements ModuleAnalyzer {
@@ -139,5 +139,4 @@ public class SimpleModuleAnalyzer implements ModuleAnalyzer {
     private boolean isLinePageNumber(String line) {
         return isLinePattern(line, "\\d{1,3}");
     }
-
 }

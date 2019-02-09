@@ -15,7 +15,6 @@ import javax.servlet.ServletRequest;
 import java.util.Set;
 
 /**
- *
  * Extracts the informations from the downloaded file which contains the list of
  * certificates. These certificates are completed courses which also contains
  * the grade of the course.
@@ -27,14 +26,11 @@ import java.util.Set;
  * <p>These interface is used to conveniently change the implementation because
  *    the format of the file may change and a new implementation is
  *    necessary.</p>
- *
  */
 @Service
 public interface CertificateAnalyzer {
 
     /**
-     *
-     *
      * Creates the set of certificates which is extracted from the download
      * request.
      *
@@ -50,7 +46,6 @@ public interface CertificateAnalyzer {
    void analyzeCertificateList(ServletRequest request);
 
     /**
-     *
      * Returns the list of certificates.
      *
      * @return the list of certificates.

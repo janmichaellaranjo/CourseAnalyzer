@@ -19,7 +19,7 @@ import java.util.*;
  * plan of the computer science curriculum of TU Wien thus an error can occure,
  * if other study plans are used with different formatting.
  *
- * <p>The order is <i><ects>_<courseType>_<course name></i></p>
+ * <p>The order is <i>[ects]_[courseType]_[course name]</i></p>
  * <p>Every other information is simply ignored</p>
  */
 public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {

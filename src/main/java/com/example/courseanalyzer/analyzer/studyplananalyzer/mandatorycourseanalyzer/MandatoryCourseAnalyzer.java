@@ -25,7 +25,6 @@ import java.util.Set;
 public interface MandatoryCourseAnalyzer {
 
     /**
-     *
      * Returns the set of the mandatory courses from the text
      * {@code mandatoryCourses}.
      *
@@ -33,7 +32,7 @@ public interface MandatoryCourseAnalyzer {
      *    criteria.</p>
      *
      * @param mandatoryCourses contains the mandatory courses
-     * @throws IllegalArgumentException is thrown, when {@coce modulesText} is
+     * @throws IllegalArgumentException is thrown, when {@code modulesText} is
      *                                   {@code null}.
      * @throws WrongFormatException is thrown, when the format of
      *                              {@code mandatoryCourses} is empty or the

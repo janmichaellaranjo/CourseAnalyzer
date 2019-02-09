@@ -7,9 +7,7 @@ package com.example.courseanalyzer.analyzer.model;
  */
 
 /**
- *
  * Represents the type of a course which determine how
- *
  */
 public enum CourseType {
 
