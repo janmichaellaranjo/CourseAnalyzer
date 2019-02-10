@@ -1,7 +1,7 @@
 'use strict'
 var module = angular.module('CourseAnalyzer.controllers', []);
-module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerService', 'fileUpload', 'CONSTANTS',
-    function($scope, $q, courseAnalyzerService, fileUpload, CONSTANTS) {
+module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerService', 'CONSTANTS',
+    function($scope, $q, courseAnalyzerService, CONSTANTS) {
 
         $scope.studyPlan = null;
         $scope.transitionalProvision = null;
@@ -17,9 +17,9 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
 
         $scope.analyzeCourses = function() {
             $q.all([
-                fileUpload.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
-                fileUpload.uploadFileToUrl($scope.transitionalProvision, CONSTANTS.readTransitionalProvision),
-                fileUpload.uploadFileToUrl($scope.studyPlan, CONSTANTS.readStudyPlan)
+                courseAnalyzerService.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
+                courseAnalyzerService.uploadFileToUrl($scope.transitionalProvision, CONSTANTS.readTransitionalProvision),
+                courseAnalyzerService.uploadFileToUrl($scope.studyPlan, CONSTANTS.readStudyPlan)
             ])
             .then(function() {
                 courseAnalyzerService.compareCourses()
@@ -49,6 +49,10 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
             if ($scope.studyPlan != null && $scope.certificateList != null) {
                 $scope.showElement.isMandatoryFilesFilled = true;
             }
+        };
+
+        $scope.closeApplication = function() {
+            courseAnalyzerService.closeApplication();
         }
     }
 ])
@@ -99,15 +103,12 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
     };
 });
 
-module.service('fileUpload', ['$q','$http', function ($q, $http) {
-    this.uploadFileToUrl = function(file, uploadUrl){
-        var formdata = new FormData();
-        formdata.append('file', file);
-        return $http.post(uploadUrl, formdata, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type' : undefined}
-        });
-    }
-}]);
+window.onbeforeunload = function () {
+   return 'The application is still running';
+}
+
+window.onunload = function () {
+   return 'The application is still running';
+}
 
 

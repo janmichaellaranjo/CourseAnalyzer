@@ -12,10 +12,9 @@
     <link rel="stylesheet" type="text/css" href="css/app/index.css">
 </head>
 <body ng-app="CourseAnalyzer">
-    <hr/>
-    <div class="container" ng-controller="courseAnalyzerController">
+    <div id="courseAnalyzerDiv" class="container" ng-controller="courseAnalyzerController">
         <div class="center">
-            <h1 id="applicationTitle">Course Analyzer</h1>
+            <h1 class="centerText">Course Analyzer</h1>
             <p id="instructionText">This web application helps you to give an overview of your total amount of mandatory
             courses, courses from optional modules and transferable skills ECts and also shows the list of remaining
             mandatory courses of your curriculum.</p>
@@ -30,22 +29,36 @@
                     <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
                     <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
                     <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
-                    <button id="analyzeBtn" ng-click="analyzeCourses()" ng-show="showElement.isMandatoryFilesFilled">Analyze</button>
+                    <button id="analyzeBtn" ng-click="analyzeCourses()" ng-disabled="!showElement.isMandatoryFilesFilled">Analyze</button>
                 </div>
             </div>
             <div class="results" ng-show="showElement.isResultFilled">
+                <hr/>
+                <h3 class="centerText">Result</h3>
                 <div class="row">
-                    <div class="column0">
-                            <p><label>Mandatory Courses ECTs</label></p>
-                            <p><label>Additional Mandatory Courses ECTs</label></p>
-                            <p><label>Optional Module ECTs</label></p>
-                            <p><label>Transferable Skills ECTs</label></p>
-                    </div>
-                    <div class="column1">
-                            <p class="resultRow">{{courseReport.mandatoryCoursesEcts}}</p>
-                            <p class="resultRow">{{courseReport.additionalMandatoryCoursesEcts}}</p>
-                            <p class="resultRow">{{courseReport.optionalModuleCoursesEcts}}</p>
-                            <p class="resultRow">{{courseReport.transferableSkillsEcts}}</p>
+                    <div class="resultColumn0">
+                        <table id="ectsTable">
+                            <thead>
+                            <td>Type</td>
+                            <td>ECTs</td>
+                            </thead>
+                            <tr>
+                                <td>Mandatory Courses ECTs</td>
+                                <td>{{courseReport.mandatoryCoursesEcts}}</td>
+                            </tr>
+                            <tr>
+                                <td>Additional Mandatory Courses ECTs</td>
+                                <td>{{courseReport.additionalMandatoryCoursesEcts}}</td>
+                            </tr>
+                            <tr>
+                                <td>Optional Module ECTs</td>
+                                <td>{{courseReport.optionalModuleCoursesEcts}}</td>
+                            </tr>
+                            <tr>
+                                <td>Transferable Skills ECTs</td>
+                                <td>{{courseReport.transferableSkillsEcts}}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div class="row">
@@ -54,9 +67,9 @@
                         <p>
                         <table class="resultTable">
                             <thead>
-                            <td>ECTs</td>
-                            <td>Course Type</td>
-                            <td>Course Name</td>
+                                <td>ECTs</td>
+                                <td>Course Type</td>
+                                <td>Course Name</td>
                             </thead>
                             <tr ng-repeat="course in courseReport.remainingMandatoryCourses">
                                 <td class="ectsCell">{{course.ects}}</td>
@@ -81,6 +94,11 @@
                     </table></p>
                     </div>
                 </div>
+            </div>
+            <div id="closeApplicationDiv">
+                <hr/>
+                <label id="hintText">The applications will still run, when the tab or browser is closed.</label>
+                <button ng-click="closeApplication()">Close Application</button>
             </div>
         </div>
     </div>

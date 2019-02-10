@@ -1,6 +1,10 @@
 .center {
     vertical-align: text-top;
-    border: 2px solid black;
+    border: 1px solid #000000;
+}
+
+.centerText {
+    text-align: center;
 }
 
 .column0 {
@@ -57,20 +61,11 @@
 
 .results {
     padding-top: 20px;
-    border: 1px solid black;
 }
 
 .resultRow {
     padding-top: 2px;
     padding-bottom: 5px;
-}
-
-.listElement {
-    width: 100px;
-}
-
-#applicationTitle {
-    text-align: center;
 }
 
 #instructionText {
@@ -80,7 +75,22 @@
     width: 90%;
 }
 
+#ectsTable td{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 1px solid #000000;
+}
+
 #optionalLabel {
     font-size: 12px;
     font-style: italic;
+}
+
+#closeApplicationDiv {
+    padding-top: 15px;
+    text-align: center;
+}
+
+#hintText {
+    font-size: 11pt;
 }

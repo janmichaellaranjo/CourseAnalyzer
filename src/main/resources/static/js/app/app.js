@@ -5,5 +5,6 @@ demoApp.constant('CONSTANTS', {
     readStudyPlan: '/courseanalyzer/readStudyPlan',
     readTransitionalProvision: '/courseanalyzer/readTransitionalProvision',
     readCertificateList: '/courseanalyzer/readCertificateList',
-    compareCourses: '/courseanalyzer/compareCourses'
+    compareCourses: '/courseanalyzer/compareCourses',
+    closeApplication: '/courseanalyzer/closeApplication'
 });
