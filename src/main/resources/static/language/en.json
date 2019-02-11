@@ -1,0 +1,20 @@
+{
+  "instructionText": "This web application helps you to give an overview of your total amount of mandatory courses, courses from optional modules and transferable skills ECts and also shows the list of remaining  mandatory courses of the curriculum.",
+  "studyPlan": "Study Plan",
+  "transitionalProvision": "Transitional Provision(Optional)",
+  "certificateList": "Finished Courses",
+  "analyze": "Analyze",
+  "result": "Result",
+  "type": "Type",
+  "mandatoryCoursesEcts": "Mandatory Courses ECTs",
+  "optionalMandatoryCoursesEcts": "Additional Mandatory Courses ECTs",
+  "optionalModuleEcts": "Optional Module ECTs",
+  "transferableSkills": "Transferable Skills ECTs",
+  "remainingMandatoryCourses": "Remaining Mandatory Courses",
+  "remainingUnassignedCourses": "Remaining Unassigned Courses",
+  "remainingMandatoryCoursesTitle": "",
+  "courseType": "Course Type",
+  "courseName": "Course Name",
+  "hint": "The applications will still run, when the tab or browser is closed. Close the application with the button.",
+  "closeApplication": "Close Web Application"
+}

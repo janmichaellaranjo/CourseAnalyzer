@@ -76,7 +76,7 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 * Create a tutorial part in web application
 * ~~More course informations~~
 * Make application responsive and different formats for different medias
-* Change to multiple languages
+* ~~Change to multiple languages~~
 * Refactore code
 * Create tests
 * Properly log every class

@@ -103,12 +103,4 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
     };
 });
 
-window.onbeforeunload = function () {
-   return 'The application is still running';
-}
-
-window.onunload = function () {
-   return 'The application is still running';
-}
-
 

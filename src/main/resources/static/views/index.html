@@ -5,57 +5,64 @@
     <title>Main Page</title>
     <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/lib/jquery-3.3.1.min.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/courseAnalyzerController.js"></script>
     <script src="js/app/courseAnalyzerService.js"></script>
+    <script src="js/app/languageSelector.js"></script>
+    <script src="js/app/populateTextReady.js"></script>
+    <script src="js/app/populateTextClick.js"></script>
+    <script src="js/app/uiElement.js"></script>
     <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/app/index.css">
 </head>
 <body ng-app="CourseAnalyzer">
     <div id="courseAnalyzerDiv" class="container" ng-controller="courseAnalyzerController">
         <div class="center">
+            <div id="languageSettingDiv">
+                <a id="enLink" href="#" onclick="setLanguage('en');underLineSelectedLanguage('en');">English</a>
+                <a id="deLink" href="#" onclick="setLanguage('de');underLineSelectedLanguage('de');">Deutsch</a>
+            </div>
             <h1 class="centerText">Course Analyzer</h1>
-            <p id="instructionText">This web application helps you to give an overview of your total amount of mandatory
-            courses, courses from optional modules and transferable skills ECts and also shows the list of remaining
-            mandatory courses of your curriculum.</p>
+            <p id="instructionText"></p>
             <div class="row">
                 <div class="column0">
-                    <p><label>Study Plan file</label></p>
-                    <p><label>Transitional Provision file</label><label id="optionalLabel"> - Optional</label></p>
-                    <p><label>Certificate List file</label></p>
+                    <p><label id="studyPlanLabel"/></p>
+                    <p><label id="transitionalProvisionLabel"/></p>
+                    <p><label id="finishedCoursesLabel"/></p>
                     <br/>
                 </div>
                 <div class="column1">
                     <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
                     <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
                     <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
-                    <button id="analyzeBtn" ng-click="analyzeCourses()" ng-disabled="!showElement.isMandatoryFilesFilled">Analyze</button>
+                    <button id="analyzeButton" ng-click="analyzeCourses()" ng-disabled="!showElement.isMandatoryFilesFilled">Analyze</button>
                 </div>
             </div>
             <div class="results" ng-show="showElement.isResultFilled">
                 <hr/>
-                <h3 class="centerText">Result</h3>
+                <h3 id="resultTitle" class="centerText">Result</h3>
                 <div class="row">
                     <div class="resultColumn0">
                         <table id="ectsTable">
                             <thead>
-                            <td>Type</td>
+                            <td id="typeCell"/>
                             <td>ECTs</td>
                             </thead>
                             <tr>
-                                <td>Mandatory Courses ECTs</td>
+                                <td id="mandatoryCoursesEctsCell"/>
                                 <td>{{courseReport.mandatoryCoursesEcts}}</td>
                             </tr>
                             <tr>
-                                <td>Additional Mandatory Courses ECTs</td>
+                                <td id="additionalMandatoryCoursesEctsCell"/>
                                 <td>{{courseReport.additionalMandatoryCoursesEcts}}</td>
                             </tr>
                             <tr>
-                                <td>Optional Module ECTs</td>
+                                <td id="optionalModuleEctsCell"/>
                                 <td>{{courseReport.optionalModuleCoursesEcts}}</td>
                             </tr>
                             <tr>
-                                <td>Transferable Skills ECTs</td>
+                                <td id="transferableSkillsEctsCell"/>
                                 <td>{{courseReport.transferableSkillsEcts}}</td>
                             </tr>
                         </table>
@@ -63,42 +70,45 @@
                 </div>
                 <div class="row">
                     <div class="resultColumn0">
-                        <p>Remaining Mandatory Courses</p>
+                        <h5 id="remainingResultedMandatoryCoursesTitle"></h5>
                         <p>
-                        <table class="resultTable">
-                            <thead>
-                                <td>ECTs</td>
-                                <td>Course Type</td>
-                                <td>Course Name</td>
-                            </thead>
-                            <tr ng-repeat="course in courseReport.remainingMandatoryCourses">
-                                <td class="ectsCell">{{course.ects}}</td>
-                                <td>{{course.courseType}}</td>
-                                <td>{{course.courseName}}</td>
-                            </tr>
-                        </table></p>
+                            <table class="resultTable">
+                                <thead>
+                                    <td>ECTs</td>
+                                    <td class="courseTypeCell"/>
+                                    <td class="courseNameCell"/>
+                                </thead>
+                                <tr ng-repeat="course in courseReport.remainingMandatoryCourses">
+                                    <td class="ectsCell">{{course.ects}}</td>
+                                    <td>{{course.courseType}}</td>
+                                    <td>{{course.courseName}}</td>
+                                </tr>
+                            </table>
+                        </p>
                     </div>
                     <div class="resultColumn1">
-                        <p>Remaining Unassigned Courses</p>
-                        <p><table class="resultTable">
-                        <thead>
-                        <td>ECTs</td>
-                        <td>Course Type</td>
-                        <td>Course Name</td>
-                        </thead>
-                        <tr ng-repeat="course in courseReport.remainingUnassignedFinishedCourses">
-                            <td class="ectsCell">{{course.ects}}</td>
-                            <td>{{course.courseType}}</td>
-                            <td>{{course.courseName}}</td>
-                        </tr>
-                    </table></p>
+                        <h5 id="remainingUnassignedCoursesTitle"></h5>
+                        <p>
+                            <table class="resultTable">
+                                <thead>
+                                    <td>ECTs</td>
+                                    <td class="courseTypeCell"/>
+                                    <td class="courseNameCell"/>
+                                </thead>
+                                <tr ng-repeat="course in courseReport.remainingUnassignedFinishedCourses">
+                                    <td class="ectsCell">{{course.ects}}</td>
+                                    <td>{{course.courseType}}</td>
+                                    <td>{{course.courseName}}</td>
+                                </tr>
+                            </table>
+                        </p>
                     </div>
                 </div>
             </div>
             <div id="closeApplicationDiv">
                 <hr/>
-                <label id="hintText">The applications will still run, when the tab or browser is closed.</label>
-                <button ng-click="closeApplication()">Close Application</button>
+                <label id="hintLabel">The applications will still run, when the tab or browser is closed.</label>
+                <button id="closeApplicationButton" ng-click="closeApplication()">Close Application</button>
             </div>
         </div>
     </div>
