@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -34,6 +35,7 @@ import java.util.*;
  *
  * <p>Every other information is simply ignored.</p>
  */
+@Component("SimpleCertificateAnalyzer")
 public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleCertificateAnalyzer.class);
@@ -53,7 +55,6 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
             Workbook workbook = getWorkBookFromMultiPartRequest(request);
             Sheet sheet = workbook.getSheetAt(SHEET_NUMBER);
 
-
             int i = START_ROW;
             Row row = sheet.getRow(i);
             while (!isRowEmpty(row)) {
@@ -64,7 +65,6 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
                 }
                 row = sheet.getRow(i++);
             }
-
 
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
@@ -78,6 +78,7 @@ public class SimpleCertificateAnalyzer implements CertificateAnalyzer {
 
     private Course getCertificateFromCells(Row row) {
         Course certificate = new Course();
+
         try {
             certificate.setCourseName(row.getCell(COURSE_NAME_INDEX).getStringCellValue());
             certificate.setCourseType(getCourseTypeFromCell(row.getCell(COURSE_TYPE_INDEX)));

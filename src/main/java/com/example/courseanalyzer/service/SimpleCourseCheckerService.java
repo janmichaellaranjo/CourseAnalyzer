@@ -12,6 +12,7 @@ import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
@@ -24,11 +25,8 @@ import javax.servlet.ServletRequest;
 public class SimpleCourseCheckerService implements CourseAnalyzerService {
     private static final Logger logger = LogManager.getLogger(SimpleCourseCheckerService.class);
 
+    @Autowired
     private CourseAnalyzer courseAnalyzer;
-
-    public SimpleCourseCheckerService() {
-        this.courseAnalyzer = new CourseAnalyzer();
-    }
 
     @Override
     public void readStudyPlan(ServletRequest request) {

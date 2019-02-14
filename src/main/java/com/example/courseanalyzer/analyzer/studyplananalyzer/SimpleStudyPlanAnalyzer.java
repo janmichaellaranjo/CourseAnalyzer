@@ -23,6 +23,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -39,28 +42,42 @@ import java.util.Set;
  * <p>Each step of the analysis can be exchanged with a new implementation, if
  *    necessary.</p>
  */
+@Component("SimpleStudyPlanAnalyzer")
 public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleStudyPlanAnalyzer.class);
-    private static final String CHAPTER_TITLE_SUGGSTED_STUDY_COURSE = "Semestereinteilung der Lehrveranstaltungen";
-    private static final String CHAPTER_TITLE_TRANSFERABLE_SKILL = "Wahlfachkatalog ”Transferable Skills“";
-    private static final String CHAPTER_TITLE_EXAM_COURSES_MODULES = "Prüfungsfächer mit den zugeordneten Modulen und Lehrveranstaltungen";
-    private static final int PAGE_NR_TABLE_OF_CONTENT = 2;
-    private PDDocument pdDocument;
-    private TableOfContent tableOfContent;
-    private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
-    private ModuleAnalyzer moduleAnalyzer;
-    private TransferableSkillsAnalyzer transferableSkillsAnalyzer;
-    private Set<Course> mandatoryCourses;
-    private Set<Module> modules;
-    private Set<Course> transferableSkills;
-    private String fileName;
 
-    public SimpleStudyPlanAnalyzer() {
-        this.mandatoryCourseAnalyzer = new SimpleMandatoryCourseAnalyzer();
-        this.moduleAnalyzer = new SimpleModuleAnalyzer();
-        this.transferableSkillsAnalyzer = new SimpleTransferableSkills();
-    }
+    private static final String CHAPTER_TITLE_SUGGSTED_STUDY_COURSE = "Semestereinteilung der Lehrveranstaltungen";
+
+    private static final String CHAPTER_TITLE_TRANSFERABLE_SKILL = "Wahlfachkatalog ”Transferable Skills“";
+
+    private static final String CHAPTER_TITLE_EXAM_COURSES_MODULES = "Prüfungsfächer mit den zugeordneten Modulen und Lehrveranstaltungen";
+
+    private static final int PAGE_NR_TABLE_OF_CONTENT = 2;
+
+    @Autowired
+    @Qualifier("SimpleMandatoryCourseAnalyzer")
+    private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
+
+    @Autowired
+    @Qualifier("SimpleModuleAnalyzer")
+    private ModuleAnalyzer moduleAnalyzer;
+
+    @Autowired
+    @Qualifier("SimpleTransferableSkills")
+    private TransferableSkillsAnalyzer transferableSkillsAnalyzer;
+
+    private PDDocument pdDocument;
+
+    private TableOfContent tableOfContent;
+
+    private Set<Course> mandatoryCourses;
+
+    private Set<Module> modules;
+
+    private Set<Course> transferableSkills;
+
+    private String fileName;
 
     @Override
     public void analyzeStudyPlan(ServletRequest request) {

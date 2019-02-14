@@ -10,6 +10,7 @@ import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
  * <p>The order is <i>[ects]/[weeklyHour]_[courseType]_[courseName]</i></p>
  * <p>Every other information is simply ignored</p>
  */
+@Component("SimpleModuleAnalyzer")
 public class SimpleModuleAnalyzer implements ModuleAnalyzer {
     private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(.*[mindestens ]?\\d+,\\d+ECTS\\)";
     private static final String COURSE_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";

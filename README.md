@@ -78,6 +78,7 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 * Make application responsive and different formats for different medias
 * ~~Change to multiple languages~~
 * Refactore code
+* ~~Use Dependency Injection~~
 * Create tests
 * Properly log every class
 * Create a how to use in README

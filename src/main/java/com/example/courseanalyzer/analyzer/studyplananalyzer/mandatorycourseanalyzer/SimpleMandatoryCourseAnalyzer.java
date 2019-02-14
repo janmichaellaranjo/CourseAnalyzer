@@ -11,6 +11,7 @@ import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ import java.util.*;
  * <p>The order is <i>[ects]_[courseType]_[course name]</i></p>
  * <p>Every other information is simply ignored</p>
  */
+@Component("SimpleMandatoryCourseAnalyzer")
 public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleMandatoryCourseAnalyzer.class);
@@ -35,7 +37,6 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
 
         Set<Course> mandatoryCourses = new HashSet<>();
         Scanner scanner = new Scanner(mandatoryCoursesText);
-        int i = 1;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
 
@@ -47,8 +48,6 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
                     mandatoryCourses.add(courseFromLine);
                 }
             }
-
-            i++;
         }
         scanner.close();
 

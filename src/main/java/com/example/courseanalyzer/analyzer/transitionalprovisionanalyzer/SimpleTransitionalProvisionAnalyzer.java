@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -35,6 +36,7 @@ import java.util.regex.Pattern;
  *    additional mandatory courses.</p>
  * <p>The order of the course is <i>[ects]_[courseType]_[course name]</i>.</p>
  */
+@Component("SimpleTransitionalProvisionAnalyzer")
 public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisionAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleTransitionalProvisionAnalyzer.class);

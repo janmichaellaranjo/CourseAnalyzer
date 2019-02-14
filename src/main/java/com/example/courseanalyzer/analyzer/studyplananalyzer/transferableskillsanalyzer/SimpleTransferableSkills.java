@@ -11,6 +11,7 @@ import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -24,6 +25,7 @@ import java.util.Set;
  * <p>Each step of the analysis can be exchanged with a new implementation, if
  *    necessary.</p>
  */
+@Component("SimpleTransferableSkills")
 public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleTransferableSkills.class);
