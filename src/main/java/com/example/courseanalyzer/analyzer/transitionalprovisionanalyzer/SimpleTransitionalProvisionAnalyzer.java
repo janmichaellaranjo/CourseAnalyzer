@@ -8,6 +8,7 @@ package com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer;
 
 import com.example.courseanalyzer.analyzer.ReadFileException;
 import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.model.CourseGroup;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.ExamModule;
@@ -40,13 +41,24 @@ import java.util.regex.Pattern;
 public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisionAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleTransitionalProvisionAnalyzer.class);
+
     private static final int PAGE_NR = 3;
+
     private static final String EXAM_MODULE_TITLE_FORMAT = "Prüfungsfach „[\\w|äöüÄÖÜß| |(|)|:|-]+“?";
+
     private static final String MANDATORY_COURSE_TITLE = "Pflichtlehrveranstaltungen";
+
     private static final String ADDITIONAL_MANDATORY_COURSE_TITLE = "Ergänzende Pflichtlehrveranstaltungen";
+
     private PDDocument pdDocument;
+
     private TransitionalProvision transitionalProvision;
+
     private String fileName;
+
+    private CourseGroup mandatoryCourseGroup;
+
+    private CourseGroup additionalMandatoryCourseGroup;
 
     @Override
     public void analyzeTransitionalProvision(ServletRequest request) {
@@ -131,62 +143,59 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
     }
 
     private void analyzeAdditionalMandatoryCourses(String transitionalProvisionText) {
+        //TODO: refactor
         this.transitionalProvision = new TransitionalProvision();
-        Set<ExamModule> examModules = new HashSet<>();
-        ExamModule examModule = null;
-        Set<Course> mandatoryCourses = null;
-        Set<Course> additionalMandatoryCourses = null;
+        Set<CourseGroup> mandatoryCourseGroups = new HashSet<>();
+        Set<CourseGroup> additionalMandatoryCourseGroups = new HashSet<>();
+
         boolean isStartMandatoryCourses = false;
-        boolean isAdded = false;
 
         for (String line : getProcessedLines(transitionalProvisionText)) {
 
             if (isStartOfExamModule(line)) {
-                examModule = new ExamModule();
-                additionalMandatoryCourses = null;
-                isAdded = false;
+                additionalMandatoryCourseGroup = null;
             }
 
             if (line.equals(MANDATORY_COURSE_TITLE)) {
-                isStartMandatoryCourses  = true;
-                mandatoryCourses = new HashSet<>();
+                isStartMandatoryCourses = true;
             } else if (line.equals(ADDITIONAL_MANDATORY_COURSE_TITLE)) {
                 isStartMandatoryCourses = false;
-                additionalMandatoryCourses = new HashSet<>();
             }
+
             if (CourseLineUtil.isLineValidCourseWithoutWeeklyHoursInformation(line)) {
-                if (line.contains("•")) {
-                    //TODO: add to MandatoryCoursesGroup
-                }
                 Course course = CourseLineUtil.getCourseFromLine(line);
+                //TODO: regex
+                if (line.contains("•")) {
+                    if (isStartMandatoryCourses) {
+                        if (isMandatoryCourseGroupFilled()) {
+                            mandatoryCourseGroups.add(mandatoryCourseGroup);
+                        }
+                        mandatoryCourseGroup = new CourseGroup();
+                    } else {
+                        if (isAdditionalMandatoryCourseGroupFilled()) {
+                            additionalMandatoryCourseGroups.add(additionalMandatoryCourseGroup);
+                        }
+                        additionalMandatoryCourseGroup = new CourseGroup();
+                    }
+                }
 
                 if (isStartMandatoryCourses) {
-                    mandatoryCourses.add(course);
+                    mandatoryCourseGroup.addCourse(course);
                 } else {
-                    additionalMandatoryCourses.add(course);
+                    additionalMandatoryCourseGroup.addCourse(course);
                 }
-            } else if(additionalMandatoryCourses != null &&
-                    !mandatoryCourses.isEmpty() &&
-                    !additionalMandatoryCourses.isEmpty()) {
-                examModule.setMandatoryCourses(mandatoryCourses);
-                examModule.setAdditionalMandatoryCourses(additionalMandatoryCourses);
+            } else if (isMandatoryCourseGroupFilled() &&
+                    isAdditionalMandatoryCourseGroupFilled()) {
 
-                examModules.add(examModule);
-                isAdded = true;
-                examModule = null;
-                additionalMandatoryCourses = null;
+                additionalMandatoryCourseGroups.add(additionalMandatoryCourseGroup);
                 isStartMandatoryCourses = false;
+            } else if (isMandatoryCourseGroupFilled()) {
+                mandatoryCourseGroups.add(mandatoryCourseGroup);
             }
         }
 
-        //if exam module is not added because it is the last, it is added too
-        if (!isAdded && mandatoryCourses != null && additionalMandatoryCourses != null) {
-            examModule.setMandatoryCourses(mandatoryCourses);
-            examModule.setAdditionalMandatoryCourses(additionalMandatoryCourses);
-            examModules.add(examModule);
-        }
-
-        transitionalProvision.setExamModules(examModules);
+        transitionalProvision.setMandatoryCourseGroups(mandatoryCourseGroups);
+        transitionalProvision.setAdditionalMandatoryCourseGroups(additionalMandatoryCourseGroups);
     }
 
     private List<String> getProcessedLines(String transitionalProvision) {
@@ -201,7 +210,6 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
                 for (String splittedLine : splittedLines) {
                     lines.add(splittedLine);
                 }
-
             } else {
                 lines.add(line);
             }
@@ -215,6 +223,14 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
         Matcher matcher = pattern.matcher(line);
 
         return matcher.matches();
+    }
+
+    private boolean isMandatoryCourseGroupFilled() {
+        return mandatoryCourseGroup != null && !mandatoryCourseGroup.isCourseGroupEmpty();
+    }
+
+    private boolean isAdditionalMandatoryCourseGroupFilled() {
+        return additionalMandatoryCourseGroup != null && !additionalMandatoryCourseGroup.isCourseGroupEmpty();
     }
 
     @Override

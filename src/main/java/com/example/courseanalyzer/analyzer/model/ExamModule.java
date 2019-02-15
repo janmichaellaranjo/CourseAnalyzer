@@ -19,6 +19,25 @@ public class ExamModule {
 
     private Set<Course> additionalMandatoryCourses;
 
+    private Set<CourseGroup> mandatoryCourseGroups;
+
+    private Set<CourseGroup> additionalMandatoryCourseGroups;
+
+    public Set<CourseGroup> getMandatoryCourseGroups() {
+        return mandatoryCourseGroups;
+    }
+
+    public void setMandatoryCourseGroups(Set<CourseGroup> mandatoryCourseGroups) {
+        this.mandatoryCourseGroups = mandatoryCourseGroups;
+    }
+
+    public Set<CourseGroup> getAdditionalMandatoryCourseGroups() {
+        return additionalMandatoryCourseGroups;
+    }
+
+    public void setAdditionalMandatoryCourseGroups(Set<CourseGroup> additionalMandatoryCourseGroups) {
+        this.additionalMandatoryCourseGroups = additionalMandatoryCourseGroups;
+    }
 
     public Set<Course> getMandatoryCourses() {
         return mandatoryCourses;

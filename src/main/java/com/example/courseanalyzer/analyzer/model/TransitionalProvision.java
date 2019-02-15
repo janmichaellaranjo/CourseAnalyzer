@@ -15,27 +15,79 @@ import java.util.Set;
  */
 public class TransitionalProvision {
 
-    private Set<ExamModule> examModules;
 
-    public Set<ExamModule> getExamModules() {
-        return examModules;
+    private Set<CourseGroup> mandatoryCourseGroups;
+
+    private Set<CourseGroup> additionalMandatoryCourseGroups;
+
+    public Set<CourseGroup> getMandatoryCourseGroups() {
+        return mandatoryCourseGroups;
     }
 
-    public void setExamModules(Set<ExamModule> examModules) {
-        this.examModules = examModules;
+    public void setMandatoryCourseGroups(Set<CourseGroup> mandatoryCourseGroups) {
+        this.mandatoryCourseGroups = mandatoryCourseGroups;
+    }
+
+    public Set<CourseGroup> getAdditionalMandatoryCourseGroups() {
+        return additionalMandatoryCourseGroups;
+    }
+
+    public void setAdditionalMandatoryCourseGroups(Set<CourseGroup> additionalMandatoryCourseGroups) {
+        this.additionalMandatoryCourseGroups = additionalMandatoryCourseGroups;
     }
 
     /**
-     * Returns true, if the mandatory courses of transitional provision
-     * contains the examined module{@code examinedModule}.
      *
-     * @param examinedModule the examined module.
-     * @return true, if the mandatory courses of transitional provision
-     *         contains the examined module{@code examinedModule}.
+     * Returns the mandatory  course group of corresponding Course
+     * {@code examinedCourse}.
+     *
+     * <p>Returns {@code null}, if no corresponding group exists.</p>
+     *
+     * @param examinedCourse the course that is examined
+     * @return the mandatory course group of corresponding Course
+     *         {@code examinedCourse}.
      */
-    public boolean containsMandatoryCourse(Course examinedModule) {
-        for (ExamModule examModule : examModules) {
-            if (examModule.containsMandatoryCourse(examinedModule)) {
+    public CourseGroup getMandatoryCourseGroupOfCourse(Course examinedCourse) {
+        for (CourseGroup mandatoryCourseGroup : mandatoryCourseGroups) {
+            if (mandatoryCourseGroup.isCourseInGroup(examinedCourse)) {
+                return mandatoryCourseGroup;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * Returns the additional mandatory  course group of corresponding Course
+     * {@code examinedCourse}.
+     *
+     * <p>Returns {@code null}, if no corresponding group exists.</p>
+     *
+     * @param examinedCourse the course that is examined
+     * @return the additional mandatory course group of corresponding Course
+     *         {@code examinedCourse}.
+     */
+    public CourseGroup getAdditionalMandatoryCourseGroupOfCourse(Course examinedCourse) {
+        for (CourseGroup additionalMandatoryCourseGroup : additionalMandatoryCourseGroups) {
+            if (additionalMandatoryCourseGroup.isCourseInGroup(examinedCourse)) {
+                return additionalMandatoryCourseGroup;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * Returns {@code true}, if the mandatory course groups contains the course
+     * {@code examinedCourse}.
+     *
+     * @param examinedCourse the course which is examined
+     * @return {@code true}, if the mandatory course groups contains the course
+     *         {@code examinedCourse}.
+     */
+    public boolean containsMandatoryCourse(Course examinedCourse) {
+        for (CourseGroup mandatoryCourseGroup : mandatoryCourseGroups) {
+            if (mandatoryCourseGroup.isCourseInGroup(examinedCourse)) {
                 return true;
             }
         }
@@ -43,16 +95,17 @@ public class TransitionalProvision {
     }
 
     /**
-     * Returns true, if the additional mandatory courses of transitional
-     * provision contains the examined module{@code examinedModule}.
      *
-     * @param examinedModule the examined module.
-     * @return if the additional mandatory courses of transitional provision
-     *         contains the examined module{@code examinedModule}.
+     * Returns {@code true}, if the additional mandatory course groups contains
+     * the course @code examinedCourse}.
+     *
+     * @param examinedCourse the course which is examined
+     * @return {@code true}, if the additional mandatory course groups contains
+     *         the course {@code examinedCourse}.
      */
-    public boolean containsAdditionalMandatoryCourse(Course examinedModule) {
-        for (ExamModule examModule : examModules) {
-            if (examModule.containsAdditionalMandatoryCourse(examinedModule)) {
+    public boolean containsAdditionalMandatoryCourse(Course examinedCourse) {
+        for (CourseGroup additionalMandatoryCourseGroup : additionalMandatoryCourseGroups) {
+            if (additionalMandatoryCourseGroup.isCourseInGroup(examinedCourse)) {
                 return true;
             }
         }
