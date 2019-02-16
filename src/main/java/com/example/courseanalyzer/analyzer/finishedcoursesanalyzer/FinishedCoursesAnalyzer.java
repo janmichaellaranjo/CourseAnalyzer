@@ -42,10 +42,12 @@ public interface FinishedCoursesAnalyzer {
      * @throws ReadFileException    is thrown, when an IO problem occurs while
      *                              reading the passed file.
      * @throws WrongFormatException is thrown, when the format is wrong such
-     *                              that no information can be properly
-     *                              extracted.
+     *                              that no information could properly be
+     *                              extracted e.g. a number is expected but the
+     *                              information is a string.
      * @throws NoModelsExtractedException is thrown, when no model is extracted
-     *                                    from the request.
+     *                                    from the request. The list of finished
+     *                                    courses is empty.
      */
    void analyzeFinishedCourses(ServletRequest request);
 

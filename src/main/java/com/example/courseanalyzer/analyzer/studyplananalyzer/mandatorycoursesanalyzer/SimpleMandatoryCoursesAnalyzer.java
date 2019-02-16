@@ -1,13 +1,12 @@
-package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer;
+package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer;
 /**
- * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer
- * @Class: SimpleMandatoryCourseAnalyzer
+ * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer
+ * @Class: SimpleMandatoryCoursesAnalyzer
  * @Author: Jan
  * @Date: 29.01.2019
  */
 
 import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
-import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;
@@ -24,10 +23,10 @@ import java.util.*;
  * <p>The order is <i>[ects]_[courseType]_[course name]</i></p>
  * <p>Every other information is simply ignored</p>
  */
-@Component("SimpleMandatoryCourseAnalyzer")
-public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
+@Component("SimpleMandatoryCoursesAnalyzer")
+public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer {
 
-    private static final Logger logger = LogManager.getLogger(SimpleMandatoryCourseAnalyzer.class);
+    private static final Logger logger = LogManager.getLogger(SimpleMandatoryCoursesAnalyzer.class);
 
     @Override
     public Set<Course> analyzeMandatoryCourses(String mandatoryCoursesText) {

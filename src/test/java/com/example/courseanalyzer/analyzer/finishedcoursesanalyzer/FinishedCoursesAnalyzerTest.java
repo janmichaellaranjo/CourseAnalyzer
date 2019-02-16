@@ -1,7 +1,7 @@
 package com.example.courseanalyzer.analyzer.finishedcoursesanalyzer;
 /**
  * @Package: com.example.courseanalyzer.analyzer.finishedcoursesanalyzer
- * @Class: CertificateAnalyzerTest
+ * @Class: FinishedCoursesAnalyzerTest
  * @Author: Jan
  * @Date: 15.02.2019
  */
@@ -38,10 +38,10 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CourseAnalyzerApplication.class)
-public class CertificateAnalyzerTest {
+public class FinishedCoursesAnalyzerTest {
 
     @Autowired
-    private FinishedCoursesAnalyzer certificateAnalyzer;
+    private FinishedCoursesAnalyzer finishedCoursesAnalyzer;
 
     private MockMultipartHttpServletRequest mockRequest;
 
@@ -64,9 +64,9 @@ public class CertificateAnalyzerTest {
 
         mockRequest.addFile(mockedFile);
 
-        certificateAnalyzer.analyzeFinishedCourses(mockRequest);
+        finishedCoursesAnalyzer.analyzeFinishedCourses(mockRequest);
 
-        Set<Course> resultedCourses = certificateAnalyzer.getFinishedCourses();
+        Set<Course> resultedCourses = finishedCoursesAnalyzer.getFinishedCourses();
 
         assertThat(resultedCourses.size(), is(6));
         assertThat(SetUtils.isEqualSet(expectedCourses, resultedCourses), is(true));
@@ -85,7 +85,7 @@ public class CertificateAnalyzerTest {
 
         mockRequest.addFile(mockedFile);
 
-        certificateAnalyzer.analyzeFinishedCourses(mockRequest);
+        finishedCoursesAnalyzer.analyzeFinishedCourses(mockRequest);
     }
 
     @Test(expected = WrongFormatException.class)
@@ -94,6 +94,6 @@ public class CertificateAnalyzerTest {
 
         mockRequest.addFile(mockedFile);
 
-        certificateAnalyzer.analyzeFinishedCourses(mockRequest);
+        finishedCoursesAnalyzer.analyzeFinishedCourses(mockRequest);
     }
 }

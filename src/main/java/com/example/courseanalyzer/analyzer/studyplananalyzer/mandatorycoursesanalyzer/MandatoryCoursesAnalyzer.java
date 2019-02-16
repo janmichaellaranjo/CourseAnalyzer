@@ -1,7 +1,7 @@
-package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer;
+package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer;
 /**
- * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer
- * @Class: MandatoryCourseAnalyzer
+ * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer
+ * @Class: MandatoryCoursesAnalyzer
  * @Author: Jan
  * @Date: 29.01.2019
  */
@@ -22,7 +22,7 @@ import java.util.Set;
  * <p>These interface is used to conveniently change the implementation because
  *    the plan may change and a new implementation is necessary.</p>
  */
-public interface MandatoryCourseAnalyzer {
+public interface MandatoryCoursesAnalyzer {
 
     /**
      * Returns the set of the mandatory courses from the text

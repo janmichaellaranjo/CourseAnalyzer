@@ -1,7 +1,7 @@
-package com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer;
+package com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer;
 /**
- * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer
- * @Class: SimpleModuleAnalyzer
+ * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer
+ * @Class: SimpleModulesAnalyzer
  * @Author: Jan
  * @Date: 04.02.2019
  */
@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
  * <p>The order is <i>[ects]/[weeklyHour]_[courseType]_[courseName]</i></p>
  * <p>Every other information is simply ignored</p>
  */
-@Component("SimpleModuleAnalyzer")
-public class SimpleModuleAnalyzer implements ModuleAnalyzer {
+@Component("SimpleModulesAnalyzer")
+public class SimpleModulesAnalyzer implements ModulesAnalyzer {
     private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(.*[mindestens ]?\\d+,\\d+ECTS\\)";
     private static final String COURSE_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";
 

@@ -3,9 +3,9 @@ com.example.courseanalyzer.analyzer
 com.example.courseanalyzer.analyzer.finishedcoursesanalyzer
 com.example.courseanalyzer.analyzer.model
 com.example.courseanalyzer.analyzer.studyplananalyzer
-com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer
+com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer
 com.example.courseanalyzer.analyzer.studyplananalyzer.model
-com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer
+com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer
 com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer
 com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer
 com.example.courseanalyzer.controller

@@ -8,12 +8,12 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer;
 
 import com.example.courseanalyzer.analyzer.exception.ReadFileException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
-import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesanalyzer.MandatoryCoursesAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Chapter;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.TableOfContent;
-import com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer.ModuleAnalyzer;
+import com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer.ModulesAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.TransferableSkillsAnalyzer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,12 +53,12 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private static final int PAGE_NR_TABLE_OF_CONTENT = 2;
 
     @Autowired
-    @Qualifier("SimpleMandatoryCourseAnalyzer")
-    private MandatoryCourseAnalyzer mandatoryCourseAnalyzer;
+    @Qualifier("SimpleMandatoryCoursesAnalyzer")
+    private MandatoryCoursesAnalyzer mandatoryCoursesAnalyzer;
 
     @Autowired
-    @Qualifier("SimpleModuleAnalyzer")
-    private ModuleAnalyzer moduleAnalyzer;
+    @Qualifier("SimpleModulesAnalyzer")
+    private ModulesAnalyzer modulesAnalyzer;
 
     @Autowired
     @Qualifier("SimpleTransferableSkills")
@@ -165,7 +165,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
 
         String text = pdfTextStripper.getText(pdDocument);
-        this.mandatoryCourses = mandatoryCourseAnalyzer.analyzeMandatoryCourses(text);
+        this.mandatoryCourses = mandatoryCoursesAnalyzer.analyzeMandatoryCourses(text);
 
     }
 
@@ -177,7 +177,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
 
         String text = pdfTextStripper.getText(pdDocument);
-        this.modules = moduleAnalyzer.analyzeModule(text);
+        this.modules = modulesAnalyzer.analyzeModule(text);
     }
 
     private void  analyzeTransferableSkills() throws IOException {

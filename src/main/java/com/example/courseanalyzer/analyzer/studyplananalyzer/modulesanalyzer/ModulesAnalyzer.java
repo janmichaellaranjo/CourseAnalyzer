@@ -1,7 +1,7 @@
-package com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer;
+package com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer;
 /**
- * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer
- * @Class: ModuleAnalyzer
+ * @Package: com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer
+ * @Class: ModulesAnalyzer
  * @Author: Jan
  * @Date: 04.02.2019
  */
@@ -21,7 +21,7 @@ import java.util.Set;
  * <p>These interface is used to conveniently change the implementation because
  *    the plan may change and a new implementation is necessary.</p>
  */
-public interface ModuleAnalyzer {
+public interface ModulesAnalyzer {
 
     /**
      * Returns the set of modules which is extracted from the text {@code modulesText}.
