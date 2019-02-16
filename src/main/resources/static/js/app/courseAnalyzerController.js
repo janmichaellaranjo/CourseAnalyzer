@@ -5,7 +5,7 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
 
         $scope.studyPlan = null;
         $scope.transitionalProvision = null;
-        $scope.certificateList = null;
+        $scope.finishedCourses = null;
         $scope.courseReport = {
             additionalMandatoryCoursesEcts: 0,
             mandatoryCoursesEcts: 0,
@@ -17,7 +17,7 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
 
         $scope.analyzeCourses = function() {
             $q.all([
-                courseAnalyzerService.uploadFileToUrl($scope.certificateList, CONSTANTS.readCertificateList),
+                courseAnalyzerService.uploadFileToUrl($scope.finishedCourses, CONSTANTS.readFinishedCourseList),
                 courseAnalyzerService.uploadFileToUrl($scope.transitionalProvision, CONSTANTS.readTransitionalProvision),
                 courseAnalyzerService.uploadFileToUrl($scope.studyPlan, CONSTANTS.readStudyPlan)
             ])
@@ -46,7 +46,7 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
         };
 
         $scope.mandatoryFilesChecker = function() {
-            if ($scope.studyPlan != null && $scope.certificateList != null) {
+            if ($scope.studyPlan != null && $scope.finishedCourses != null) {
                 $scope.showElement.isMandatoryFilesFilled = true;
             }
         };
@@ -89,13 +89,13 @@ module.controller('courseAnalyzerController',['$scope', '$q', 'courseAnalyzerSer
 .directive('filecertificatelist', function () {
     return {
         scope: {
-              certificateList: '='
+              finishedCourses: '='
         },
         link: function(scope, element, attrs) {
             element.bind('change', function(){
                 scope.$apply(function(){
                     var parentScope = scope.$parent;
-                    parentScope.certificateList = element[0].files[0];
+                    parentScope.finishedCourses = element[0].files[0];
                     parentScope.mandatoryFilesChecker();
                 });
             });

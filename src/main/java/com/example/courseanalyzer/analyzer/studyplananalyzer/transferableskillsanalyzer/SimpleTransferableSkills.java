@@ -6,7 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  * @Date: 04.02.2019
  */
 
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;

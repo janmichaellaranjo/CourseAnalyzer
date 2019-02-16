@@ -6,7 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer;
  * @Date: 03.02.2019
  */
 
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.model.Course;
 

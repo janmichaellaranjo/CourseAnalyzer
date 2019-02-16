@@ -7,8 +7,6 @@ package com.example.courseanalyzer.service;
  */
 
 import com.example.courseanalyzer.analyzer.CourseAnalyzer;
-import com.example.courseanalyzer.analyzer.ReadFileException;
-import com.example.courseanalyzer.analyzer.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,14 +45,14 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
     }
 
     @Override
-    public void readCertificateList(ServletRequest request) {
+    public void readFinishedCourseList(ServletRequest request) {
 
         if (request == null) {
             logger.error("The request on the service layer is null");
             throw new IllegalArgumentException("request must not be null");
         }
 
-        courseAnalyzer.analyzeCourseList(request);
+        courseAnalyzer.analyzeFinishedCourses(request);
     }
 
     @Override

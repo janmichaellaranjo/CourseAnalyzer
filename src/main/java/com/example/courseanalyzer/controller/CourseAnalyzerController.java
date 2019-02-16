@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -35,7 +34,7 @@ public class CourseAnalyzerController {
     @RequestMapping(value = "/readStudyPlan",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void readStudyPlan(HttpServletRequest request, HttpServletResponse response) {
+    public void readStudyPlan(HttpServletRequest request) {
         logger.info("A request for reading a study plan has been initiated");
         courseCheckerService.readStudyPlan(request);
     }
@@ -43,17 +42,17 @@ public class CourseAnalyzerController {
     @RequestMapping(value = "/readTransitionalProvision",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void readTransitionalProvision(HttpServletRequest request, HttpServletResponse response) {
+    public void readTransitionalProvision(HttpServletRequest request) {
         logger.info("A request for reading a transitional provision has been initiated");
         courseCheckerService.readTransitionalProvision(request);
     }
 
-    @RequestMapping(value = "/readCertificateList",
+    @RequestMapping(value = "/readFinishedCourseList",
                     method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public void readCourseList(HttpServletRequest request, HttpServletResponse response) {
+    public void readFinishedCourseList(HttpServletRequest request) {
         logger.info("A request for reading a course list has been initiated");
-        courseCheckerService.readCertificateList(request);
+        courseCheckerService.readFinishedCourseList(request);
     }
 
     @RequestMapping(value = "/compareCourses",

@@ -6,7 +6,8 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseana
  * @Date: 29.01.2019
  */
 
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;
@@ -53,10 +54,11 @@ public class SimpleMandatoryCourseAnalyzer implements MandatoryCourseAnalyzer {
 
         if (mandatoryCourses.isEmpty()) {
             String errorMsg = String.format(
-                    "The the mandatory course text has the wrong format");
+                    "The mandatory course text has the wrong format." +
+                    "No Mandatory courses could be extracted");
             logger.error(errorMsg);
 
-            throw new WrongFormatException(errorMsg);
+            throw new NoModelsExtractedException(errorMsg);
         }
 
         return mandatoryCourses;

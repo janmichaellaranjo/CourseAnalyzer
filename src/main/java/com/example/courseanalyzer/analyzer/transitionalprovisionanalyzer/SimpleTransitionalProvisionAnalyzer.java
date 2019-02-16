@@ -6,12 +6,11 @@ package com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer;
  * @Date: 02.02.2019
  */
 
-import com.example.courseanalyzer.analyzer.ReadFileException;
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.ReadFileException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseGroup;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
-import com.example.courseanalyzer.analyzer.model.ExamModule;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -96,7 +95,7 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
     }
 
     private PDDocument getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
-        //TODO: extract method-SimpleCertificateAnalyzer uses similar method too
+        //TODO: extract method-SimpleFinishedCoursesAnalyzer uses similar method too
         MultipartHttpServletRequest multiPartRequest = (MultipartHttpServletRequest) request;
         multiPartRequest.getParameterMap();
 

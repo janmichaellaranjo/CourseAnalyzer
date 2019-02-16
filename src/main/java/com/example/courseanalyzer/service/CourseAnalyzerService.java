@@ -6,8 +6,8 @@ package com.example.courseanalyzer.service;
  * @Date: 25.01.2019
  */
 
-import com.example.courseanalyzer.analyzer.ReadFileException;
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.ReadFileException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
 
 import javax.servlet.ServletRequest;
@@ -57,7 +57,7 @@ public interface CourseAnalyzerService {
      * @throws WrongFormatException is thrown, when the format is empty or the
      *                               text creates an empty list of certificates.
      */
-    void readCertificateList(ServletRequest request);
+    void readFinishedCourseList(ServletRequest request);
 
     /**
      *

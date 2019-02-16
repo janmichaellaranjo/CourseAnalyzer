@@ -3,7 +3,7 @@ var demoApp = angular.module('CourseAnalyzer', ['CourseAnalyzer.controllers','Co
 demoApp.constant('CONSTANTS', {
     readStudyPlan: '/courseanalyzer/readStudyPlan',
     readTransitionalProvision: '/courseanalyzer/readTransitionalProvision',
-    readCertificateList: '/courseanalyzer/readCertificateList',
+    readFinishedCourseList: '/courseanalyzer/readFinishedCourseList',
     compareCourses: '/courseanalyzer/compareCourses',
     closeApplication: '/courseanalyzer/closeApplication'
 });

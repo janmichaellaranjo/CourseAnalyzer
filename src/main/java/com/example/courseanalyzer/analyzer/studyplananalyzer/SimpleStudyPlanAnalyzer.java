@@ -6,17 +6,14 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer;
  * @Date: 03.02.2019
  */
 
-import com.example.courseanalyzer.analyzer.ReadFileException;
-import com.example.courseanalyzer.analyzer.WrongFormatException;
+import com.example.courseanalyzer.analyzer.exception.ReadFileException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.MandatoryCourseAnalyzer;
-import com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer.SimpleMandatoryCourseAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Chapter;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.TableOfContent;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer.ModuleAnalyzer;
-import com.example.courseanalyzer.analyzer.studyplananalyzer.moduleanalyzer.SimpleModuleAnalyzer;
-import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.SimpleTransferableSkills;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.TransferableSkillsAnalyzer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -112,7 +109,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     }
 
     private PDDocument getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
-        //TODO: extract method-SimpleCertificateAnalyzer uses similar method too
+        //TODO: extract method-SimpleFinishedCoursesAnalyzer uses similar method too
         MultipartHttpServletRequest multiPartRequest = (MultipartHttpServletRequest) request;
         multiPartRequest.getParameterMap();
 

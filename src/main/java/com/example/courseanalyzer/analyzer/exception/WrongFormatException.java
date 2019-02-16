@@ -1,6 +1,6 @@
-package com.example.courseanalyzer.analyzer;
+package com.example.courseanalyzer.analyzer.exception;
 /**
- * @Package: com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer
+ * @Package: com.example.courseanalyzer.analyzer.exception
  * @Class: WrongFormatException
  * @Author: Jan
  * @Date: 07.02.2019

@@ -1,6 +1,6 @@
 com.example.courseanalyzer
 com.example.courseanalyzer.analyzer
-com.example.courseanalyzer.analyzer.certificateanalyzer
+com.example.courseanalyzer.analyzer.finishedcoursesanalyzer
 com.example.courseanalyzer.analyzer.model
 com.example.courseanalyzer.analyzer.studyplananalyzer
 com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycourseanalyzer

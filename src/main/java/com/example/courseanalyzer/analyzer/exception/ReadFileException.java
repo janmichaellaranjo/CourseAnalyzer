@@ -1,6 +1,6 @@
-package com.example.courseanalyzer.analyzer;
+package com.example.courseanalyzer.analyzer.exception;
 /**
- * @Package: com.example.courseanalyzer.analyzer
+ * @Package: com.example.courseanalyzer.analyzer.exception
  * @Class: ReadFileException
  * @Author: Jan
  * @Date: 07.02.2019

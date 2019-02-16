@@ -6,9 +6,11 @@ package com.example.courseanalyzer.analyzer;
  * @Date: 29.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.ReadFileException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseGroup;
 import com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer.TransitionalProvisionAnalyzer;
-import com.example.courseanalyzer.analyzer.certificateanalyzer.CertificateAnalyzer;
+import com.example.courseanalyzer.analyzer.finishedcoursesanalyzer.FinishedCoursesAnalyzer;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.CourseReport;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
@@ -35,8 +37,8 @@ public class CourseAnalyzer {
     private StudyPlanAnalyzer studyPlanAnalyzer;
 
     @Autowired
-    @Qualifier("SimpleCertificateAnalyzer")
-    private CertificateAnalyzer certificateAnalyzer;
+    @Qualifier("SimpleFinishedCoursesAnalyzer")
+    private FinishedCoursesAnalyzer certificateAnalyzer;
 
     @Autowired
     @Qualifier("SimpleTransitionalProvisionAnalyzer")
@@ -93,12 +95,12 @@ public class CourseAnalyzer {
     }
 
     /**
-     * @see CertificateAnalyzer#analyzeCertificateList(ServletRequest)
+     * @see FinishedCoursesAnalyzer#analyzeFinishedCourses(ServletRequest)
      *
      * @param request the download request
      */
-    public void analyzeCourseList(ServletRequest request) {
-        certificateAnalyzer.analyzeCertificateList(request);
+    public void analyzeFinishedCourses(ServletRequest request) {
+        certificateAnalyzer.analyzeFinishedCourses(request);
     }
 
     /**
@@ -121,7 +123,7 @@ public class CourseAnalyzer {
         this.sumAchievedAdditionalMandatoryEcts = 0f;
         this.sumAchievedOptionalModuleEcts = 0f;
         this.sumAchievedTransferableSkillsEcts = 0f;
-        this.finishedCourses = certificateAnalyzer.getCertificates();
+        this.finishedCourses = certificateAnalyzer.getFinishedCourses();
         this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
         this.transitionalProvision = transitionalProvisionAnalyzer.getTransitionalProvision();
         this.modules = studyPlanAnalyzer.getModules();
