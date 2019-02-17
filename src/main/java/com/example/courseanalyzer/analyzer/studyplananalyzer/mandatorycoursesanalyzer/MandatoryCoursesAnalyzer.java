@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesan
  * @Date: 29.01.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 
@@ -28,16 +29,19 @@ public interface MandatoryCoursesAnalyzer {
      * Returns the set of the mandatory courses from the text
      * {@code mandatoryCourses}.
      *
-     * <p>This list can be empty, if the text does not meet the format
-     *    criteria.</p>
+     * <p>When a line does not meet all criteria for a course, it won't be added
+     * to the list and will be treated as a different line.</p>
      *
      * @param mandatoryCourses contains the mandatory courses
      * @throws IllegalArgumentException is thrown, when {@code modulesText} is
      *                                   {@code null}.
+     * @throws NoModelsExtractedException is thrown, when no course could be
+     *                                    extracted from {@code mandatoryCourses}
+     *                                    because the format of the text is
+     *                                    wrong.
      * @throws WrongFormatException is thrown, when the format of
-     *                              {@code mandatoryCourses} is empty or the
-     *                              format is wrong such that the list of
-     *                              mandatory courses is empty.
+     *                              {@code mandatoryCourses} is empty or a
+     *                              course information is incomplete
      * @return the set of the mandatory courses from the text
      *         {@code mandatoryCourses}.
      */

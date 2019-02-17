@@ -6,10 +6,13 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer;
  * @Date: 04.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -27,8 +30,12 @@ import java.util.regex.Pattern;
  */
 @Component("SimpleModulesAnalyzer")
 public class SimpleModulesAnalyzer implements ModulesAnalyzer {
+
     private static final String MODULE_FORMAT = "[*]?Modul ”[\\w|äöüÄÖÜß| |\\-|&]+“ \\(.*[mindestens ]?\\d+,\\d+ECTS\\)";
+
     private static final String COURSE_FORMAT = "\\w+,\\w+\\/\\w+,\\w+ .*[VO|UE|VU|PR|SE] [\\w|äöüÄÖÜß| |*-|*&]+";
+
+    private static final Logger logger = LogManager.getLogger(SimpleModulesAnalyzer.class);
 
     @Override
     public Set<Module> analyzeModule(String modulesText) {
@@ -70,14 +77,18 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
                 isProcessing = false;
             }
         }
-
-        module.setCourses(courses);
-        modules.add(module);
+        if (module != null) {
+            module.setCourses(courses);
+            modules.add(module);
+        }
 
         if (modules.isEmpty()) {
-            String errorMsg = "The passed modules text does not contain any valid module format";
+            String errorMsg = String.format(
+                    "The module text has the wrong format." +
+                            "No module could be extracted");
+            logger.error(errorMsg);
 
-            throw new WrongFormatException(errorMsg);
+            throw new NoModelsExtractedException(errorMsg);
         }
 
         return modules;
@@ -85,10 +96,17 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
 
     private void throwExceptionIfTextIsEmpty(String text) {
         //TODO: extract into validation util because similar method exist
+        String errorMsg;
         if (text == null) {
-            throw new IllegalArgumentException("The passed module text is null");
+            errorMsg = "The passed module text is null";
+
+            logger.error(errorMsg);
+            throw new IllegalArgumentException(errorMsg);
         } else if (text.isEmpty()) {
-            throw new WrongFormatException("The passed module text is empty");
+            errorMsg = "The passed module text is empty";
+
+            logger.error(errorMsg);
+            throw new WrongFormatException(errorMsg);
         }
     }
 

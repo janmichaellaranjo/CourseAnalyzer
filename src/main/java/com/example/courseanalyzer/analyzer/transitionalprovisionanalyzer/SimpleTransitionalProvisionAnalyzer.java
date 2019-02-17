@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer;
  * @Date: 02.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.ReadFileException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.CourseGroup;
@@ -144,6 +145,9 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
     private void analyzeAdditionalMandatoryCourses(String transitionalProvisionText) {
         //TODO: refactor
         this.transitionalProvision = new TransitionalProvision();
+        this.mandatoryCourseGroup = null;
+        this.additionalMandatoryCourseGroup = null;
+
         Set<CourseGroup> mandatoryCourseGroups = new HashSet<>();
         Set<CourseGroup> additionalMandatoryCourseGroups = new HashSet<>();
 
@@ -191,6 +195,19 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
             } else if (isMandatoryCourseGroupFilled()) {
                 mandatoryCourseGroups.add(mandatoryCourseGroup);
             }
+        }
+
+        if (mandatoryCourseGroups.isEmpty()) {
+            String errorMsg =
+                    "The transitional provision text has the wrong format." +
+                    "No mandatory course group could be extracted";
+            throw new NoModelsExtractedException(errorMsg);
+        }
+        if (additionalMandatoryCourseGroups.isEmpty()) {
+            String errorMsg =
+                    "The transitional provision text has the wrong format." +
+                            "No additional mandatory course group could be extracted";
+            throw new NoModelsExtractedException(errorMsg);
         }
 
         transitionalProvision.setMandatoryCourseGroups(mandatoryCourseGroups);

@@ -90,4 +90,30 @@ public class Module {
 
         return output;
     }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 37 * name.hashCode();
+
+        for (Course course : courses) {
+            hashCode += 37 * course.hashCode();
+        }
+
+        hashCode += isMandatory ? 1 : 2;
+
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Module)) {
+            return false;
+        }
+
+        Module otherModule = (Module)o;
+
+        return this.isMandatory == otherModule.isMandatory &&
+                this.name.equals(otherModule.name) &&
+                this.courses.equals(otherModule.courses);
+    }
 }

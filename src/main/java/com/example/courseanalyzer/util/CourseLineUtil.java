@@ -75,6 +75,9 @@ public final class CourseLineUtil {
      * </p>
      *
      * @param line the examined line which is used to extract the course
+     * @throws NumberFormatException is thrown, when a non number is tried to be
+     *                               parsed.
+     *
      * @return the Course by extracting the informations from the line
      * {@code line}.
      */

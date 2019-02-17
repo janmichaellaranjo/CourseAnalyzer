@@ -1,0 +1,46 @@
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
+aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea 
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+1. Semester (WS)
+1,0 VO Course 1
+2,0 VU Course 2
+3,0 VO Course 3
+4,0 VU Course 4
+5,0 VO Course 5
+6,0 VU Course 6
+2. Semester (SS)
+7,0 VO Course 7
+8,0 VU Course 8
+9,0 VO Course 9
+10,0 VU Course 10
+11,0 VO Course 11
+12,0 VU Course 12
+13,0 VO Course 13
+3. Semester (WS)
+* 14,0 VU Course 14
+* 15,0 VO Course 15
+* 16,0 VU Course 16
+* 17,0 VO Course 17
+* 18,0 VU Course 18
+* 19,0 VO Course 19
+* 20,0 VU Course 20
+* 21,0 VO Course 21
+4. Semester (SS)
+* 22,0 VU Course 22
+* 23,0 VO Course 23
+* 24,0 VU Course 24
+* 25,0 VO Course 25
+* 26,0 VU Course 26
+* 27,0 VO Course 27
+* 28,0 VU Course 28
+5. Semester (WS)
+* 29,0 VO Course 29
+* 30,0 VU Course 30
+* 31,0 VO Course 31
+* 32,0 VU Course 32
+* 33,0 VO Course 33
+* 34,0 VU Course 34
+* 35,0 VO Course 35
+* 36,0 VU Course 36
+

@@ -7,6 +7,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesan
  */
 
 import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
+import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.logging.log4j.LogManager;
@@ -33,28 +34,44 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
 
         if (mandatoryCoursesText == null) {
             throw new IllegalArgumentException("The passed mandatory courses text is null");
+        } else if (mandatoryCoursesText.isEmpty()) {
+            throw new WrongFormatException("The passed mandatory courses text is empty");
         }
 
         Set<Course> mandatoryCourses = new HashSet<>();
         Scanner scanner = new Scanner(mandatoryCoursesText);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
+        String line = "";
+        try {
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine().trim();
 
-            if (CourseLineUtil.isLineValidCourseWithoutWeeklyHoursInformation(line)) {
+                if (CourseLineUtil.isLineValidCourseWithoutWeeklyHoursInformation(line)) {
 
-                Course courseFromLine = CourseLineUtil.getCourseFromLine(line);
+                    Course courseFromLine = CourseLineUtil.getCourseFromLine(line);
 
-                if (courseFromLine.isInformationComplete()) {
-                    mandatoryCourses.add(courseFromLine);
+                    if (courseFromLine.isInformationComplete()) {
+                        mandatoryCourses.add(courseFromLine);
+                    } else {
+                        String erroMsg = "The mandatory course could not be extracted from the line %s. " +
+                                "The line contains invalid or incomplete informations";
+                        throw new WrongFormatException(erroMsg);
+                    }
                 }
             }
+        } catch (NumberFormatException e) {
+            logger.error(e.getLocalizedMessage(), e);
+
+            String errorMsg = String.format(
+                    "The mandatory course could not be extracted from the line %s. The ECTs is not a number.",
+                    line);
+            throw new WrongFormatException(errorMsg);
         }
         scanner.close();
 
         if (mandatoryCourses.isEmpty()) {
             String errorMsg = String.format(
                     "The mandatory course text has the wrong format." +
-                    "No Mandatory courses could be extracted");
+                    "No mandatory courses could be extracted");
             logger.error(errorMsg);
 
             throw new NoModelsExtractedException(errorMsg);

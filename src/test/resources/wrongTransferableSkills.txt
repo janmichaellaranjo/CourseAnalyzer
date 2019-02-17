@@ -1,0 +1,21 @@
+F. Wahlfachkatalog ”Transferable Skills“
+Die Lehrveranstaltungen, die im Modul Freie Wahlfächer und Transferable Skills aus
+dem Themenbereich ”Transferable Skills“ zu wählen sind, können unter anderem aus
+dem folgenden Katalog gewählt werden.
+1,0/2,0 VO
+2,0/2,0 VU Course 2
+3,0/2,0 VO Course 3
+4,0/2,0 VU Course 4
+5,0/2,0 VO Course 5
+6,0/2,0 VU Course 6
+7,0/2,0 VO Course 7
+8,0/2,0 VU Course 8
+9,0/2,0 VO Course 9
+10,0/2,0 VU Course 10
+11,0/2,0 VO Course 11
+12,0/2,0 VU Course 12
+13,0/2,0 VO Course 13
+14,0/2,0 VU Course 14
+15,0/2,0 VO Course 15
+16,0/2,0 VU Course 16
+17,0/2,0 VO Course 17

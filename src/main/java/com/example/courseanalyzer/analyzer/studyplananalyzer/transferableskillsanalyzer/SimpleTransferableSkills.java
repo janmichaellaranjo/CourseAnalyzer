@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  * @Date: 04.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
@@ -38,13 +39,19 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
         Set<Course> transferableSkills = new HashSet<>();
         Scanner scanner = new Scanner(transferableSkillsText);
 
+        int i = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
 
             if (CourseLineUtil.isLineValidCourseWithWeeklyHoursInformation(line)) {
                 Course transferableSkill = CourseLineUtil.getCourseFromLineWithWeeklyHours(line);
                 transferableSkills.add(transferableSkill);
+            } else if (!transferableSkills.isEmpty()) {
+                String errorMsg ="The transferable skill could not be extracted from %i.line." +
+                        "The line contains invalid or incomplete informations";
+                throw new WrongFormatException(errorMsg);
             }
+            i++;
         }
 
         if (transferableSkills.isEmpty()) {
@@ -52,7 +59,7 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
             logger.error(errorMsg);
 
-            throw new WrongFormatException(errorMsg);
+            throw new NoModelsExtractedException(errorMsg);
         }
 
         return transferableSkills;

@@ -74,6 +74,28 @@ public class CourseGroup {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof CourseGroup)) {
+            return false;
+        }
+
+        CourseGroup otherCourseGroup = (CourseGroup) o;
+
+        return this.courses.equals(otherCourseGroup.courses);
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 0;
+
+        for (Course course : courses) {
+            hashCode += 37 * course.hashCode();
+        }
+
+        return hashCode;
+    }
+
+    @Override
     public String toString() {
         return courses.toString();
     }

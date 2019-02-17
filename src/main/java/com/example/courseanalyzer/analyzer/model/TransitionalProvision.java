@@ -111,4 +111,23 @@ public class TransitionalProvision {
         }
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 37 * mandatoryCourseGroups.hashCode();
+        hashCode += 37 * additionalMandatoryCourseGroups.hashCode();
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TransitionalProvision)) {
+            return false;
+        }
+
+        TransitionalProvision otherTransitionalProvision = (TransitionalProvision) o;
+
+        return this.mandatoryCourseGroups.equals(otherTransitionalProvision.mandatoryCourseGroups) &&
+                this.additionalMandatoryCourseGroups.equals(otherTransitionalProvision.additionalMandatoryCourseGroups);
+    }
 }

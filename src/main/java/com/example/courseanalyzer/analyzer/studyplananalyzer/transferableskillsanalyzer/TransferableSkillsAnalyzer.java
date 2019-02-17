@@ -6,6 +6,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  * @Date: 04.02.2019
  */
 
+import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 
@@ -34,6 +35,11 @@ public interface TransferableSkillsAnalyzer {
      * @param transferableSkillsText contains the mandatory courses
      * @throws IllegalArgumentException is thrown, when {@code modulesText} is
      *                                  {@code null}.
+     * @throws NoModelsExtractedException is thrown, when no transferable skill
+     *                                    could be extracted from
+     *                                    {@code transferableSkillsText}
+     *                                    because the format of the text is
+     *                                    wrong.
      * @throws WrongFormatException is thrown, when the format of
      *                              {@code transferableSkillsText} is empty or
      *                              the format of the text is wrong such that
