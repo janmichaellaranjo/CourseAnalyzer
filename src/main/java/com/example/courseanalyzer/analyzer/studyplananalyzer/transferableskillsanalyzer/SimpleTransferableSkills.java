@@ -45,11 +45,15 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
             if (CourseLineUtil.isLineValidCourseWithWeeklyHoursInformation(line)) {
                 Course transferableSkill = CourseLineUtil.getCourseFromLineWithWeeklyHours(line);
-                transferableSkills.add(transferableSkill);
-            } else if (!transferableSkills.isEmpty()) {
-                String errorMsg ="The transferable skill could not be extracted from %i.line." +
-                        "The line contains invalid or incomplete informations";
-                throw new WrongFormatException(errorMsg);
+                if (transferableSkill.isInformationComplete()) {
+                    transferableSkills.add(transferableSkill);
+                } else {
+                    String errorMsg = String.format(
+                            "The transferable skill could not be extracted from %d.line." +
+                                    "The line contains invalid or incomplete informations",
+                            i);
+                    throw new WrongFormatException(errorMsg);
+                }
             }
             i++;
         }

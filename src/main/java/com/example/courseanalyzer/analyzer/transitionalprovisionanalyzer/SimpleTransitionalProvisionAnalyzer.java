@@ -86,6 +86,8 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
         this.pdDocument = getWorkBookFromMultiPartRequest(request);
 
         if (pdDocument == null) {
+
+            transitionalProvision = null;
             return;
         }
 

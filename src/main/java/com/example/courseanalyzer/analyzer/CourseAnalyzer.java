@@ -135,9 +135,9 @@ public class CourseAnalyzer {
         for (Course finishedCourse : finishedCourses) {
             if (mandatoryCourses.contains(finishedCourse)) {
                 sumAchievedMandatoryEcts += finishedCourse.getEcts();
-            } else if (transitionalProvision.containsMandatoryCourse(finishedCourse)) {
+            } else if (transitionalProvision != null && transitionalProvision.containsMandatoryCourse(finishedCourse)) {
                 sumAchievedMandatoryEcts += finishedCourse.getEcts();
-            } else if (transitionalProvision.containsAdditionalMandatoryCourse(finishedCourse)) {
+            } else if (transitionalProvision != null && transitionalProvision.containsAdditionalMandatoryCourse(finishedCourse)) {
                 sumAchievedAdditionalMandatoryEcts += finishedCourse.getEcts();
             } else if (isOptionalModulesContainsCourse(finishedCourse)) {
                 sumAchievedOptionalModuleEcts += finishedCourse.getEcts();
@@ -167,8 +167,8 @@ public class CourseAnalyzer {
         Set<Course> unassignedCourses = finishedCourses
                 .stream()
                 .filter(finishedCourse -> !mandatoryCourses.contains(finishedCourse))
-                .filter(finishedCourse -> !transitionalProvision.containsMandatoryCourse(finishedCourse))
-                .filter(finishedCourse -> !transitionalProvision.containsAdditionalMandatoryCourse(finishedCourse))
+                .filter(finishedCourse -> transitionalProvision != null ? !transitionalProvision.containsMandatoryCourse(finishedCourse) : true)
+                .filter(finishedCourse -> transitionalProvision != null ? !transitionalProvision.containsAdditionalMandatoryCourse(finishedCourse) : true)
                 .filter(finishedCourse -> !isOptionalModulesContainsCourse(finishedCourse))
                 .filter(finishedCourse -> !transferableSkills.contains(finishedCourse))
                 .collect(Collectors.toSet());
@@ -178,14 +178,19 @@ public class CourseAnalyzer {
     }
 
     private Set<Course> determineRemainingMandatoryCourses() {
+
+        if (transitionalProvision == null) {
+            return mandatoryCourses;
+        }
+
         Set<Course> remainingMandatoryCourses = mandatoryCourses
                 .stream()
                 .filter(mandatoryCourse -> !finishedCourses.contains(mandatoryCourse))
                 .collect(Collectors.toSet());
-        for (Course finishedCourse : finishedCourses) {
-            CourseGroup mandatoryCourseGroup = transitionalProvision.getMandatoryCourseGroupOfCourse(finishedCourse);
-            CourseGroup additionalMandatoryCourseGroup = transitionalProvision.getAdditionalMandatoryCourseGroupOfCourse(finishedCourse);
 
+        for (Course finishedCourse : finishedCourses) {
+            CourseGroup additionalMandatoryCourseGroup = transitionalProvision.getAdditionalMandatoryCourseGroupOfCourse(finishedCourse);
+            CourseGroup mandatoryCourseGroup = transitionalProvision.getMandatoryCourseGroupOfCourse(finishedCourse);
             if (mandatoryCourseGroup != null) {
                 remainingMandatoryCourses = remainingMandatoryCourses
                         .stream()
