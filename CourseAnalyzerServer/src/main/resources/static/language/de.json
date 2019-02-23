@@ -1,0 +1,20 @@
+{
+  "instructionText": "Diese Web-Application gibt dir einen Überblick über die Gesamtanzahl von ECTs, die du in Pflicht-Lehrveranstaltungen, ergängzenden Pflicht-Lehrveranstaltungen, Wahl-Lehrveranstaltungen oder Soft-Skills. Zusätzlich wird noch eine Liste an fehlenden Pflicht-Lehrveranstaltungen des Curriculum angezeigt.",
+  "studyPlan": "Studienplan",
+  "transitionalProvision": "Übergangsbestimmungen(Optional)",
+  "certificateList": "Abgeschlossene Lehrveranstaltungen",
+  "analyze": "Analysieren",
+  "optional": "- Optional",
+  "result": "Resultat",
+  "type": "Typ",
+  "mandatoryCoursesEcts": "Pflicht-Lehrveranstaltungen ECTs",
+  "optionalMandatoryCoursesEcts": "Ergänzende Pflicht-Lehrveranstaltungen ECTs",
+  "optionalModuleEcts": "Wahl-Lehrveranstaltungen ECTs",
+  "transferableSkills": "Transferable-Skills ECTs",
+  "remainingMandatoryCourses": "Restliche Pflicht-Lehrveranstaltungen",
+  "remainingUnassignedCourses": "Restliche, Nicht Zugewiesene Lehrveranstaltungen",
+  "courseType": "Kurstyp",
+  "courseName": "Kursname",
+  "hint": "Die Application läuft weiter, wenn Tabs oder der Browser geschlossen wird. Schließen sie Applikation mit dem Button.",
+  "closeApplication": "Web-Application Schließen"
+}
