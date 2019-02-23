@@ -1,0 +1,93 @@
+<div id="courseAnalyzerDiv" class="container" ng-controller="CourseAnalyzerController as courseAnalyzerController">
+    <div class="center">
+        <div id="languageSettingDiv">
+            <a id="enLink" href="#" onclick="setLanguage('en');underLineSelectedLanguage('en');">English</a>
+            <a id="deLink" href="#" onclick="setLanguage('de');underLineSelectedLanguage('de');">Deutsch</a>
+        </div>
+        <h1 class="centerText">Course Analyzer</h1>
+        <p id="instructionText"></p>
+        <div class="row">
+            <div class="column0">
+                <p><label id="studyPlanLabel"></label></p>
+                <p><label id="transitionalProvisionLabel"></label></p>
+                <p><label id="finishedCoursesLabel"></label></p>
+                <br/>
+            </div>
+            <div class="column1">
+                <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
+                <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
+                <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
+                <button id="analyzeButton" ng-click="analyzeCourses()" ng-disabled="!showElement.isMandatoryFilesFilled">Analyze</button>
+            </div>
+        </div>
+        <div class="results" ng-show="showElement.isResultFilled">
+            <hr/>
+            <h3 id="resultTitle" class="centerText">Result</h3>
+            <div class="row">
+                <div class="resultColumn0">
+                    <table id="ectsTable">
+                        <thead>
+                        <td id="typeCell"></td>
+                        <td>ECTs</td>
+                        </thead>
+                        <tr>
+                            <td id="mandatoryCoursesEctsCell"></td>
+                            <td>{{courseAnalyzerController.courseReport.mandatoryCoursesEcts}}</td>
+                        </tr>
+                        <tr>
+                            <td id="additionalMandatoryCoursesEctsCell"></td>
+                            <td>{{courseReport.additionalMandatoryCoursesEcts}}</td>
+                        </tr>
+                        <tr>
+                            <td id="optionalModuleEctsCell"></td>
+                            <td>{{courseReport.optionalModuleCoursesEcts}}</td>
+                        </tr>
+                        <tr>
+                            <td id="transferableSkillsEctsCell"></td>
+                            <td>{{courseReport.transferableSkillsEcts}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="resultColumn0">
+                    <h5 id="remainingResultedMandatoryCoursesTitle"></h5>
+                    <p>
+                        <table class="resultTable">
+                            <thead>
+                                <td>ECTs</td>
+                                <td class="courseTypeCell"></td>
+                                <td class="courseNameCell"></td>
+                            </thead>
+                            <tr ng-repeat="course in courseReport.remainingMandatoryCourses">
+                                <td class="ectsCell">{{course.ects}}</td>
+                                <td>{{course.courseType}}</td>
+                                <td>{{course.courseName}}</td>
+                            </tr>
+                        </table>
+                </div>
+                <div class="resultColumn1">
+                    <h5 id="remainingUnassignedCoursesTitle"></h5>
+                    <p>
+                        <table class="resultTable">
+                            <thead>
+                                <td>ECTs</td>
+                                <td class="courseTypeCell"></td>
+                                <td class="courseNameCell"></td>
+                            </thead>
+                            <tr ng-repeat="course in courseReport.remainingUnassignedFinishedCourses">
+                                <td class="ectsCell">{{course.ects}}</td>
+                                <td>{{course.courseType}}</td>
+                                <td>{{course.courseName}}</td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </div>
+        <div id="closeApplicationDiv">
+            <hr/>
+            <label id="hintLabel">The applications will still run, when the tab or browser is closed.</label>
+            <button id="closeApplicationButton" ng-click="closeApplication()">Close Application</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<p id="instructionText">Diese Web-Application gibt dir einen Überblick über die Gesamtanzahl von ECTs, die du in Pflicht-Lehrveranstaltungen, ergängzenden Pflicht-Lehrveranstaltungen, Wahl-Lehrveranstaltungen oder Soft-Skills. Zusätzlich wird noch eine Liste an fehlenden Pflicht-Lehrveranstaltungen des Curriculum angezeigt.</p>
+<div class="row">
+  <div class="column0">
+      <p><label id="studyPlanLabel">Studienplan</label></p>
+      <p><label id="transitionalProvisionLabel">Übergangsbestimmungen(Optional)</label></p>
+      <p><label id="finishedCoursesLabel">Abgeschlossene Lehrveranstaltungen</label></p>
+      <br/>
+  </div>
+  <div class="column1">
+      <p><input type="file" accept=".pdf" (change)="handleStudyPlanInput($event.target.files)"/></p>
+      <p><input type="file" accept=".pdf" (change)="handleTransitionalProvisionInput($event.target.files)"/></p>
+      <p><input type="file" accept=".xlsx" (change)="handleFinishedCoursesInput($event.target.files)"/></p>
+      <button id="analyzeButton" ng-click="analyzeCourses()" [disabled]="isButtonDisabled">Analyze</button>
+  </div>
+</div>
