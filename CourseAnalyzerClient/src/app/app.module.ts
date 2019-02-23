@@ -4,9 +4,7 @@ import { UpgradeModule } from '@angular/upgrade/static';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { CourseAnalyzerController } from './courseanalyzer.controller'
 import moduleName from './courseanalyzer.module.ajs';
-import * as $ from 'jquery';
 import { AppComponent } from './app.component'
 import { HomeComponent } from './home/home.component';
 import { SelectComponent } from './select/select.component';
@@ -14,6 +12,8 @@ import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LanguageComponent } from './language/language.component';
+
+import { HomeService } from './home/home.service'
 
 @NgModule({
   declarations: [
@@ -31,7 +31,10 @@ import { LanguageComponent } from './language/language.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    HomeService,
+    NavComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

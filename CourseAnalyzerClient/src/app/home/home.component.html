@@ -1,15 +1,45 @@
 <p id="instructionText">Diese Web-Application gibt dir einen Überblick über die Gesamtanzahl von ECTs, die du in Pflicht-Lehrveranstaltungen, ergängzenden Pflicht-Lehrveranstaltungen, Wahl-Lehrveranstaltungen oder Soft-Skills. Zusätzlich wird noch eine Liste an fehlenden Pflicht-Lehrveranstaltungen des Curriculum angezeigt.</p>
-<div class="row">
-  <div class="column0">
-      <p><label id="studyPlanLabel">Studienplan</label></p>
-      <p><label id="transitionalProvisionLabel">Übergangsbestimmungen(Optional)</label></p>
-      <p><label id="finishedCoursesLabel">Abgeschlossene Lehrveranstaltungen</label></p>
-      <br/>
-  </div>
-  <div class="column1">
-      <p><input type="file" accept=".pdf" (change)="handleStudyPlanInput($event.target.files)"/></p>
-      <p><input type="file" accept=".pdf" (change)="handleTransitionalProvisionInput($event.target.files)"/></p>
-      <p><input type="file" accept=".xlsx" (change)="handleFinishedCoursesInput($event.target.files)"/></p>
-      <button id="analyzeButton" ng-click="analyzeCourses()" [disabled]="isButtonDisabled">Analyze</button>
-  </div>
-</div>
+<table>
+  <tr>
+    <td>
+      <label id="studyPlanLabel">Studienplan</label>
+    </td>
+    <td>
+      <input type="file" accept=".pdf" (change)="handleStudyPlanInput($event.target.files)" id="selectedStudyPlanFile" style="display: none;" />
+      <input type="button" value="Auswählen" onclick="document.getElementById('selectedStudyPlanFile').click();" />
+    </td>
+    <td>
+      {{studyPlanFilePath}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label id="transitionalProvisionLabel">Übergangsbestimmungen(Optional)</label>
+    </td>
+    <td>
+      <input type="file" accept=".pdf" (change)="handleTransitionalProvisionInput($event.target.files)" id="selectedTransitionalProvisionFile" style="display: none;" />
+      <input type="button" value="Auswählen" onclick="document.getElementById('selectedTransitionalProvisionFile').click();" />    
+    </td>
+    <td>
+      {{transitionalProvisionFilePath}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label id="finishedCoursesLabel">Abgeschlossene Lehrveranstaltungen</label>
+    </td>
+    <td>
+      <input type="file" accept=".xlsx" (change)="handleFinishedCoursesInput($event.target.files)" id="selectedFinishedCoursesFile" style="display: none;" />
+      <input type="button" value="Auswählen" onclick="document.getElementById('selectedFinishedCoursesFile').click();" />
+    </td>
+    <td>
+      {{finishedCourseFilePath}}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+        <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analyze</button>
+    </td>
+  </tr>
+</table>
