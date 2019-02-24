@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
+import { MatChipsModule, MatIconModule } from '@angular/material'
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +14,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LanguageComponent } from './language/language.component';
 
-import { HomeService } from './home/home.service'
+import { HomeService } from './home/home.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { HomeService } from './home/home.service'
     BrowserModule,
     UpgradeModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatChipsModule,
+    MatIconModule
   ],
   providers: [
     HomeService,

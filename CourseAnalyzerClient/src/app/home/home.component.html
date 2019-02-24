@@ -5,11 +5,23 @@
       <label id="studyPlanLabel">Studienplan</label>
     </td>
     <td>
-      <input type="file" accept=".pdf" (change)="handleStudyPlanInput($event.target.files)" id="selectedStudyPlanFile" style="display: none;" />
+      <input type="file" accept=".pdf" id="selectedStudyPlanFile" style="display: none;" #studyPlanFileInput (change)="handleStudyPlanInput($event.target.files)" />
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedStudyPlanFile').click();" />
     </td>
-    <td>
-      {{studyPlanFilePath}}
+    <td *ngIf="isStudyPlanFileCorrect">
+        <mat-chip-list>
+          <mat-chip [removable]="removable" (removed)="removeStudyPlan()">
+            {{studyPlanFilePath}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+    </td>
+    <td *ngIf="isStudyPlanFileCorrect">
+      <mat-icon color="accent">done</mat-icon>
+    </td>
+    <td *ngIf="isStudyPlanFileSelected && !isStudyPlanFileCorrect">
+        <mat-icon color="warn">clear</mat-icon>
+        <label class="error">{{studyPlanErrorMessage}}</label>
     </td>
   </tr>
   <tr>
@@ -17,11 +29,25 @@
       <label id="transitionalProvisionLabel">Übergangsbestimmungen(Optional)</label>
     </td>
     <td>
-      <input type="file" accept=".pdf" (change)="handleTransitionalProvisionInput($event.target.files)" id="selectedTransitionalProvisionFile" style="display: none;" />
+      <input type="file" accept=".pdf" id="selectedTransitionalProvisionFile" style="display: none;" #transitionalProvisionFileInput (change)="handleTransitionalProvisionInput($event.target.files)"/>
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedTransitionalProvisionFile').click();" />    
     </td>
-    <td>
-      {{transitionalProvisionFilePath}}
+    <td *ngIf=isTransitionalProvisionFileCorrect>
+      <mat-chip-list>
+        <mat-chip [removable]="removable" (removed)="removeTransitionalProvision()">
+            {{transitionalProvisionFilePath}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+    <td *ngIf="isTransitionalProvisionFileCorrect">
+      <mat-icon color="accent">done</mat-icon>
+    </td>
+    <td *ngIf="isTransitionalProvisionFileSelected && !isTransitionalProvisionFileCorrect">
+        <mat-icon color="warn">clear</mat-icon>
+        <label class="error">{{transitionalProvisionErrorMessage}}</label>
+    </td>
+    <td>     
     </td>
   </tr>
   <tr>
@@ -29,17 +55,29 @@
       <label id="finishedCoursesLabel">Abgeschlossene Lehrveranstaltungen</label>
     </td>
     <td>
-      <input type="file" accept=".xlsx" (change)="handleFinishedCoursesInput($event.target.files)" id="selectedFinishedCoursesFile" style="display: none;" />
+      <input type="file" accept=".xlsx" id="selectedFinishedCoursesFile" style="display: none;" #finishedCoursesFileInput (change)="handleFinishedCoursesInput($event.target.files)"/>
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedFinishedCoursesFile').click();" />
     </td>
-    <td>
-      {{finishedCourseFilePath}}
+    <td *ngIf="isFinishedCoursesFileCorrect">
+      <mat-chip-list>
+        <mat-chip [removable]="removable" (removed)="removeFinishedCourses()">
+            {{finishedCourseFilePath}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </td>
+    <td *ngIf="isFinishedCoursesFileCorrect">
+      <mat-icon color="accent">done</mat-icon>
+    </td>
+    <td *ngIf="isFinishedCoursesFileSelected && !isFinishedCoursesFileCorrect">
+      <mat-icon color="warn">clear</mat-icon>
+      <label class="error">{{finishedCoursesErrorMessage}}</label>
     </td>
   </tr>
   <tr>
     <td></td>
     <td>
-        <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analyze</button>
+      <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analyze</button>
     </td>
   </tr>
 </table>

@@ -4,7 +4,8 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { HomeService } from './home.service'
-import { NavComponent } from '../nav/nav.component';
+
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -12,19 +13,41 @@ import { NavComponent } from '../nav/nav.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public isButtonDisabled: boolean = true;
-  public isStudyPlanFileCorrect: boolean = false;
-  public studyPlanFilePath: string;
-  public transitionalProvisionFilePath: string;
-  public finishedCourseFilePath: string;
-  
+  isButtonDisabled: boolean;
+  isStudyPlanFileSelected: boolean;
+  isTransitionalProvisionFileSelected: boolean;
+  isFinishedCoursesFileSelected: boolean;
+  isStudyPlanFileCorrect: boolean;
+  isTransitionalProvisionFileCorrect: boolean;
+  isFinishedCoursesFileCorrect: boolean;
+  studyPlanFilePath: string;
+  transitionalProvisionFilePath: string;
+  finishedCourseFilePath: string;
+  studyPlanErrorMessage: string;
+  transitionalProvisionErrorMessage: string;
+  finishedCoursesErrorMessage: string;
+  removable: boolean = true;
+
   private backEndUrl: string = 'http://localhost:8080/courseanalyzer';
+
+  @ViewChild('studyPlanFileInput')
+  studyPlanFileInput: ElementRef;
+
+  @ViewChild('transitionalProvisionFileInput')
+  transitionalProvisionFileInput: ElementRef;
+
+  @ViewChild('finishedCoursesFileInput')
+  finishedCoursesFileInput: ElementRef;
 
   constructor(
     private http: HttpClient,
     private homeService: HomeService,
-    private navComponent: NavComponent,
-    private cdRef:ChangeDetectorRef) { 
+    private cdRef:ChangeDetectorRef) {
+      this.isButtonDisabled = true;
+      this.isStudyPlanFileCorrect = false; 
+  }
+
+  ngOnInit() {
   }
 
   ngAfterViewInit() {
@@ -39,12 +62,13 @@ export class HomeComponent implements OnInit {
     if (this.homeService.finishedCourses != null) {
       this.finishedCourseFilePath = this.homeService.finishedCourses.name;
     }
+
     this.cdRef.detectChanges();
   }
   
   handleStudyPlanInput(files: FileList) {
     let file = files.item(0);
-
+    
     if (file != null) {
       let url: string = this.backEndUrl + '/readStudyPlan';
       let formData: FormData = new FormData();
@@ -57,21 +81,29 @@ export class HomeComponent implements OnInit {
       this.http.post<File>(url, formData, options)
       .pipe(
         catchError(this.handleError)
-      ).subscribe(
+      )
+      .subscribe(
         (jsonData) => {},
-        (err) => console.error(err),
+        (err) => {
+          console.error(err);
+
+          this.studyPlanErrorMessage = err;
+
+          this.isStudyPlanFileSelected = true;
+          this.isStudyPlanFileCorrect = false;
+        },
         () => {       
           this.homeService.studyPlan = file;
           this.isStudyPlanFileCorrect = true;
+          this.isStudyPlanFileSelected = true;
           this.studyPlanFilePath = file.name;
           this.activateButton();
         }
       );
     } else {
-      this.homeService.studyPlan = null;
-      this.studyPlanFilePath = '';
-      this.activateButton();
+      this.isStudyPlanFileSelected = true;
     }
+    
   }
 
   handleTransitionalProvisionInput(files: FileList) {
@@ -82,28 +114,36 @@ export class HomeComponent implements OnInit {
       let formData: FormData = new FormData();
       let options = {};
       
-      formData.append('transitionalProvision', file, file.name); 
-      
+      formData.append('transitionalProvision', file, file.name);      
 
       console.log('The file ' + file.name + " is sent to " + url);
   
       this.http.post<File>(url, formData, options)
       .pipe(
         catchError(this.handleError)
-      ).subscribe(
-        (jsonData) => {},
-        (err) => console.error(err),
+      )
+      .subscribe(
+        (data) => {},
+        (err) => {
+          console.error(err);
+
+          this.transitionalProvisionErrorMessage = err;
+
+          this.isTransitionalProvisionFileSelected = true;
+          this.isTransitionalProvisionFileCorrect = false;
+        },
         () => {
           this.homeService.transitionalProvision = file;
           this.transitionalProvisionFilePath = file.name;
+          this.isTransitionalProvisionFileCorrect = true;
+          this.isTransitionalProvisionFileSelected = true;
+
+          this.activateButton();
         }
       );
     } else {
-      this.homeService.transitionalProvision = null;
-      this.transitionalProvisionFilePath = '';
+      this.isTransitionalProvisionFileSelected = true;
     }
-
-    this.activateButton();
   }
 
   handleFinishedCoursesInput(files: FileList) {
@@ -123,19 +163,24 @@ export class HomeComponent implements OnInit {
         catchError(this.handleError)).
         subscribe(
         (data) => {},
-        (err) => console.error(err),
+        (err) => {
+          console.error(err);
+
+          this.finishedCoursesErrorMessage = err;
+          
+          this.isFinishedCoursesFileSelected = true;
+          this.isFinishedCoursesFileCorrect = false;
+        },
         () => {
           this.homeService.finishedCourses = file;
           this.finishedCourseFilePath = file.name;
-
+          this.isFinishedCoursesFileCorrect = true;
+          this.isFinishedCoursesFileSelected = true;
           this.activateButton();
         }
       );
     } else {
-      this.homeService.finishedCourses = null;
-      this.finishedCourseFilePath = '';
-
-      this.activateButton();
+      this.isFinishedCoursesFileSelected = true;
     }
   }
 
@@ -156,12 +201,33 @@ export class HomeComponent implements OnInit {
     
   }
 
+  removeStudyPlan() {
+      this.homeService.studyPlan = null;
+      this.isStudyPlanFileSelected = false;
+      this.isStudyPlanFileCorrect = false;
+      this.studyPlanFileInput.nativeElement.value = "";
+  }
+
+  removeTransitionalProvision() {
+      this.homeService.transitionalProvision = null;
+      this.isTransitionalProvisionFileCorrect = false;
+      this.isTransitionalProvisionFileSelected = false;
+      this.transitionalProvisionFileInput.nativeElement.value = "";
+  }
+
+  removeFinishedCourses() {
+      this.homeService.finishedCourses = null;
+      this.isFinishedCoursesFileCorrect = false;
+      this.isFinishedCoursesFileSelected = false;
+      this.finishedCoursesFileInput.nativeElement.value = "";
+  }
+
   private handleError(error: HttpErrorResponse) {
     //TODO: extract into service
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     }else if(error instanceof HttpErrorResponse) {
-      return throwError(error.message);
+      return throwError(error.error.message);
     } else {
       console.error('Backend returned code ${error.status}, body was: ${error.error}');
     }
@@ -174,9 +240,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.isButtonDisabled = true;
     }
-  }
-
-  ngOnInit() {
   }
 
 }

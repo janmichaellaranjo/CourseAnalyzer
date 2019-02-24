@@ -10,7 +10,9 @@
 
 section {
     justify-self: center;
-    width: 70%;
+    width: 60%;
     margin: 0 auto;
     padding: 2em;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
