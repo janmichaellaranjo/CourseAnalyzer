@@ -73,6 +73,16 @@ public class TableOfContent {
     }
 
     /**
+     *
+     * Returns true, if the table of content contains any chapter.
+     *
+     * @return true, if the table of content contains any chapter.
+     */
+    public boolean containsChapter() {
+        return !chapters.isEmpty();
+    }
+
+    /**
      * Returns the chapter with the corresponding title {@code title}.
      *
      * @param chapterTitle the title of the chapter which is searched for.

@@ -83,8 +83,7 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
     private void initPdf(MultipartFile multipartFile) throws IOException {
 
         this.pdDocument = PDDocument.load(multipartFile.getInputStream());
-
-        fileName = multipartFile.getName();
+        this.fileName = multipartFile.getName();
 
         if (pdDocument == null) {
 

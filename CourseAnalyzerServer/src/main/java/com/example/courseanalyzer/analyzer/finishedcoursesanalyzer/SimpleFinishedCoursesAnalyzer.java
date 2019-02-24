@@ -51,11 +51,13 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
     @Override
     public void analyzeFinishedCourses(MultipartFile multipartFile) {
         this.finishedCourses = new HashSet<>();
+        this.fileName = multipartFile.getName();
+
+        int i = START_ROW;
         try {
             Workbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
             Sheet sheet = workbook.getSheetAt(SHEET_NUMBER);
 
-            int i = START_ROW;
             Row row = sheet.getRow(i);
             while (!isRowEmpty(row)) {
                 Course finishedCourse = getFinishedCourseFromCells(row);
@@ -78,6 +80,14 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
                     getFileName());
 
             throw new ReadFileException(errorMsg);
+        } catch (IllegalStateException e) {
+            logger.error(e.getLocalizedMessage(), e);
+
+            String errorMsg = String.format(
+                    "The format of the %i.row does not contain a string value",
+                    i);
+
+            throw new WrongFormatException(errorMsg);
         }
 
         if (finishedCourses.isEmpty()) {
@@ -126,25 +136,6 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
 
         return cell.getCellType() == CellType.BLANK ||
                 cell.getStringCellValue().isEmpty();
-    }
-
-    private Workbook getWorkBookFromMultiPartRequest(ServletRequest request) throws IOException {
-        //TODO: extract because similar method exists
-        MultipartHttpServletRequest multiPartRequest = (MultipartHttpServletRequest) request;
-
-        Iterator<String> iterator = multiPartRequest.getFileNames();
-
-        // Only one file is uploaded
-        if (iterator.hasNext()) {
-            this.fileName = iterator.next();
-
-            logger.debug("File %s is uploaded", fileName);
-            MultipartFile multipartFile = multiPartRequest.getFile(fileName);
-            Workbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
-
-            return workbook;
-        }
-        return null;
     }
 
     private CourseType getCourseTypeFromCell(Cell cell) {
