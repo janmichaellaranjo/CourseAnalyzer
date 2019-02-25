@@ -68,6 +68,11 @@ public class CourseAnalyzerController {
         return courseReport;
     }
 
+    @RequestMapping(value = "deleteSelectedFile/{fileName}", method = RequestMethod.DELETE)
+    public void deleteSelectedFile(@PathVariable("fileName") String fileName) {
+        courseCheckerService.deleteSelectedFile(fileName);
+    }
+
     @RequestMapping(value = "/closeApplication",
             method = RequestMethod.GET)
     public @ResponseBody void closeApplication() {

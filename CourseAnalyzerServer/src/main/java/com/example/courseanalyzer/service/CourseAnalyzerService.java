@@ -19,7 +19,6 @@ import javax.servlet.ServletRequest;
 public interface CourseAnalyzerService {
 
     /**
-     *
      * Reads the file and extracts the mandatory courses, modules and
      * transferable skills from the request which contains the uploaded file.
      *
@@ -34,7 +33,6 @@ public interface CourseAnalyzerService {
     void readStudyPlan(MultipartFile multipartFile);
 
     /**
-     *
      * Reads the file and extracts the additional mandatory courses from the
      * request which contains the uploaded file.
      *
@@ -48,7 +46,6 @@ public interface CourseAnalyzerService {
     void readTransitionalProvision(MultipartFile multipartFile);
 
     /**
-     *
      * Reads the file and extracts the certificates from the request which
      * contains the uploaded file.
      *
@@ -59,6 +56,13 @@ public interface CourseAnalyzerService {
      *                               text creates an empty list of certificates.
      */
     void readFinishedCourseList(MultipartFile multipartFile);
+
+    /**
+     * Deletes the selected file with the file name {@code fileName}.
+     *
+     * @param fileName the name of the file which should be deleted.
+     */
+    void deleteSelectedFile(String fileName);
 
     /**
      *
