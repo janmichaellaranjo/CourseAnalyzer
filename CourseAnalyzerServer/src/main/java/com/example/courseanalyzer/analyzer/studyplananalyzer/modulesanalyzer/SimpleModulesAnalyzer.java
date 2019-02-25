@@ -37,17 +37,20 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleModulesAnalyzer.class);
 
+    private Set<Module> modules;
+
     @Override
-    public Set<Module> analyzeModule(String modulesText) {
+    public void analyzeModule(String modulesText) {
 
         throwExceptionIfTextIsEmpty(modulesText);
 
         List<String> processedLines = getProcessedLinesFromText(modulesText);
         boolean isProcessing = false;
         boolean isFirst = true;
-        Set<Module> modules = new HashSet<>();
         Module module = null;
         Set<Course> courses = null;
+
+        this.modules = new HashSet<>();
 
         for (String line : processedLines) {
             if (isLinePattern(line, MODULE_FORMAT)) {
@@ -90,8 +93,6 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
 
             throw new NoModelsExtractedException(errorMsg);
         }
-
-        return modules;
     }
 
     private void throwExceptionIfTextIsEmpty(String text) {
@@ -158,5 +159,10 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
 
     private boolean isLinePageNumber(String line) {
         return isLinePattern(line, "\\d{1,3}");
+    }
+
+    @Override
+    public Set<Module> getModules() {
+        return modules;
     }
 }

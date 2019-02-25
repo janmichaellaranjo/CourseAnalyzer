@@ -26,13 +26,12 @@ import java.util.Set;
 public interface MandatoryCoursesAnalyzer {
 
     /**
-     * Returns the set of the mandatory courses from the text
-     * {@code mandatoryCourses}.
+     * Extracts the mandatory courses from the text {@code mandatoryCoursesText}.
      *
      * <p>When a line does not meet all criteria for a course, it won't be added
      * to the list and will be treated as a different line.</p>
      *
-     * @param mandatoryCourses contains the mandatory courses
+     * @param mandatoryCoursesText contains the mandatory courses
      * @throws IllegalArgumentException is thrown, when {@code modulesText} is
      *                                   {@code null}.
      * @throws NoModelsExtractedException is thrown, when no course could be
@@ -45,5 +44,13 @@ public interface MandatoryCoursesAnalyzer {
      * @return the set of the mandatory courses from the text
      *         {@code mandatoryCourses}.
      */
-    Set<Course> analyzeMandatoryCourses(String mandatoryCourses);
+    void analyzeMandatoryCourses(String mandatoryCoursesText);
+
+    /**
+     * Returns the set of the mandatory courses which was determined by
+     * {@link #analyzeMandatoryCourses(String)}.
+     * @return the set of the mandatory courses which was determined by
+     *         {@link #analyzeMandatoryCourses(String)}.
+     */
+    Set<Course> getMandatoryCourses();
 }

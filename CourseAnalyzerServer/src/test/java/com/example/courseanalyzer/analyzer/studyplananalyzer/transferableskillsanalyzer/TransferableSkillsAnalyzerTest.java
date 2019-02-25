@@ -44,7 +44,9 @@ public class TransferableSkillsAnalyzerTest {
         final int sizeOfCourses = 17;
         String transferableSkillsText = FileUtil.getWholeStringFromFile("correctTransferableSkills.txt");
 
-        Set<Course> resultedCourses = transferableSkillsAnalyzer.analyzeTransferableSkills(transferableSkillsText);
+        transferableSkillsAnalyzer.analyzeTransferableSkills(transferableSkillsText);
+
+        Set<Course> resultedCourses = transferableSkillsAnalyzer.getTransferableSkills();
         Set<Course> expectedCourses = new HashSet<>(Arrays.asList(
                 IntStream.range(1, sizeOfCourses + 1)
                         .mapToObj(ModelUtil::createCourseFromInteger)

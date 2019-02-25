@@ -31,12 +31,14 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleTransferableSkills.class);
 
+    private Set<Course> transferableSkills;
+
     @Override
-    public Set<Course> analyzeTransferableSkills(String transferableSkillsText) {
+    public void analyzeTransferableSkills(String transferableSkillsText) {
 
         throwExceptionIfTextIsEmpty(transferableSkillsText);
 
-        Set<Course> transferableSkills = new HashSet<>();
+        this.transferableSkills = new HashSet<>();
         Scanner scanner = new Scanner(transferableSkillsText);
 
         int i = 0;
@@ -65,8 +67,6 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
 
             throw new NoModelsExtractedException(errorMsg);
         }
-
-        return transferableSkills;
     }
 
     private void throwExceptionIfTextIsEmpty(String text) {
@@ -76,5 +76,10 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
         } else if (text.isEmpty()) {
             throw new WrongFormatException("The passed transferable skills text is empty");
         }
+    }
+
+    @Override
+    public Set<Course> getTransferableSkills() {
+        return transferableSkills;
     }
 }

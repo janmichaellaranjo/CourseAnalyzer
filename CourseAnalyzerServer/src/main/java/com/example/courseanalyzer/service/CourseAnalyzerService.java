@@ -58,17 +58,19 @@ public interface CourseAnalyzerService {
     void readFinishedCourseList(MultipartFile multipartFile);
 
     /**
-     * Deletes the selected file with the file name {@code fileName}.
+     * Deletes the selected file with the file name {@code fileName} and also
+     * the corresponding determined informations such as mandatory courses, etc.
      *
      * @param fileName the name of the file which should be deleted.
      */
     void deleteSelectedFile(String fileName);
 
     /**
+     * Returns a detailed report about all finished courses by comparing the
+     * resulted finished courses with the mandatory courses and optionally with
+     * the transitional provision.
      *
-     * @see com.example.courseanalyzer.analyzer.CourseAnalyzer#compareCourses
-     *
-     * @return a report of the finished mandatory courses.
+     * @return a detailed report about all finished courses.
      */
     CourseReport compareCourses();
 }

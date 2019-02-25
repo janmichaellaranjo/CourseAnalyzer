@@ -29,8 +29,10 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
 
     private static final Logger logger = LogManager.getLogger(SimpleMandatoryCoursesAnalyzer.class);
 
+    private Set<Course> mandatoryCourses;
+
     @Override
-    public Set<Course> analyzeMandatoryCourses(String mandatoryCoursesText) {
+    public void analyzeMandatoryCourses(String mandatoryCoursesText) {
 
         if (mandatoryCoursesText == null) {
             throw new IllegalArgumentException("The passed mandatory courses text is null");
@@ -38,8 +40,9 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
             throw new WrongFormatException("The passed mandatory courses text is empty");
         }
 
-        Set<Course> mandatoryCourses = new HashSet<>();
         Scanner scanner = new Scanner(mandatoryCoursesText);
+        this.mandatoryCourses = new HashSet<>();
+
         String line = "";
         try {
             while (scanner.hasNextLine()) {
@@ -65,8 +68,9 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
                     "The mandatory course could not be extracted from the line %s. The ECTs is not a number.",
                     line);
             throw new WrongFormatException(errorMsg);
+        } finally {
+            scanner.close();
         }
-        scanner.close();
 
         if (mandatoryCourses.isEmpty()) {
             String errorMsg = String.format(
@@ -76,7 +80,10 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
 
             throw new NoModelsExtractedException(errorMsg);
         }
+    }
 
+    @Override
+    public Set<Course> getMandatoryCourses() {
         return mandatoryCourses;
     }
 }

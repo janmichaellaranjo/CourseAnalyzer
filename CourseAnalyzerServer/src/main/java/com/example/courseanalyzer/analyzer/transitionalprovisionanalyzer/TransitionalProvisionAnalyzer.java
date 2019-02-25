@@ -38,6 +38,12 @@ public interface TransitionalProvisionAnalyzer {
     void analyzeTransitionalProvision(MultipartFile multipartFile);
 
     /**
+     * Deletes the transitional provision and all determined informations such
+     * as mandatory course groups, etc.
+     */
+    void deleteTransitionalProvisionFile();
+
+    /**
      * Returns the transitional provision containing the mandatory and additional
      * mandatory courses.
      *

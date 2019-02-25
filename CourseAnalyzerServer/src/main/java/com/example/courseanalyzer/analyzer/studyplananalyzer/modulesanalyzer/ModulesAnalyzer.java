@@ -25,8 +25,7 @@ import java.util.Set;
 public interface ModulesAnalyzer {
 
     /**
-     * Returns the set of modules which is extracted from the text
-     * {@code modulesText}.
+     * Extracts the modules from the text {@code modulesText}.
      *
      * @param modulesText contains the modules.
      * @throws IllegalArgumentException is thrown, when {@code modulesText} is
@@ -41,5 +40,12 @@ public interface ModulesAnalyzer {
      * @return the set of modules which is extracted from the text
      *         {@code modulesText}.
      */
-    Set<Module> analyzeModule(String modulesText);
+    void analyzeModule(String modulesText);
+
+    /**
+     * Returns the set of modules.
+     *
+     * @return the set of modules.
+     */
+    Set<Module> getModules();
 }

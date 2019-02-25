@@ -44,7 +44,9 @@ public class MandatoryCourseAnalyzerTest {
         final int sizeOfCourses = 36;
         String mandatoryCoursesText = FileUtil.getWholeStringFromFile("correctMandatoryCourses.txt");
 
-        Set<Course> resultedCourses = mandatoryCoursesAnalyzer.analyzeMandatoryCourses(mandatoryCoursesText);
+        mandatoryCoursesAnalyzer.analyzeMandatoryCourses(mandatoryCoursesText);
+
+        Set<Course> resultedCourses = mandatoryCoursesAnalyzer.getMandatoryCourses();
         Set<Course> expectedCourses = new HashSet<>(Arrays.asList(
                 IntStream.range(1, sizeOfCourses + 1)
                 .mapToObj(ModelUtil::createCourseFromInteger)

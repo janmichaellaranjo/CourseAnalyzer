@@ -80,6 +80,15 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
         }
     }
 
+    @Override
+    public void deleteTransitionalProvisionFile() {
+        this.pdDocument = null;
+        this.fileName = null;
+        this.mandatoryCourseGroup = null;
+        this.additionalMandatoryCourseGroup = null;
+        this.transitionalProvision = null;
+    }
+
     private void initPdf(MultipartFile multipartFile) throws IOException {
 
         this.pdDocument = PDDocument.load(multipartFile.getInputStream());

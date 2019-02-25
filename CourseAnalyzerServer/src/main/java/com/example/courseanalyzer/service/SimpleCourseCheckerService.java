@@ -32,13 +32,19 @@ import java.util.stream.Collectors;
 public class SimpleCourseCheckerService implements CourseAnalyzerService {
     private static final Logger logger = LogManager.getLogger(SimpleCourseCheckerService.class);
 
+    private static final String STUDY_PLAN_FILE = "studyPlanFile";
+
+    private static final String TRANSITIONAL_PRVOVISION_FILE = "transitionalProvisionFile";
+
+    private static final String FINISHED_COURSES_FILE = "finishedCoursesFile";
+
     @Autowired
     @Qualifier("SimpleStudyPlanAnalyzer")
     private StudyPlanAnalyzer studyPlanAnalyzer;
 
     @Autowired
     @Qualifier("SimpleFinishedCoursesAnalyzer")
-    private FinishedCoursesAnalyzer certificateAnalyzer;
+    private FinishedCoursesAnalyzer finishedCoursesAnalyzer;
 
     @Autowired
     @Qualifier("SimpleTransitionalProvisionAnalyzer")
@@ -92,7 +98,7 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
             throw new IllegalArgumentException(errorMsg);
         }
 
-        certificateAnalyzer.analyzeFinishedCourses(multipartFile);
+        finishedCoursesAnalyzer.analyzeFinishedCourses(multipartFile);
     }
 
     @Override
@@ -104,6 +110,17 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
             throw new IllegalArgumentException(errorMsg);
         }
 
+        chooseFileForDeletion(fileName);
+    }
+
+    private void chooseFileForDeletion(String fileName) {
+        if (fileName.equals(STUDY_PLAN_FILE)) {
+            studyPlanAnalyzer.deleteStudyPlanFile();
+        } else if (fileName.equals(TRANSITIONAL_PRVOVISION_FILE)) {
+            transitionalProvisionAnalyzer.deleteTransitionalProvisionFile();
+        } else if (fileName.equals(FINISHED_COURSES_FILE)) {
+            finishedCoursesAnalyzer.deleteFinishedCoursesFile();
+        }
     }
 
     @Override
@@ -120,7 +137,7 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
         this.sumAchievedAdditionalMandatoryEcts = 0f;
         this.sumAchievedOptionalModuleEcts = 0f;
         this.sumAchievedTransferableSkillsEcts = 0f;
-        this.finishedCourses = certificateAnalyzer.getFinishedCourses();
+        this.finishedCourses = finishedCoursesAnalyzer.getFinishedCourses();
         this.mandatoryCourses = studyPlanAnalyzer.getMandatoryCourses();
         this.transitionalProvision = transitionalProvisionAnalyzer.getTransitionalProvision();
         this.modules = studyPlanAnalyzer.getModules();

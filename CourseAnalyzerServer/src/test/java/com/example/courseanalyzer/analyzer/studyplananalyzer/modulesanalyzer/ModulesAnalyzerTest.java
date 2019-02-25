@@ -45,7 +45,9 @@ public class ModulesAnalyzerTest {
         final int sizeOfModules = 7;
         String moduleText = FileUtil.getWholeStringFromFile("correctModule.txt");
 
-        Set<Module> resultedModules = modulesAnalyzer.analyzeModule(moduleText);
+        modulesAnalyzer.analyzeModule(moduleText);
+
+        Set<Module> resultedModules = modulesAnalyzer.getModules();
         Set<Module> expectedModules = new HashSet(Arrays.asList(
                 IntStream
                 .range(1, 8)

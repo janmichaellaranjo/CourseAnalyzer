@@ -80,14 +80,14 @@ export class HomeComponent implements OnInit {
   
       this.http.post<File>(url, formData, options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.homeService.handleError)
       )
       .subscribe(
-        (jsonData) => {},
-        (err) => {
-          console.error(err);
+        () => {},
+        (error) => {
+          console.error(error);
 
-          this.studyPlanErrorMessage = err;
+          this.studyPlanErrorMessage = error;
 
           this.isStudyPlanFileSelected = true;
           this.isStudyPlanFileCorrect = false;
@@ -120,14 +120,14 @@ export class HomeComponent implements OnInit {
   
       this.http.post<File>(url, formData, options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.homeService.handleError)
       )
       .subscribe(
         (data) => {},
-        (err) => {
-          console.error(err);
+        (error) => {
+          console.error(error);
 
-          this.transitionalProvisionErrorMessage = err;
+          this.transitionalProvisionErrorMessage = error;
 
           this.isTransitionalProvisionFileSelected = true;
           this.isTransitionalProvisionFileCorrect = false;
@@ -160,13 +160,13 @@ export class HomeComponent implements OnInit {
   
       this.http.post<File>(url, formData, options)
       .pipe(
-        catchError(this.handleError)).
+        catchError(this.homeService.handleError)).
         subscribe(
         (data) => {},
-        (err) => {
-          console.error(err);
+        (error) => {
+          console.error(error);
 
-          this.finishedCoursesErrorMessage = err;
+          this.finishedCoursesErrorMessage = error;
           
           this.isFinishedCoursesFileSelected = true;
           this.isFinishedCoursesFileCorrect = false;
@@ -187,12 +187,12 @@ export class HomeComponent implements OnInit {
   compareCourses() {
     let url: string = this.backEndUrl + "/compareCourses";
     this.http.get(url)
-    .pipe(catchError(this.handleError))
+    .pipe(catchError(this.homeService.handleError))
     .subscribe(
       (data) =>{
         this.handleResult(data);
       },
-      (err) => console.error(err),
+      (error) => console.error(error),
       () => {}
     );
   }
@@ -206,6 +206,13 @@ export class HomeComponent implements OnInit {
       this.isStudyPlanFileSelected = false;
       this.isStudyPlanFileCorrect = false;
       this.studyPlanFileInput.nativeElement.value = "";
+
+      this.homeService.resetFile('studyPlanFile')
+      .subscribe(
+        () => {},
+        (error) => console.error(error),
+        () => {}
+      );
   }
 
   removeTransitionalProvision() {
@@ -221,18 +228,6 @@ export class HomeComponent implements OnInit {
       this.isFinishedCoursesFileSelected = false;
       this.finishedCoursesFileInput.nativeElement.value = "";
   }
-
-  private handleError(error: HttpErrorResponse) {
-    //TODO: extract into service
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    }else if(error instanceof HttpErrorResponse) {
-      return throwError(error.error.message);
-    } else {
-      console.error('Backend returned code ${error.status}, body was: ${error.error}');
-    }
-    return throwError('Something bad happened; please try again later.');
-  };
 
   activateButton() {
     if (this.homeService.isMandatoryFilesSelected()) {

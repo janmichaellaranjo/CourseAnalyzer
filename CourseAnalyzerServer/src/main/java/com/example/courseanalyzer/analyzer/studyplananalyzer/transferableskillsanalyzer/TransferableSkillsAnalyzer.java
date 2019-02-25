@@ -26,11 +26,7 @@ import java.util.Set;
 public interface TransferableSkillsAnalyzer {
 
     /**
-     * Returns the set of the transferable skills from the  text
-     * {@code mandatoryCourses}
-     *
-     * <p>This list can be empty, if the text does not meet the format
-     *    criteria.</p>
+     * Extracts the transferable skills from text {@code transferableSkillsText}.
      *
      * @param transferableSkillsText contains the mandatory courses
      * @throws IllegalArgumentException is thrown, when {@code modulesText} is
@@ -48,5 +44,12 @@ public interface TransferableSkillsAnalyzer {
      * @return the set of the transferable skills from the  text
      *        {@code mandatoryCourses}
      */
-    Set<Course> analyzeTransferableSkills(String transferableSkillsText);
+    void analyzeTransferableSkills(String transferableSkillsText);
+
+    /**
+     *  Returns the set of the transferable skills.
+     *
+     * @return the set of the transferable skills.
+     */
+    Set<Course> getTransferableSkills();
 }

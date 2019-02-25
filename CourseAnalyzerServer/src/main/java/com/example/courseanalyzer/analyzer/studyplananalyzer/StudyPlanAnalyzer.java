@@ -51,6 +51,12 @@ public interface StudyPlanAnalyzer {
     void analyzeStudyPlan(MultipartFile multiPartFile);
 
     /**
+     * Deletes the study plan and all determined informations such as mandatory
+     * courses, etc.
+     */
+    void deleteStudyPlanFile();
+
+    /**
      * Returns the set of mandatory courses.
      *
      * <p>This method should be called after

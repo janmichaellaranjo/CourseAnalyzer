@@ -53,6 +53,12 @@ public interface FinishedCoursesAnalyzer {
     void analyzeFinishedCourses(MultipartFile multipartFile);
 
     /**
+     * Deletes the finished courses file and all determined informations such as
+     * finished courses, etc.
+     */
+    void deleteFinishedCoursesFile();
+
+    /**
      * Returns the list of finished courses.
      *
      * @return the list of finished courses.

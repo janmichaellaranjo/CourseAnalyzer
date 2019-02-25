@@ -40,12 +40,19 @@ import java.util.*;
 public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
 
     private static final Logger logger = LogManager.getLogger(SimpleFinishedCoursesAnalyzer.class);
+
     private static final int SHEET_NUMBER = 0;
+
     private static final int START_ROW = 3;
+
     private static final int COURSE_NAME_INDEX = 0;
+
     private static final int COURSE_TYPE_INDEX = 1;
+
     private static final int COURSE_ECTS_INDEX = 3;
+
     private Set<Course> finishedCourses;
+
     private String fileName;
 
     @Override
@@ -54,8 +61,10 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
         this.fileName = multipartFile.getName();
 
         int i = START_ROW;
+
+        Workbook workbook = null;
         try {
-            Workbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
+            workbook = new XSSFWorkbook(multipartFile.getInputStream());
             Sheet sheet = workbook.getSheetAt(SHEET_NUMBER);
 
             Row row = sheet.getRow(i);
@@ -88,6 +97,19 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
                     i);
 
             throw new WrongFormatException(errorMsg);
+        } finally {
+            if (workbook != null) {
+                try {
+                    workbook.close();
+                } catch (IOException e) {
+                    logger.error(e.getLocalizedMessage(), e);
+                    String errorMsg = String.format(
+                            "An error occured while closing the workbook %s",
+                            getFileName());
+
+                    throw new ReadFileException(errorMsg);
+                }
+            }
         }
 
         if (finishedCourses.isEmpty()) {
@@ -95,6 +117,12 @@ public class SimpleFinishedCoursesAnalyzer implements FinishedCoursesAnalyzer {
                     "No finished courses could be extracted";
             throw new NoModelsExtractedException(errorMsg);
         }
+    }
+
+    @Override
+    public void deleteFinishedCoursesFile() {
+        this.fileName = null;
+        this.finishedCourses = null;
     }
 
     private Course getFinishedCourseFromCells(Row row) {

@@ -96,6 +96,16 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         }
     }
 
+    @Override
+    public void deleteStudyPlanFile() {
+        this.pdDocument = null;
+        this.fileName = null;
+        this.tableOfContent = null;
+        mandatoryCourses = null;
+        this.modules = null;
+        this.transferableSkills = null;
+    }
+
     private void initPdf(MultipartFile multipartFile) throws IOException {
 
         this.pdDocument =  PDDocument.load(multipartFile.getInputStream());
@@ -156,7 +166,8 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
 
         String text = pdfTextStripper.getText(pdDocument);
-        this.mandatoryCourses = mandatoryCoursesAnalyzer.analyzeMandatoryCourses(text);
+        mandatoryCoursesAnalyzer.analyzeMandatoryCourses(text);
+        this.mandatoryCourses = mandatoryCoursesAnalyzer.getMandatoryCourses();
 
     }
 
@@ -168,7 +179,10 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
 
         String text = pdfTextStripper.getText(pdDocument);
-        this.modules = modulesAnalyzer.analyzeModule(text);
+
+        modulesAnalyzer.analyzeModule(text);
+
+        this.modules = modulesAnalyzer.getModules();
     }
 
     private void  analyzeTransferableSkills() throws IOException {
@@ -179,7 +193,10 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(transferableSkillsChapter.getPageEnd());
 
         String text = pdfTextStripper.getText(pdDocument);
-        this.transferableSkills = transferableSkillsAnalyzer.analyzeTransferableSkills(text);
+
+        transferableSkillsAnalyzer.analyzeTransferableSkills(text);
+
+        this.transferableSkills = transferableSkillsAnalyzer.getTransferableSkills();
     }
 
     @Override
