@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { MatChipsModule, MatIconModule } from '@angular/material'
+import { MatTabsModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +16,11 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LanguageComponent } from './language/language.component';
 
-import { HomeService } from './home/home.service';
+import { HomeService } from './home/home.service'
+import { InputService } from './input/input.service';
+
+import { InputComponent } from './input/input.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,9 @@ import { HomeService } from './home/home.service';
     NavComponent,
     AboutComponent,
     ContactComponent,
-    LanguageComponent
+    LanguageComponent,
+    InputComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -32,10 +40,13 @@ import { HomeService } from './home/home.service';
     HttpClientModule,
     AppRoutingModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HomeService,
+    InputService,
     NavComponent
   ],
   bootstrap: [AppComponent]

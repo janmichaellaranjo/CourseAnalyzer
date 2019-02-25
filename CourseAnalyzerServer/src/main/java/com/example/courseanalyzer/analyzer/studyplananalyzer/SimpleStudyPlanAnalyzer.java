@@ -101,7 +101,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         this.pdDocument = null;
         this.fileName = null;
         this.tableOfContent = null;
-        mandatoryCourses = null;
+        this.mandatoryCourses = null;
         this.modules = null;
         this.transferableSkills = null;
     }
@@ -109,7 +109,7 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
     private void initPdf(MultipartFile multipartFile) throws IOException {
 
         this.pdDocument =  PDDocument.load(multipartFile.getInputStream());
-        this.fileName = multipartFile.getName();
+        this.fileName = multipartFile.getOriginalFilename();
         this.tableOfContent = new TableOfContent();
 
         validateStudyPlanPDF();

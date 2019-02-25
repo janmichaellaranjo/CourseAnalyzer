@@ -1,0 +1,12 @@
+table {
+    margin-left: 10%;
+    border-spacing: 1em;
+}
+
+.error {
+    color: red;
+}
+
+.green-icon {
+    color: rgb(24, 214, 24);
+}
