@@ -16,8 +16,11 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LanguageComponent } from './language/language.component';
 
+import { ReportAccessGuard } from './report/reportaccessguard.service'
 import { HomeService } from './home/home.service'
 import { InputService } from './input/input.service';
+import { ReportService } from './report/report.service';
+
 
 import { InputComponent } from './input/input.component';
 import { ReportComponent } from './report/report.component';
@@ -45,9 +48,11 @@ import { ReportComponent } from './report/report.component';
     BrowserAnimationsModule
   ],
   providers: [
+    NavComponent,
     HomeService,
     InputService,
-    NavComponent
+    ReportAccessGuard,
+    ReportService
   ],
   bootstrap: [AppComponent]
 })

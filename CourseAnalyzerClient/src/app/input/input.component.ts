@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { InputService } from './input.service'
+import { InputService } from './input.service';
+import { ReportService } from '../report/report.service';
 
 import { ViewChild } from '@angular/core';
+import { HomeService } from '../home/home.service';
 
 @Component({
   selector: 'app-input',
@@ -44,6 +46,8 @@ export class InputComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private inputService: InputService,
+    private reportService: ReportService,
+    private homeService: HomeService,
     private cdRef: ChangeDetectorRef) {
     this.isButtonDisabled = true;
   }
@@ -74,6 +78,8 @@ export class InputComponent implements OnInit {
       this.isFinishedCoursesFileCorrect = true;
       this.isFinishedCoursesFileSelected = true;
     }
+
+    this.activateButton();
 
     this.cdRef.detectChanges();
   }
@@ -220,7 +226,10 @@ export class InputComponent implements OnInit {
   }
 
   handleResult(data) {
+    this.reportService.isAccessible = true;
+    this.homeService.disableRouterTab(false);
 
+    this.router.navigate([this.homeService.REPORT_URL]);
   }
 
   removeStudyPlan() {
