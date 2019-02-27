@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 export class ReportService {
     isAccessible: boolean;
     data: any;
-
+    selectedTable: string;
+    
     constructor() {
         this.isAccessible = false;
     }

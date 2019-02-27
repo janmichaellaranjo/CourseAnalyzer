@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
-import { MatChipsModule, MatIconModule } from '@angular/material'
-import { MatTabsModule } from '@angular/material';
+import { MatChipsModule, MatIconModule, MatTabsModule, MatTableModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,9 +22,11 @@ import { HomeService } from './home/home.service';
 import { InputService } from './input/input.service';
 import { ReportService } from './report/report.service';
 
-
 import { InputComponent } from './input/input.component';
 import { ReportComponent } from './report/report.component';
+import { RemainingMandatoryCourseTableComponent } from './report/remaining-mandatory-course-table/remaining-mandatory-course-table.component';
+import { RemainingUnassginedCoursesTableComponent } from './report/remaining-unassgined-courses-table/remaining-unassgined-courses-table.component';
+import { ListDirective } from './report/list.directive';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { ReportComponent } from './report/report.component';
     ContactComponent,
     LanguageComponent,
     InputComponent,
-    ReportComponent
+    ReportComponent,
+    RemainingMandatoryCourseTableComponent,
+    RemainingUnassginedCoursesTableComponent,
+    ListDirective,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,9 @@ import { ReportComponent } from './report/report.component';
     MatChipsModule,
     MatIconModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    MatTableModule,
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     NavComponent,
@@ -56,6 +63,7 @@ import { ReportComponent } from './report/report.component';
     ReportAccessGuard,
     ReportService
   ],
+  entryComponents: [RemainingMandatoryCourseTableComponent, RemainingUnassginedCoursesTableComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

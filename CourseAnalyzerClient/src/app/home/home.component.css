@@ -6,3 +6,7 @@ table {
 .error {
     color: red;
 }
+
+#routerArea {
+    padding-top: 3%;
+}

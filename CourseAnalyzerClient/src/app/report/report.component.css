@@ -1,6 +1,11 @@
 #ectsArea {
     position: fixed;
-    right: 10%; 
-    top: 70%;
-    background-color: grey; 
+    right: 20%; 
+    top: 30%;
+    background-color: lightgray; 
+}
+
+#dropDownMenu {
+    padding-top: 1%;
+    padding-bottom: 2%;
 }

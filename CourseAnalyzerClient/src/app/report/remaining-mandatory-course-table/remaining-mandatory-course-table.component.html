@@ -1,0 +1,20 @@
+<h5>Fehlende Pflicht-Lehrveranstaltung</h5>
+<table id="remainingMandatoryCourseTable" mat-table [dataSource]="this.reportService.data.remainingMandatoryCourses">
+    <ng-container matColumnDef="ects">
+        <th mat-header-cell *matHeaderCellDef>ECTs</th>
+        <td mat-cell *matCellDef="let remainingMandatoryCourse">{{remainingMandatoryCourse.ects}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseType">
+        <th mat-header-cell *matHeaderCellDef>Typ</th>
+        <td mat-cell *matCellDef="let remainingMandatoryCourse">{{remainingMandatoryCourse.courseType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let remainingMandatoryCourse">{{remainingMandatoryCourse.courseName}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
