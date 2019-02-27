@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class HomeService {
   navLinks: any[];
   previousTab: string;
+  BASE_URL: string = "/";
   INPUT_URL: string = "/input";
   REPORT_URL: string = "/report";
   constructor() {

@@ -8,6 +8,7 @@ import { ReportService } from '../report/report.service';
 
 import { ViewChild } from '@angular/core';
 import { HomeService } from '../home/home.service';
+import { AppRoutingService } from '../app-routing.service';
 
 @Component({
   selector: 'app-input',
@@ -30,7 +31,6 @@ export class InputComponent implements OnInit {
   finishedCoursesErrorMessage: string;
   removable: boolean = true;
 
-  INPUT_URL: string = "/input";
   private backEndUrl: string = 'http://localhost:8080/courseanalyzer';
 
   @ViewChild('studyPlanFileInput')
@@ -47,17 +47,14 @@ export class InputComponent implements OnInit {
     private router: Router,
     private inputService: InputService,
     private reportService: ReportService,
+    private appRoutingService: AppRoutingService,
     private homeService: HomeService,
     private cdRef: ChangeDetectorRef) {
     this.isButtonDisabled = true;
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((res) => {
-      if (this.router.url == this.INPUT_URL) {
-
-      }
-    });
+    this.appRoutingService.maintainSameHomeTabWhenHomeClicked();
   }
 
   ngAfterViewInit() {
@@ -226,6 +223,7 @@ export class InputComponent implements OnInit {
   }
 
   handleResult(data) {
+    this.reportService.data = data;
     this.reportService.isAccessible = true;
     this.homeService.disableRouterTab(false);
 

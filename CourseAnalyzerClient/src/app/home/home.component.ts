@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeService } from './home.service';
+import { keyframes } from '@angular/animations';
+import { AppRoutingService } from '../app-routing.service';
 
 @Component({
   selector: 'app-home',
@@ -9,23 +11,21 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
   
-  constructor(private router: Router, private homeService: HomeService) {
+  constructor(
+    private router: Router,
+     private homeService: HomeService,
+     private appRoutingService: AppRoutingService) { 
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe((res) => {
+
+    this.appRoutingService.navigateToPreviousVisitedTab();
+
+    this.router.events.subscribe(() => {
       if (this.router.url == this.homeService.INPUT_URL ||
           this.router.url == this.homeService.REPORT_URL) {
         this.homeService.previousTab = this.router.url;
       }
     });
-  }
-
-  ngAfterViewInit() {
-    if (this.homeService.previousTab != null) {
-      this.router.navigate([this.homeService.previousTab]);
-    } else {
-      this.router.navigate([this.homeService.INPUT_URL]);
-    }
   }
 }

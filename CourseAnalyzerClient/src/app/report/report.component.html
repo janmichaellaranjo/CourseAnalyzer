@@ -1,3 +1,27 @@
-<p>
-  report works!
-</p>
+<h2>Result</h2>
+<div id="ectsArea">
+  <table>
+    <table id="ectsTable">
+      <thead>
+      <td id="typeCell"></td>
+      <td>ECTs</td>
+      </thead>
+      <tr>
+          <td id="mandatoryCoursesEctsCell"></td>
+          <td>{{this.reportService.data.mandatoryCoursesEcts}}</td>
+      </tr>
+      <tr>
+          <td id="additionalMandatoryCoursesEctsCell"></td>
+          <td>{{this.reportService.data.additionalMandatoryCoursesEcts}}</td>
+      </tr>
+      <tr>
+          <td id="optionalModuleEctsCell"></td>
+          <td>{{this.reportService.data.optionalModuleCoursesEcts}}</td>
+      </tr>
+      <tr>
+          <td id="transferableSkillsEctsCell"></td>
+          <td>{{this.reportService.data.transferableSkillsEcts}}</td>
+      </tr>
+  </table>
+  </table>
+</div>

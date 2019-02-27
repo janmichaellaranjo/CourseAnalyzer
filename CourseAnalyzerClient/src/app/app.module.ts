@@ -16,8 +16,9 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LanguageComponent } from './language/language.component';
 
-import { ReportAccessGuard } from './report/reportaccessguard.service'
-import { HomeService } from './home/home.service'
+import { AppRoutingService } from './app-routing.service';
+import { ReportAccessGuard } from './report/reportaccessguard.service';
+import { HomeService } from './home/home.service';
 import { InputService } from './input/input.service';
 import { ReportService } from './report/report.service';
 
@@ -49,6 +50,7 @@ import { ReportComponent } from './report/report.component';
   ],
   providers: [
     NavComponent,
+    AppRoutingService,
     HomeService,
     InputService,
     ReportAccessGuard,
