@@ -69,8 +69,8 @@ export class InputComponent implements OnInit {
               console.error(error);
             }
             this.inputService.studyPlan = null;
-
             this.inputService.addStudyPlanErrorMsg(error);
+            this.enableReportTab();
             this.activateButton();
           },
           () => {
@@ -107,12 +107,10 @@ export class InputComponent implements OnInit {
             console.error(error);
 
             this.inputService.transitionalProvision = null;
-
             this.inputService.addTransitionalProvisionErrorMsg(error);
           },
           () => {
             this.inputService.transitionalProvision = file;
-
             this.inputService.removeTransitionalProvisionErrorMsg();
           }
       );
@@ -137,11 +135,12 @@ export class InputComponent implements OnInit {
         subscribe(
           () => { },
           (error) => {
-            console.error(error);
-
+            if (error != undefined) {
+              console.error(error);
+            }
             this.inputService.finishedCourses = null;
-
             this.inputService.addFinishedCoursesErrorMsg(error);
+            this.enableReportTab();
             this.activateButton();
           },
           () => {
@@ -178,7 +177,8 @@ export class InputComponent implements OnInit {
   selectReportComponent() {
     this.homeService.component = ReportComponent;
     this.homeService.selectedTabIndex = this.homeService.REPORT_INDEX;
-    this.homeService.isReportDisabled = false;
+    
+    this.enableReportTab();
     this.homeService.displayComponent();
   }
 
@@ -197,6 +197,7 @@ export class InputComponent implements OnInit {
     );
 
     this.inputService.removeStudyPlanErrorMsg();
+    this.enableReportTab();
     this.activateButton();
   }
 
@@ -232,7 +233,12 @@ export class InputComponent implements OnInit {
       );
 
     this.inputService.removeFinishedCoursesErrorMsg();
+    this.enableReportTab();
     this.activateButton();
+  }
+
+  enableReportTab() {
+    this.homeService.isReportDisabled = !this.inputService.isMandatoryFilesSelected();
   }
 
   activateButton() {
