@@ -3,25 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
-import { InputComponent } from './input/input.component';
-import { ReportComponent } from './report/report.component'
-import { ReportAccessGuard } from './report/reportaccessguard.service'
 
 const routes: Routes = [
   { 
     path: '',
-    component: HomeComponent,
-    children : [
-      { 
-        path: 'input',
-        component: InputComponent 
-      },
-      { 
-        path: 'report',
-        component: ReportComponent,
-        canActivate: [ReportAccessGuard],
-      } 
-  ] 
+    component: HomeComponent
   },
   { 
     path: 'about', 

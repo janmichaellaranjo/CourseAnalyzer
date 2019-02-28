@@ -1,30 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
+import { HomeDirective } from './home.directive';
 
 @Injectable() 
 export class HomeService {
-  navLinks: any[];
-  previousTab: string;
-  BASE_URL: string = "/";
-  INPUT_URL: string = "/input";
-  REPORT_URL: string = "/report";
+  selectedTabIndex: number;
+  INPUT_INDEX = 0;
+  REPORT_INDEX = 1;
+  isReportDisabled: boolean = true;
+  component: any;
+  componentFactoryResolver: ComponentFactoryResolver;
+  componentHost: HomeDirective;
+
   constructor() {
-    this.navLinks = [
-      {
-          label: 'Eingabe',
-          link: [this.INPUT_URL],
-          index: 0,
-          isDisabled: false
-      }, 
-      {
-          label: 'Ergebnis',
-          link: [this.REPORT_URL],
-          index: 1,
-          isDisabled: true
-      }];
-    this.previousTab = null;
   }
 
-  disableRouterTab(isDisabled: boolean) {
-    this.navLinks[1].isDisabled = isDisabled;
+  displayComponent() {
+
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.component);
+
+    let viewContainerRef = this.componentHost.viewContainerRef;
+    viewContainerRef.clear();
+
+    viewContainerRef.createComponent(componentFactory);
   }
 }

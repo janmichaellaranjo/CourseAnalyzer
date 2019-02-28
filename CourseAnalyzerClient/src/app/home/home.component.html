@@ -1,14 +1,11 @@
-<nav mat-tab-nav-bar>
-    <a mat-tab-link
-    *ngFor="let link of this.homeService.navLinks"
-    [routerLink]="link.link"
-    routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive"
-    [disabled]="link.isDisabled">
-    {{link.label}}
-    </a>
-</nav>
+<mat-tab-group (selectedTabChange)="displaySelectedComponent($event)" [selectedIndex]="this.homeService.selectedTabIndex">
+    <mat-tab label="Eingabe">
+    </mat-tab>
+    <mat-tab label="Ergebnis" [disabled] = "this.homeService.isReportDisabled">
+    </mat-tab>
+</mat-tab-group>
+
 <div id="routerArea">
-    <router-outlet></router-outlet>
+    <ng-template appHome></ng-template>
 </div>
 

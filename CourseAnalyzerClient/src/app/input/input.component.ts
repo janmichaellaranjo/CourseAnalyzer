@@ -1,14 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+import { HomeService } from '../home/home.service';
 import { InputService } from './input.service';
 import { ReportService } from '../report/report.service';
 
-import { ViewChild } from '@angular/core';
-import { HomeService } from '../home/home.service';
-import { AppRoutingService } from '../app-routing.service';
+import { ReportComponent } from '../report/report.component'
 
 @Component({
   selector: 'app-input',
@@ -47,14 +46,12 @@ export class InputComponent implements OnInit {
     private router: Router,
     private inputService: InputService,
     private reportService: ReportService,
-    private appRoutingService: AppRoutingService,
     private homeService: HomeService,
     private cdRef: ChangeDetectorRef) {
     this.isButtonDisabled = true;
   }
 
   ngOnInit(): void {
-    this.appRoutingService.maintainSameHomeTabWhenHomeClicked();
   }
 
   ngAfterViewInit() {
@@ -225,9 +222,15 @@ export class InputComponent implements OnInit {
   handleResult(data) {
     this.reportService.data = data;
     this.reportService.isAccessible = true;
-    this.homeService.disableRouterTab(false);
 
-    this.router.navigate([this.homeService.REPORT_URL]);
+    this.selectReportComponent();
+  }
+
+  selectReportComponent() {
+    this.homeService.component = ReportComponent;
+    this.homeService.selectedTabIndex = this.homeService.REPORT_INDEX;
+    this.homeService.isReportDisabled = false;
+    this.homeService.displayComponent();
   }
 
   removeStudyPlan() {
