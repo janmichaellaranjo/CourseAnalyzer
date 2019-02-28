@@ -16,18 +16,6 @@ import { ReportComponent } from '../report/report.component'
 })
 export class InputComponent implements OnInit {
   isButtonDisabled: boolean;
-  isStudyPlanFileSelected: boolean;
-  isTransitionalProvisionFileSelected: boolean;
-  isFinishedCoursesFileSelected: boolean;
-  isStudyPlanFileCorrect: boolean;
-  isTransitionalProvisionFileCorrect: boolean;
-  isFinishedCoursesFileCorrect: boolean;
-  studyPlanFilePath: string;
-  transitionalProvisionFilePath: string;
-  finishedCourseFilePath: string;
-  studyPlanErrorMessage: string;
-  transitionalProvisionErrorMessage: string;
-  finishedCoursesErrorMessage: string;
   removable: boolean = true;
 
   private backEndUrl: string = 'http://localhost:8080/courseanalyzer';
@@ -43,7 +31,6 @@ export class InputComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private inputService: InputService,
     private reportService: ReportService,
     private homeService: HomeService,
@@ -55,26 +42,7 @@ export class InputComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.inputService.studyPlan != null) {
-      this.studyPlanFilePath = this.inputService.studyPlan.name;
-      this.isStudyPlanFileCorrect = true;
-      this.isStudyPlanFileSelected = true;
-    }
-
-    if (this.inputService.transitionalProvision != null) {
-      this.transitionalProvisionFilePath = this.inputService.transitionalProvision.name;
-      this.isTransitionalProvisionFileCorrect = true;
-      this.isTransitionalProvisionFileSelected = true;
-    }
-
-    if (this.inputService.finishedCourses != null) {
-      this.finishedCourseFilePath = this.inputService.finishedCourses.name;
-      this.isFinishedCoursesFileCorrect = true;
-      this.isFinishedCoursesFileSelected = true;
-    }
-
     this.activateButton();
-
     this.cdRef.detectChanges();
   }
 
@@ -99,29 +67,22 @@ export class InputComponent implements OnInit {
           (error) => {
             if (error != undefined) {
               console.error(error);
-
             }
+            this.inputService.studyPlan = null;
 
-            this.studyPlanErrorMessage = error;
-
-            this.isStudyPlanFileSelected = true;
-            this.isStudyPlanFileCorrect = false;
+            this.inputService.addStudyPlanErrorMsg(error);
+            this.activateButton();
           },
           () => {
             this.inputService.studyPlan = file;
-            this.isStudyPlanFileCorrect = true;
-            this.isStudyPlanFileSelected = true;
-            this.studyPlanFilePath = file.name;
-            this.studyPlanErrorMessage = null;
-
+            
+            this.inputService.removeStudyPlanErrorMsg();
             this.activateButton();
           }
         );
-    } else {
-      this.isStudyPlanFileSelected = true;
+        
+        this.activateButton();
     }
-
-    this.inputService.errorMsg = null;
   }
 
   handleTransitionalProvisionInput(files: FileList) {
@@ -141,29 +102,21 @@ export class InputComponent implements OnInit {
           catchError(this.inputService.handleError)
         )
         .subscribe(
-          (data) => { },
+          () => { },
           (error) => {
             console.error(error);
 
-            this.transitionalProvisionErrorMessage = error;
+            this.inputService.transitionalProvision = null;
 
-            this.isTransitionalProvisionFileSelected = true;
-            this.isTransitionalProvisionFileCorrect = false;
+            this.inputService.addTransitionalProvisionErrorMsg(error);
           },
           () => {
             this.inputService.transitionalProvision = file;
-            this.transitionalProvisionFilePath = file.name;
-            this.isTransitionalProvisionFileCorrect = true;
-            this.isTransitionalProvisionFileSelected = true;
 
-            this.activateButton();
+            this.inputService.removeTransitionalProvisionErrorMsg();
           }
-        );
-    } else {
-      this.isTransitionalProvisionFileSelected = true;
+      );
     }
-
-    this.inputService.errorMsg = null;
   }
 
   handleFinishedCoursesInput(files: FileList) {
@@ -182,28 +135,24 @@ export class InputComponent implements OnInit {
         .pipe(
           catchError(this.inputService.handleError)).
         subscribe(
-          (data) => { },
+          () => { },
           (error) => {
             console.error(error);
 
-            this.finishedCoursesErrorMessage = error;
+            this.inputService.finishedCourses = null;
 
-            this.isFinishedCoursesFileSelected = true;
-            this.isFinishedCoursesFileCorrect = false;
+            this.inputService.addFinishedCoursesErrorMsg(error);
+            this.activateButton();
           },
           () => {
             this.inputService.finishedCourses = file;
-            this.finishedCourseFilePath = file.name;
-            this.isFinishedCoursesFileCorrect = true;
-            this.isFinishedCoursesFileSelected = true;
+
+            this.inputService.removeFinishedCoursesErrorMsg();
             this.activateButton();
           }
-        );
-    } else {
-      this.isFinishedCoursesFileSelected = true;
-    }
-
-    this.inputService.errorMsg = null;
+      );
+      this.activateButton();
+    } 
   }
 
   compareCourses() {
@@ -235,9 +184,6 @@ export class InputComponent implements OnInit {
 
   removeStudyPlan() {
     this.inputService.studyPlan = null;
-    this.studyPlanErrorMessage = null;
-    this.isStudyPlanFileSelected = false;
-    this.isStudyPlanFileCorrect = false;
     this.studyPlanFileInput.nativeElement.value = "";
 
     this.inputService.resetFile('studyPlanFile')
@@ -245,42 +191,48 @@ export class InputComponent implements OnInit {
         () => { },
         (error) => {
           console.error(error);
-          this.inputService.errorMsg = error;
+          this.inputService.addStudyPlanErrorMsg(error);
         },
         () => { }
     );
 
+    this.inputService.removeStudyPlanErrorMsg();
     this.activateButton();
   }
 
   removeTransitionalProvision() {
     this.inputService.transitionalProvision = null;
-    this.isTransitionalProvisionFileCorrect = false;
-    this.isTransitionalProvisionFileSelected = false;
     this.transitionalProvisionFileInput.nativeElement.value = "";
 
     this.inputService.resetFile('transitionalProvisionFile')
       .subscribe(
         () => { },
-        (error) => console.error(error),
+        (error) => {
+          console.error(error);
+          this.inputService.addTransitionalProvisionErrorMsg(error);
+        },
         () => { }
       );
+
+      this.inputService.removeTransitionalProvisionErrorMsg();
   }
 
   removeFinishedCourses() {
     this.inputService.finishedCourses = null;
-    this.isFinishedCoursesFileCorrect = false;
-    this.isFinishedCoursesFileSelected = false;
     this.finishedCoursesFileInput.nativeElement.value = "";
 
     this.inputService.resetFile('finishedCoursesFile')
       .subscribe(
         () => { },
-        (error) => console.error(error),
+        (error) => {
+          console.error(error);
+          this.inputService.addFinishedCoursesErrorMsg(error);
+        },
         () => { }
       );
 
-      this.activateButton();
+    this.inputService.removeFinishedCoursesErrorMsg();
+    this.activateButton();
   }
 
   activateButton() {

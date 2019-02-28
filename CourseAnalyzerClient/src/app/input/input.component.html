@@ -8,20 +8,19 @@
       <input type="file" accept=".pdf" id="selectedStudyPlanFile" style="display: none;" #studyPlanFileInput (change)="handleStudyPlanInput($event.target.files)" />
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedStudyPlanFile').click();" />
     </td>
-    <td *ngIf="isStudyPlanFileCorrect">
+    <td *ngIf="inputService.studyPlan != null">
         <mat-chip-list>
           <mat-chip [removable]="removable" (removed)="removeStudyPlan()">
-            {{studyPlanFilePath}}
+            {{this.inputService.studyPlan.name}}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>
     </td>
-    <td *ngIf="isStudyPlanFileSelected && isStudyPlanFileCorrect">
+    <td *ngIf="inputService.studyPlan != null">
       <mat-icon class="green-icon">done</mat-icon>
     </td>
-    <td *ngIf="isStudyPlanFileSelected && !isStudyPlanFileCorrect">
+    <td *ngIf="inputService.studyPlanErrorMsg != null">
         <mat-icon color="warn">clear</mat-icon>
-        <label class="error">{{studyPlanErrorMessage}}</label>
     </td>
   </tr>
   <tr>
@@ -32,20 +31,19 @@
       <input type="file" accept=".pdf" id="selectedTransitionalProvisionFile" style="display: none;" #transitionalProvisionFileInput (change)="handleTransitionalProvisionInput($event.target.files)"/>
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedTransitionalProvisionFile').click();" />    
     </td>
-    <td *ngIf=isTransitionalProvisionFileCorrect>
+    <td *ngIf="inputService.transitionalProvision != null">
       <mat-chip-list>
         <mat-chip [removable]="removable" (removed)="removeTransitionalProvision()">
-            {{transitionalProvisionFilePath}}
+            {{this.inputService.transitionalProvision.name}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
     </td>
-    <td *ngIf="isTransitionalProvisionFileCorrect">
+    <td *ngIf="inputService.transitionalProvision != null">
       <mat-icon class="green-icon">done</mat-icon>
     </td>
-    <td *ngIf="isTransitionalProvisionFileSelected && !isTransitionalProvisionFileCorrect">
+    <td *ngIf="inputService.transitionalProvisionErrorMsg != null">
         <mat-icon color="warn">clear</mat-icon>
-        <label class="error">{{transitionalProvisionErrorMessage}}</label>
     </td>
     <td>     
     </td>
@@ -58,20 +56,19 @@
       <input type="file" accept=".xlsx" id="selectedFinishedCoursesFile" style="display: none;" #finishedCoursesFileInput (change)="handleFinishedCoursesInput($event.target.files)"/>
       <input type="button" value="Auswählen" onclick="document.getElementById('selectedFinishedCoursesFile').click();" />
     </td>
-    <td *ngIf="isFinishedCoursesFileCorrect">
+    <td *ngIf="inputService.finishedCourses != null">
       <mat-chip-list>
         <mat-chip [removable]="removable" (removed)="removeFinishedCourses()">
-            {{finishedCourseFilePath}}
+            {{this.inputService.finishedCourses.name}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
     </td>
-    <td *ngIf="isFinishedCoursesFileCorrect">
+    <td *ngIf="inputService.finishedCourses != null">
       <mat-icon class="green-icon">done</mat-icon>
     </td>
-    <td *ngIf="isFinishedCoursesFileSelected && !isFinishedCoursesFileCorrect">
+    <td *ngIf="inputService.finishedCoursesErrorMsg != null">
       <mat-icon color="warn">clear</mat-icon>
-      <label class="error">{{finishedCoursesErrorMessage}}</label>
     </td>
   </tr>
   <tr>
@@ -80,9 +77,11 @@
       <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analyze</button>
     </td>
   </tr>
-  <tr *ngIf="inputService.isErrorMsgShown()">
-    <td rowspan="3">
-      <label class="error">{{errorMsg}}</label>
-    </td>
-  </tr>
+  <div *ngIf="inputService.isErrorMsgsShown()">
+    <tr *ngFor="let errorMsg of inputService.errorMsgs">
+      <td colspan="3" >
+        <label class="error">{{errorMsg}}</label>
+      </td>
+    </tr>
+  </div>
 </table>
