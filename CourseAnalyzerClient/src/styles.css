@@ -22,3 +22,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 a { 
     color: black;
 }
+
+.resultTable {
+    width: 60%;
+}
+
+.ectsCol {
+    width: 13%;
+}
+
+.typeCol {
+    width: 13%;
+}

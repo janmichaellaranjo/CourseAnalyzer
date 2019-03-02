@@ -1,0 +1,15 @@
+h5 {
+    padding-bottom: 2%;
+}
+div  {
+    padding-bottom: 2%;
+}
+label {
+    display: block;
+}
+.title {
+    font-weight: bold;
+}
+.url {
+    color: #0645AD;
+}
