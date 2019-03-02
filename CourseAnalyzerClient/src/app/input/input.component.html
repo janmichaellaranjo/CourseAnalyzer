@@ -1,8 +1,11 @@
-<p id="instructionText">Diese Web-Application gibt dir einen Überblick über die Gesamtanzahl von ECTs, die du in Pflicht-Lehrveranstaltungen, ergängzenden Pflicht-Lehrveranstaltungen, Wahl-Lehrveranstaltungen oder Soft-Skills. Zusätzlich wird noch eine Liste an fehlenden Pflicht-Lehrveranstaltungen des Curriculum angezeigt.</p>
+<p id="instructionText">
+  Wählen Sie einen Studienplan, Übergangsbestimmungen(Optional) und eine Datei mit den abgeschlossenen Lehrveranstaltungen aus. Klicken 
+  sie auf "Analysieren", um mit der Analyse der Kurse zu starten.
+</p>
 <table>
   <tr>
-    <td>
-      <label id="studyPlanLabel">Studienplan</label>
+    <td class="labelCol">
+      <label>Studienplan</label>
     </td>
     <td>
       <input type="file" accept=".pdf" id="selectedStudyPlanFile" style="display: none;" #studyPlanFileInput (change)="handleStudyPlanInput($event.target.files)" />
@@ -23,9 +26,9 @@
         <mat-icon color="warn">clear</mat-icon>
     </td>
   </tr>
-  <tr>
+  <tr class="labelCol">
     <td>
-      <label id="transitionalProvisionLabel">Übergangsbestimmungen(Optional)</label>
+      <label>Übergangsbestimmungen(Optional)</label>
     </td>
     <td>
       <input type="file" accept=".pdf" id="selectedTransitionalProvisionFile" style="display: none;" #transitionalProvisionFileInput (change)="handleTransitionalProvisionInput($event.target.files)"/>
@@ -49,8 +52,8 @@
     </td>
   </tr>
   <tr>
-    <td>
-      <label id="finishedCoursesLabel">Abgeschlossene Lehrveranstaltungen</label>
+    <td class="labelCol">
+      <label>Abgeschlossene Lehrveranstaltungen</label>
     </td>
     <td>
       <input type="file" accept=".xlsx" id="selectedFinishedCoursesFile" style="display: none;" #finishedCoursesFileInput (change)="handleFinishedCoursesInput($event.target.files)"/>
@@ -74,7 +77,7 @@
   <tr>
     <td></td>
     <td>
-      <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analyze</button>
+      <button id="analyzeButton" (click)="compareCourses()" [disabled]="isButtonDisabled">Analysieren</button>
     </td>
   </tr>
   <div *ngIf="inputService.isErrorMsgsShown()">
