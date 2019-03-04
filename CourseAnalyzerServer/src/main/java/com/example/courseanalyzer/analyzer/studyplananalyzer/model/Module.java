@@ -34,7 +34,6 @@ public class Module {
         return isMandatory;
     }
 
-
     public String getName() {
         return name;
     }
@@ -93,7 +92,8 @@ public class Module {
 
     @Override
     public int hashCode() {
-        int hashCode = 37 * name.hashCode();
+
+        int hashCode = 37 * (name != null ? name.hashCode() : 1);
 
         for (Course course : courses) {
             hashCode += 37 * course.hashCode();

@@ -11,7 +11,6 @@ import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletRequest;
 import java.util.Set;
 
 /**

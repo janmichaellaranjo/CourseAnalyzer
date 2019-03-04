@@ -1,9 +1,9 @@
 package com.example.courseanalyzer.service;
 /**
  * @Package: com.example.courseanalyzer.service
- * @Class: SimpleCourseCheckerService
+ * @Class: CourseAnalyzer
  * @Author: Jan
- * @Date: 25.01.2019
+ * @Date: 02.03.2019
  */
 
 import com.example.courseanalyzer.analyzer.finishedcoursesanalyzer.FinishedCoursesAnalyzer;
@@ -14,41 +14,34 @@ import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.StudyPlanAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer.TransitionalProvisionAnalyzer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 /**
+ * <p>Compares the mandatory courses and transferable skills from the study plan
+ * and optional module from the transitional provision with the finished courses.
+ * </p>
+ * <p>The detailed result of the analysis will be encapsulated in
+ * {@link com.example.courseanalyzer.analyzer.model.CourseReport} which can be
+ * </p>
  *
  */
-@Service
-public class SimpleCourseCheckerService implements CourseAnalyzerService {
-    private static final Logger logger = LogManager.getLogger(SimpleCourseCheckerService.class);
-
-    private static final String STUDY_PLAN_FILE = "studyPlanFile";
-
-    private static final String TRANSITIONAL_PRVOVISION_FILE = "transitionalProvisionFile";
-
-    private static final String FINISHED_COURSES_FILE = "finishedCoursesFile";
+public class CourseAnalyzer {
 
     @Autowired
     @Qualifier("SimpleStudyPlanAnalyzer")
     private StudyPlanAnalyzer studyPlanAnalyzer;
 
     @Autowired
-    @Qualifier("SimpleFinishedCoursesAnalyzer")
-    private FinishedCoursesAnalyzer finishedCoursesAnalyzer;
-
-    @Autowired
     @Qualifier("SimpleTransitionalProvisionAnalyzer")
     private TransitionalProvisionAnalyzer transitionalProvisionAnalyzer;
+
+    @Autowired
+    @Qualifier("SimpleFinishedCoursesAnalyzer")
+    private FinishedCoursesAnalyzer finishedCoursesAnalyzer;
 
     private CourseReport courseReport;
 
@@ -62,74 +55,23 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
 
     private Set<Course> transferableSkills;
 
-    private float sumAchievedMandatoryEcts = 0f;
+    private float sumAchievedMandatoryEcts;
 
-    private float sumAchievedAdditionalMandatoryEcts = 0f;
+    private float sumAchievedAdditionalMandatoryEcts;
 
-    private float sumAchievedOptionalModuleEcts = 0f;
+    private float sumAchievedOptionalModuleEcts;
 
-    private float sumAchievedTransferableSkillsEcts = 0f;
+    private float sumAchievedTransferableSkillsEcts;
 
-    @Override
-    public void readStudyPlan(MultipartFile multiPartFile) {
-        if (multiPartFile == null) {
-            String errorMsg = "The multipartFile for the study plan on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-        studyPlanAnalyzer.analyzeStudyPlan(multiPartFile);
-    }
-
-    @Override
-    public void readTransitionalProvision(MultipartFile multipartFile) {
-        if (multipartFile == null) {
-            String errorMsg = "The multipartFile for the transitional provision on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-        transitionalProvisionAnalyzer.analyzeTransitionalProvision(multipartFile);
-    }
-
-    @Override
-    public void readFinishedCourseList(MultipartFile multipartFile) {
-        if (multipartFile == null) {
-            String errorMsg = "The multipartFile for the finished course list on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-
-        finishedCoursesAnalyzer.analyzeFinishedCourses(multipartFile);
-    }
-
-    @Override
-    public void deleteSelectedFile(String fileName) {
-        if (fileName == null || fileName.isEmpty()) {
-            String errorMsg = "The file name for deleting the selected file must not be null or empty";
-            logger.error(errorMsg);
-
-            throw new IllegalArgumentException(errorMsg);
-        }
-
-        chooseFileForDeletion(fileName);
-    }
-
-    private void chooseFileForDeletion(String fileName) {
-        if (fileName.equals(STUDY_PLAN_FILE)) {
-            studyPlanAnalyzer.deleteStudyPlanFile();
-        } else if (fileName.equals(TRANSITIONAL_PRVOVISION_FILE)) {
-            transitionalProvisionAnalyzer.deleteTransitionalProvisionFile();
-        } else if (fileName.equals(FINISHED_COURSES_FILE)) {
-            finishedCoursesAnalyzer.deleteFinishedCoursesFile();
-        }
-    }
-
-    @Override
-    public CourseReport compareCourses() {
+    /**
+     * Analysis the mandatory courses, transferable skills, optional modules
+     * with the finished courses. The result of the analysis will be encapsulated
+     * in {@link #courseReport}.
+     */
+    public void analyzeCourses() {
         initCourseInformation();
         determineCourseLists();
         calculateEcts();
-
-        return courseReport;
     }
 
     private void initCourseInformation() {
@@ -193,14 +135,14 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
 
     private Set<Course> determineRemainingMandatoryCourses() {
 
-        if (transitionalProvision == null) {
-            return mandatoryCourses;
-        }
-
         Set<Course> remainingMandatoryCourses = mandatoryCourses
                 .stream()
                 .filter(mandatoryCourse -> !finishedCourses.contains(mandatoryCourse))
                 .collect(Collectors.toSet());
+
+        if (transitionalProvision == null) {
+            return remainingMandatoryCourses;
+        }
 
         for (Course finishedCourse : finishedCourses) {
             CourseGroup additionalMandatoryCourseGroup = transitionalProvision.getAdditionalMandatoryCourseGroupOfCourse(finishedCourse);
@@ -219,5 +161,16 @@ public class SimpleCourseCheckerService implements CourseAnalyzerService {
         }
 
         return remainingMandatoryCourses;
+    }
+
+    /**
+     * Returns the detailed result of the courses.
+     *
+     * <p>This method should only be used after {@link #analyzeCourses()} has
+     * been called to ensure a correct report.</p>
+     * @return the detailed result of the courses.
+     */
+    public CourseReport getCourseReport() {
+        return courseReport;
     }
 }
