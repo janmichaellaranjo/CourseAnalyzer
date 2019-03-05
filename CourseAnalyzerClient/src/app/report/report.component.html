@@ -1,0 +1,35 @@
+<h2>Ergebnis</h2>
+<div id="dropDownMenu" ngbDropdown>
+    <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle>Lehrveranstaltungen</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+        <button class="dropdown-item" (click)="selectRemainingMandatoryCourseTableComponent()">Fehlende Pflicht-Lehrveranstaltungen</button>
+        <button class="dropdown-item" (click)="selectRemainingUnassignedCourseTableComponent()">Restliche nicht zugewiesene Lehrveranstaltungen</button>
+    </div>
+</div>
+<div id="listArea">
+    <ng-template appList></ng-template>
+</div>
+<div id="ectsArea">
+    <table id="ectsTable">
+        <thead>
+        <td id="typeCell"></td>
+        <td>ECTs</td>
+        </thead>
+        <tr>
+            <td id="mandatoryCoursesEctsCell">Pflicht-Lehrveranstaltungen ECTs</td>
+            <td class="ectsCol">{{this.reportService.data.mandatoryCoursesEcts}}</td>
+        </tr>
+        <tr>
+            <td id="additionalMandatoryCoursesEctsCell">Restliche Pflicht-Lehrveranstaltungen</td>
+            <td class="ectsCol">{{this.reportService.data.additionalMandatoryCoursesEcts}}</td>
+        </tr>
+        <tr>
+            <td id="optionalModuleEctsCell">Ergänzende Pflicht-Lehrveranstaltungen ECTs</td>
+            <td class="ectsCol">{{this.reportService.data.optionalModuleEcts}}</td>
+        </tr>
+        <tr>
+            <td id="transferableSkillsEctsCell">Transferable-Skills ECTs</td>
+            <td class="ectsCol">{{this.reportService.data.transferableSkillsEcts}}</td>
+        </tr>
+    </table>
+</div>

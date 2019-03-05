@@ -1,0 +1,11 @@
+<mat-tab-group (selectedTabChange)="displaySelectedComponent($event)" [selectedIndex]="this.homeService.selectedTabIndex">
+    <mat-tab label="Eingabe">
+    </mat-tab>
+    <mat-tab label="Ergebnis" [disabled] = "this.homeService.isReportDisabled">
+    </mat-tab>
+</mat-tab-group>
+
+<div id="routerArea">
+    <ng-template appHome></ng-template>
+</div>
+

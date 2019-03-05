@@ -1,0 +1,12 @@
+table {
+    margin-left: 10%;
+    border-spacing: 1em;
+}
+
+.error {
+    color: red;
+}
+
+#routerArea {
+    padding-top: 3%;
+}

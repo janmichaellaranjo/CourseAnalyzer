@@ -1,0 +1,20 @@
+<h5>Restliche Nicht Zugewiesene Lehrveranstaltungen</h5>
+<table class="resultTable" mat-table [dataSource]="this.reportService.data.remainingUnassignedFinishedCourses">
+    <ng-container  matColumnDef="ects">
+        <th class="ectsCol" mat-header-cell *matHeaderCellDef>ECTs</th>
+        <td class="ectsCol" mat-cell *matCellDef="let remainingUnnassignedCourse">{{remainingUnnassignedCourse.ects}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseType">
+        <th class="typeCol" mat-header-cell *matHeaderCellDef>Typ</th>
+        <td class="typeCol" mat-cell *matCellDef="let remainingUnnassignedCourse">{{remainingUnnassignedCourse.courseType}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let remainingUnnassignedCourse">{{remainingUnnassignedCourse.courseName}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

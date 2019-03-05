@@ -1,0 +1,15 @@
+<p id="instructionText"></p>
+<div class="row">
+    <div class="column0">
+        <p><label id="studyPlanLabel"></label></p>
+        <p><label id="transitionalProvisionLabel"></label></p>
+        <p><label id="finishedCoursesLabel"></label></p>
+        <br/>
+    </div>
+    <div class="column1">
+        <p><input type="file" accept=".pdf" filestudyplan='studyPlan' /></p>
+        <p><input type="file" accept=".pdf" filetransitionalprovision='transitionalProvision' /></p>
+        <p><input type="file" accept=".xlsx" filecertificatelist='certificateList' /></p>
+        <button id="analyzeButton" ng-click="analyzeCourses()" ng-disabled="!showElement.isMandatoryFilesFilled">Analyze</button>
+    </div>
+</div>

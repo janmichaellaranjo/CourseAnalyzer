@@ -59,7 +59,7 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 
 ## Used Frameworks
 
-* AngularJS
+* Angular
 * Spring
 * Apache POI
 * PDFBox
@@ -67,18 +67,16 @@ The current implementation works for the *TU Wien*'s current study plans in Comp
 
 ## TODO
 
-* Remove mistake of courses in groups in transitional provision
+* ~~Remove mistake of courses in groups in transitional provision
 * ~~Return all remaining mandatory courses~~
 * ~~Add validations on every layerand Exception Handling~~
-* Better error messaging
-* Better formatting of site
-* More user interaction
-* Create a tutorial part in web application
+* ~~Better error messaging
+* ~~Better formatting of site
+* ~~More user interaction
 * ~~More course informations~~
-* Make application responsive and different formats for different medias
 * ~~Change to multiple languages~~
 * Refactore code
 * ~~Use Dependency Injection~~
-* Create tests
+* ~~Create tests
 * Properly log every class
-* Create a how to use in README
+* Create a development in README
