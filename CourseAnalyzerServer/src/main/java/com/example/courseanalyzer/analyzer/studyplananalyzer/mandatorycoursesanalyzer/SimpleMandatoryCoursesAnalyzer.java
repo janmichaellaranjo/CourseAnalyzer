@@ -6,10 +6,10 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.mandatorycoursesan
  * @Date: 29.01.2019
  */
 
-import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -72,14 +72,7 @@ public class SimpleMandatoryCoursesAnalyzer implements MandatoryCoursesAnalyzer 
             scanner.close();
         }
 
-        if (mandatoryCourses.isEmpty()) {
-            String errorMsg = String.format(
-                    "The mandatory course text has the wrong format." +
-                    "No mandatory courses could be extracted");
-            logger.error(errorMsg);
-
-            throw new NoModelsExtractedException(errorMsg);
-        }
+        ValidationUtil.validateNonEmptySet(mandatoryCourses, "mandatory courses");
     }
 
     @Override

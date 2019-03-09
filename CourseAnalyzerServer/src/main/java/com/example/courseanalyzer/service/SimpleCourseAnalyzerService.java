@@ -14,6 +14,7 @@ import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.StudyPlanAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
 import com.example.courseanalyzer.analyzer.transitionalprovisionanalyzer.TransitionalProvisionAnalyzer;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -71,45 +73,26 @@ public class SimpleCourseAnalyzerService implements CourseAnalyzerService {
     private float sumAchievedTransferableSkillsEcts = 0f;
 
     @Override
-    public void readStudyPlan(MultipartFile multiPartFile) {
-        if (multiPartFile == null) {
-            String errorMsg = "The multipartFile for the study plan on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-        studyPlanAnalyzer.analyzeStudyPlan(multiPartFile);
+    public void readStudyPlan(MultipartFile multipartFile) {
+        ValidationUtil.validateMultiPartFileOnServiceLayer(multipartFile, "study plan");
+        studyPlanAnalyzer.analyzeStudyPlan(multipartFile);
     }
 
     @Override
     public void readTransitionalProvision(MultipartFile multipartFile) {
-        if (multipartFile == null) {
-            String errorMsg = "The multipartFile for the transitional provision on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
+        ValidationUtil.validateMultiPartFileOnServiceLayer(multipartFile, "transitional provision");
         transitionalProvisionAnalyzer.analyzeTransitionalProvision(multipartFile);
     }
 
     @Override
     public void readFinishedCourseList(MultipartFile multipartFile) {
-        if (multipartFile == null) {
-            String errorMsg = "The multipartFile for the finished course list on the service layer is null";
-            logger.error(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
-        }
-
+        ValidationUtil.validateMultiPartFileOnServiceLayer(multipartFile, "finished course list");
         finishedCoursesAnalyzer.analyzeFinishedCourses(multipartFile);
     }
 
     @Override
     public void deleteSelectedFile(String fileName) {
-        if (fileName == null || fileName.isEmpty()) {
-            String errorMsg = "The file name for deleting the selected file must not be null or empty";
-            logger.error(errorMsg);
-
-            throw new IllegalArgumentException(errorMsg);
-        }
-
+        ValidationUtil.validateFilledFileName(fileName, "deleting the selected file");
         chooseFileForDeletion(fileName);
     }
 

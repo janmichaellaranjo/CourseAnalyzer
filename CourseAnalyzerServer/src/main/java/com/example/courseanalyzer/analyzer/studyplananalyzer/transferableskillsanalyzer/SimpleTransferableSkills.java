@@ -10,6 +10,7 @@ import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -60,13 +61,7 @@ public class SimpleTransferableSkills implements TransferableSkillsAnalyzer {
             i++;
         }
 
-        if (transferableSkills.isEmpty()) {
-            String errorMsg = "The passed transferable skills text creates a list of transferable skills that is empty";
-
-            logger.error(errorMsg);
-
-            throw new NoModelsExtractedException(errorMsg);
-        }
+        ValidationUtil.validateNonEmptySet(transferableSkills, "transferable skills");
     }
 
     private void throwExceptionIfTextIsEmpty(String text) {

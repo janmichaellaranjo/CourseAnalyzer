@@ -15,6 +15,7 @@ import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Chapter;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.TableOfContent;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer.ModulesAnalyzer;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskillsanalyzer.TransferableSkillsAnalyzer;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -131,16 +132,13 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setEndPage(PAGE_NR_TABLE_OF_CONTENT);
 
         String parsedText = pdfTextStripper.getText(pdDocument);
-        Scanner scanner = null;
 
-        if (parsedText.isEmpty()) {
-            String errorMsg = String.format(
-                    "The table of content on page %d is empty",
-                    PAGE_NR_TABLE_OF_CONTENT);
-            throw new WrongFormatException(errorMsg);
-        }
+        ValidationUtil.validateNonEmptyParsedText(
+                parsedText,
+                PAGE_NR_TABLE_OF_CONTENT,
+                "table of content");
 
-        scanner = new Scanner(parsedText);
+        Scanner scanner = new Scanner(parsedText);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -165,22 +163,34 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setStartPage(suggestedStudyCourseChapter.getPageStart());
         pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
 
-        String text = pdfTextStripper.getText(pdDocument);
-        mandatoryCoursesAnalyzer.analyzeMandatoryCourses(text);
+        String parsedText = pdfTextStripper.getText(pdDocument);
+
+        ValidationUtil.validateNonEmptyParsedText(
+                parsedText,
+                suggestedStudyCourseChapter.getPageStart(),
+                "mandatory courses");
+
+        mandatoryCoursesAnalyzer.analyzeMandatoryCourses(parsedText);
+
         this.mandatoryCourses = mandatoryCoursesAnalyzer.getMandatoryCourses();
 
     }
 
     private void analyzeModules() throws IOException {
-        Chapter suggestedStudyCourseChapter = tableOfContent.getChapter(CHAPTER_TITLE_EXAM_COURSES_MODULES);
+        Chapter modulesChapter = tableOfContent.getChapter(CHAPTER_TITLE_EXAM_COURSES_MODULES);
         PDFTextStripper pdfTextStripper = new PDFTextStripper();
 
-        pdfTextStripper.setStartPage(suggestedStudyCourseChapter.getPageStart());
-        pdfTextStripper.setEndPage(suggestedStudyCourseChapter.getPageEnd());
+        pdfTextStripper.setStartPage(modulesChapter.getPageStart());
+        pdfTextStripper.setEndPage(modulesChapter.getPageEnd());
 
-        String text = pdfTextStripper.getText(pdDocument);
+        String parsedText = pdfTextStripper.getText(pdDocument);
 
-        modulesAnalyzer.analyzeModule(text);
+        ValidationUtil.validateNonEmptyParsedText(
+                parsedText,
+                modulesChapter.getPageStart(),
+                "modules");
+
+        modulesAnalyzer.analyzeModule(parsedText);
 
         this.modules = modulesAnalyzer.getModules();
     }
@@ -192,9 +202,14 @@ public class SimpleStudyPlanAnalyzer implements StudyPlanAnalyzer {
         pdfTextStripper.setStartPage(transferableSkillsChapter.getPageStart());
         pdfTextStripper.setEndPage(transferableSkillsChapter.getPageEnd());
 
-        String text = pdfTextStripper.getText(pdDocument);
+        String parsedText = pdfTextStripper.getText(pdDocument);
 
-        transferableSkillsAnalyzer.analyzeTransferableSkills(text);
+        ValidationUtil.validateNonEmptyParsedText(
+                parsedText,
+                transferableSkillsChapter.getPageStart(),
+                "transferable skills");
+
+        transferableSkillsAnalyzer.analyzeTransferableSkills(parsedText);
 
         this.transferableSkills = transferableSkillsAnalyzer.getTransferableSkills();
     }

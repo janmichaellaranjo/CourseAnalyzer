@@ -40,7 +40,6 @@ public class CourseAnalyzerController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void readStudyPlan(@RequestParam("studyPlan") MultipartFile multipartFile) {
         logger.info("A request for reading a study plan has been initiated");
-
         courseCheckerService.readStudyPlan(multipartFile);
     }
 

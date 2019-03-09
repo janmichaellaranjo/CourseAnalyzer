@@ -11,6 +11,7 @@ import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.studyplananalyzer.model.Module;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -85,14 +86,7 @@ public class SimpleModulesAnalyzer implements ModulesAnalyzer {
             modules.add(module);
         }
 
-        if (modules.isEmpty()) {
-            String errorMsg = String.format(
-                    "The module text has the wrong format." +
-                            "No module could be extracted");
-            logger.error(errorMsg);
-
-            throw new NoModelsExtractedException(errorMsg);
-        }
+        ValidationUtil.validateNonEmptySet(modules, "module");
     }
 
     private void throwExceptionIfTextIsEmpty(String text) {

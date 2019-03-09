@@ -7,7 +7,7 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.modulesanalyzer;
  */
 
 import com.example.courseanalyzer.CourseAnalyzerApplication;
-import com.example.courseanalyzer.Util.FileUtil;
+import com.example.courseanalyzer.util.FileUtil;
 import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;

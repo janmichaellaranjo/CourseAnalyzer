@@ -7,18 +7,16 @@ package com.example.courseanalyzer.analyzer.finishedcoursesanalyzer;
  */
 
 import com.example.courseanalyzer.CourseAnalyzerApplication;
-import com.example.courseanalyzer.Util.ModelUtil;
-import com.example.courseanalyzer.Util.FileUtil;
+import com.example.courseanalyzer.util.ModelUtil;
+import com.example.courseanalyzer.util.FileUtil;
 import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
 import org.apache.commons.collections4.SetUtils;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 

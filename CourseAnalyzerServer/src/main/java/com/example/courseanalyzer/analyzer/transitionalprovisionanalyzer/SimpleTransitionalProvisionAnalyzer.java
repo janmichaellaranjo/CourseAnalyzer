@@ -13,6 +13,7 @@ import com.example.courseanalyzer.analyzer.model.CourseGroup;
 import com.example.courseanalyzer.util.CourseLineUtil;
 import com.example.courseanalyzer.analyzer.model.Course;
 import com.example.courseanalyzer.analyzer.model.TransitionalProvision;
+import com.example.courseanalyzer.util.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -196,12 +197,8 @@ public class SimpleTransitionalProvisionAnalyzer implements TransitionalProvisio
                     "No mandatory course group could be extracted";
             throw new NoModelsExtractedException(errorMsg);
         }
-        if (additionalMandatoryCourseGroups.isEmpty()) {
-            String errorMsg =
-                    "The transitional provision text has the wrong format." +
-                            "No additional mandatory course group could be extracted";
-            throw new NoModelsExtractedException(errorMsg);
-        }
+
+        ValidationUtil.validateNonEmptySet(additionalMandatoryCourseGroups, "additional mandatory course group");
 
         transitionalProvision.setMandatoryCourseGroups(mandatoryCourseGroups);
         transitionalProvision.setAdditionalMandatoryCourseGroups(additionalMandatoryCourseGroups);

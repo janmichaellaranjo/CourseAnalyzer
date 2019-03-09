@@ -7,8 +7,8 @@ package com.example.courseanalyzer.analyzer.studyplananalyzer.transferableskills
  */
 
 import com.example.courseanalyzer.CourseAnalyzerApplication;
-import com.example.courseanalyzer.Util.ModelUtil;
-import com.example.courseanalyzer.Util.FileUtil;
+import com.example.courseanalyzer.util.ModelUtil;
+import com.example.courseanalyzer.util.FileUtil;
 import com.example.courseanalyzer.analyzer.exception.NoModelsExtractedException;
 import com.example.courseanalyzer.analyzer.exception.WrongFormatException;
 import com.example.courseanalyzer.analyzer.model.Course;
